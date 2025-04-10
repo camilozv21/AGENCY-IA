@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "trx": "i18nexus pull"
   },
   "dependencies": {
     "@mantine/core": "^7.17.4",
@@ -14,9 +15,13 @@
     "@mantine/hooks": "^7.17.4",
     "@mantine/modals": "^7.17.4",
     "@mantine/notifications": "^7.17.4",
+    "i18next": "^24.2.3",
+    "i18next-resources-to-backend": "^1.2.1",
     "next": "15.2.5",
+    "next-i18n-router": "^5.5.1",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-i18next": "^15.4.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -25,6 +30,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.2.5",
+    "i18nexus-cli": "^3.5.0",
     "typescript": "^5"
   }
 }
