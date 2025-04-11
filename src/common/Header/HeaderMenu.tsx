@@ -31,6 +31,7 @@ import { useDisclosure } from '@mantine/hooks';
 import classes from './HeaderMenu.module.css';
 import Image from 'next/image';
 import { LanguagePicker } from './LanguagePicker';
+import Link from 'next/link';
 
 const mockdata = [
   {
@@ -89,7 +90,7 @@ export function HeaderMenu() {
   ));
 
   return (
-    <Box pb={20}>
+    <Box>
       <header className={classes.header}>
         <Group justify="space-between" h="100%">
           <picture>
@@ -107,19 +108,16 @@ export function HeaderMenu() {
           </picture>
 
           <Group h="100%" gap={0} visibleFrom="sm">
-            <a href="#" className={classes.link}>
-              Home
-            </a>
             <HoverCard width={600} position="bottom" radius="md" shadow="md" withinPortal>
               <HoverCard.Target>
-                <a href="#" className={classes.link}>
+                <Link href="#" className={classes.link}>
                   <Center inline>
                     <Box component="span" mr={5}>
-                      Features
+                      Paquetes
                     </Box>
                     <IconChevronDown size={16} color={theme.colors.blue[6]} />
                   </Center>
-                </a>
+                </Link>
               </HoverCard.Target>
 
               <HoverCard.Dropdown style={{ overflow: 'hidden' }}>
@@ -151,17 +149,17 @@ export function HeaderMenu() {
                 </div>
               </HoverCard.Dropdown>
             </HoverCard>
-            <a href="#" className={classes.link}>
-              Learn
-            </a>
-            <a href="#" className={classes.link}>
-              Academy
-            </a>
+            <Link href="#" className={classes.link}>
+              Contactanos
+            </Link>
+            <Link href="#" className={classes.link}>
+              Soporte
+            </Link>
           </Group>
 
           <Group visibleFrom="sm">
             <Button variant="default">Log in</Button>
-            <Button>Sign up</Button>
+            <Button>Registráte</Button>
             <LanguagePicker />
           </Group>
 
