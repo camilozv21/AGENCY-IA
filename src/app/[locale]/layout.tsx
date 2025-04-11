@@ -11,8 +11,8 @@ import initTranslations from "../i18n";
 import { ReactNode } from "react";
 import { dir } from "i18next";
 import TranslationsProvider from "./TranslationsProvider";
-import Header from "@/common/Header/Header";
 import { Footer } from "@/common/Footer/Footer";
+import { HeaderMenu } from "@/common/Header/HeaderMenu";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -46,7 +46,7 @@ export default async function RootLayout({ children, params }: { children: React
       <body className={manrope.variable}>
         <MantineProvider defaultColorScheme="dark">
           <TranslationsProvider locale={locale} namespaces={namespaces} resources={resources}>
-            <Header />
+            <HeaderMenu />
             <main>{children}</main>
             <Footer />
           </TranslationsProvider>
