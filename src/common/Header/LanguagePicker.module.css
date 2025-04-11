@@ -1,0 +1,33 @@
+.control {
+  width: 200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
+  border-radius: var(--mantine-radius-md);
+  border: 1px solid var(--mantine-color-dark-6); /* Tema oscuro */
+  transition: background-color 150ms ease;
+  background-color: var(--mantine-color-dark-6); /* Tema oscuro */
+}
+
+.control[data-expanded] {
+  background-color: var(--mantine-color-dark-5); /* Tema oscuro */
+}
+
+.control:hover {
+  background-color: var(--mantine-color-dark-5); /* Tema oscuro */
+}
+
+.label {
+  font-weight: 500;
+  font-size: var(--mantine-font-size-sm);
+}
+
+.icon {
+  transition: transform 150ms ease;
+  transform: rotate(0deg);
+}
+
+.control[data-expanded] .icon {
+  transform: rotate(180deg);
+}
