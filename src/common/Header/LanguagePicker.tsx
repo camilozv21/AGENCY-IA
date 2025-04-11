@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IconChevronDown } from '@tabler/icons-react';
 import { Group, Image, Menu, UnstyledButton } from '@mantine/core';
 import classes from './LanguagePicker.module.css';
@@ -15,17 +15,26 @@ type Language = {
 };
 
 const data: Language[] = [
+  { label: 'Español', image: 'https://i.imgur.com/v72UaHG.png', value: 'es' },
   { label: 'English', image: 'https://i.imgur.com/NVCmjWC.png', value: 'en' },
-  { label: 'Spanish', image: 'https://i.imgur.com/v72UaHG.png', value: 'es' },
 ];
 
 export function LanguagePicker() {
   const [opened, setOpened] = useState(false);
-  const [selected, setSelected] = useState<Language>(data[0]);
   const { i18n } = useTranslation();
   const currentLocale = i18n.language;
   const router = useRouter();
   const currentPathname = usePathname();
+  const [selected, setSelected] = useState<Language>(
+    data.find((lang) => lang.value === currentLocale) || data[0]
+  );
+
+  useEffect(() => {
+    const currentLanguage = data.find((lang) => lang.value === currentLocale);
+    if (currentLanguage) {
+      setSelected(currentLanguage);
+    }
+  }, [currentLocale]);
 
   const handleChange = (newLocale: string) => {
     i18n.changeLanguage(newLocale);
