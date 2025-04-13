@@ -1,22 +1,8 @@
-import { IconGasStation, IconGauge, IconManualGearbox, IconUsers } from '@tabler/icons-react';
-import { Button, Card, Center, Flex, Group, Text, ThemeIcon, useMantineTheme } from '@mantine/core';
+import { Button, Card, Flex, Group, Text, ThemeIcon, useMantineTheme } from '@mantine/core';
 import classes from './CardsPlans.module.css';
 import { plansData } from '@/utils/plans';
 
-const mockdata = [
-  { label: '4 passengers', icon: IconUsers },
-  { label: '100 km/h in 4 seconds', icon: IconGauge },
-  { label: 'Automatic gearbox', icon: IconManualGearbox },
-  { label: 'Electric', icon: IconGasStation },
-];
-
 export function CardsPlans() {
-  // const features = mockdata.map((feature) => (
-  //   <Center key={feature.label}>
-  //     <feature.icon size={16} className={classes.icon} stroke={1.5} />
-  //     <Text size="xs">{feature.label}</Text>
-  //   </Center>
-  // ));
   const theme = useMantineTheme();
 
   return (
