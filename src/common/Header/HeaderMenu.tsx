@@ -8,6 +8,7 @@ import {
   IconCoin,
   IconFingerprint,
   IconNotification,
+  IconShoppingCart,
 } from '@tabler/icons-react';
 import {
   Anchor,
@@ -20,6 +21,7 @@ import {
   Drawer,
   Group,
   HoverCard,
+  Indicator,
   ScrollArea,
   SimpleGrid,
   Text,
@@ -75,7 +77,7 @@ export function HeaderMenu() {
     <UnstyledButton className={classes.subLink} key={item.title}>
       <Group wrap="nowrap" align="flex-start">
         <ThemeIcon size={34} variant="default" radius="md">
-          <item.icon size={22} color={theme.colors.blue[6]} />
+          <item.icon size={22} color={'#F3C96B'} />
         </ThemeIcon>
         <div>
           <Text size="sm" fw={500}>
@@ -115,7 +117,7 @@ export function HeaderMenu() {
                     <Box component="span" mr={5}>
                       Paquetes
                     </Box>
-                    <IconChevronDown size={16} color={theme.colors.blue[6]} />
+                    <IconChevronDown size={16} color={'#F3C96B'} />
                   </Center>
                 </Link>
               </HoverCard.Target>
@@ -123,7 +125,7 @@ export function HeaderMenu() {
               <HoverCard.Dropdown style={{ overflow: 'hidden' }}>
                 <Group justify="space-between" px="md">
                   <Text fw={500}>Features</Text>
-                  <Anchor href="#" fz="xs">
+                  <Anchor href="#" fz="xs" style={{ color: '#F3C96B'}}>
                     View all
                   </Anchor>
                 </Group>
@@ -144,7 +146,7 @@ export function HeaderMenu() {
                         Their food sources have decreased, and their numbers
                       </Text>
                     </div>
-                    <Button variant="default">Get started</Button>
+                    <Button variant="default" color='#F3C96B'>Get started</Button>
                   </Group>
                 </div>
               </HoverCard.Dropdown>
@@ -158,8 +160,11 @@ export function HeaderMenu() {
           </Group>
 
           <Group visibleFrom="sm">
+            <Indicator id='indicator-cart' inline label="1" size={16} color='#1E1E2D' className={classes.indicatorContainer}>
+              <IconShoppingCart size={25} color="#F3C96B" />
+            </Indicator>
             <Button variant="default">Log in</Button>
-            <Button>Registráte</Button>
+            <Button color='#F3C96B' style={{ color: '#1E1E2D'}}>Registráte</Button>
             <LanguagePicker />
           </Group>
 
