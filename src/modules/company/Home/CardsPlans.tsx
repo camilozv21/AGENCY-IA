@@ -1,14 +1,14 @@
-import { Button, Card, Flex, Group, Text, ThemeIcon, useMantineTheme } from '@mantine/core';
+import { Button, Card, Flex, Group, Text, ThemeIcon } from '@mantine/core';
 import classes from './CardsPlans.module.css';
 import { plansData } from '@/utils/plans';
 
 export function CardsPlans() {
-  const theme = useMantineTheme();
+  // const theme = useMantineTheme();
 
   return (
     <Flex
       mih={50}
-      bg="rgba(0, 0, 0, .3)"
+      // bg="rgba(0, 0, 0, .3)"
       gap="lg"
       justify="center"
       align="start"
@@ -26,6 +26,7 @@ export function CardsPlans() {
           <Card
             withBorder
             radius="md"
+            shadow='xl'
             className={`${classes.card} ${plan.featured ? classes.featuredCard : ''}`}
           >
             <Card.Section className={classes.imageSection}>
@@ -53,7 +54,8 @@ export function CardsPlans() {
                     <li key={feature.text + index} className={classes.feature}>
                       <Flex gap='sm' align='center' pb={15}>
                         <ThemeIcon size={34} variant="default" radius="md">
-                          <feature.icon size={22} color={theme.colors.violet[6]} />
+                          {/* <feature.icon size={22} color={theme.colors.violet[6]} /> */}
+                          <feature.icon size={22} color='#F3C96B' />
                         </ThemeIcon>
                         <Text fz='sm'>{feature.text}</Text>
                       </Flex>
@@ -74,7 +76,7 @@ export function CardsPlans() {
                   </Text>
                 </div>
 
-                <Button radius="xl" style={{ flex: 1 }} color="violet">
+                <Button radius="xl" style={{ flex: 1, color: '#1E1E2D' }} color="#F3C96B">
                   {plan.button}
                 </Button>
               </Group>
