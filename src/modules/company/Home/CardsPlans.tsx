@@ -1,9 +1,9 @@
-import { Button, Card, Flex, Group, Text, ThemeIcon, useMantineTheme } from '@mantine/core';
+import { Button, Card, Flex, Group, Text, ThemeIcon } from '@mantine/core';
 import classes from './CardsPlans.module.css';
 import { plansData } from '@/utils/plans';
 
 export function CardsPlans() {
-  const theme = useMantineTheme();
+  // const theme = useMantineTheme();
 
   return (
     <Flex
