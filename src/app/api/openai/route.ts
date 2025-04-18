@@ -6,9 +6,13 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_KEY,
 });
 
+interface RequestBody {
+  prompt: string;
+}
+
 export async function POST(request: Request) {
-    const body = await request.json();
-    const { usermessages } = body;
+    const body: RequestBody = await request.json();
+    const { prompt }: { prompt: string } = body;
   
     const response = await openai.responses.create({
         model: "gpt-4-turbo-2024-04-09",
@@ -22,7 +26,7 @@ export async function POST(request: Request) {
             "content": [
               {
                 "type": "input_text",
-                "text": usermessages.toString()
+                "text": prompt
               }
             ]
           },          
