@@ -95,19 +95,21 @@ export function HeaderMenu() {
     <Box>
       <header className={classes.header}>
         <Group justify="space-between" h="100%">
-          <picture>
-            <source
-              media="(min-width: 600px)"
-              srcSet="https://i.imgur.com/Sifv7bZ.png"
-            />
-              <Image
-                src="https://i.imgur.com/Sifv7bZ.png"
-                alt="carson logo"
-                width={97} 
-                height={32} 
-                priority
+          <Link href='/'>
+            <picture>
+              <source
+                media="(min-width: 600px)"
+                srcSet="https://i.imgur.com/Sifv7bZ.png"
               />
-          </picture>
+                <Image
+                  src="https://i.imgur.com/Sifv7bZ.png"
+                  alt="carson logo"
+                  width={97} 
+                  height={32} 
+                  priority
+                />
+            </picture>
+          </Link>
 
           <Group h="100%" gap={0} visibleFrom="sm">
             <HoverCard width={600} position="bottom" radius="md" shadow="md" withinPortal>
@@ -160,9 +162,11 @@ export function HeaderMenu() {
           </Group>
 
           <Group visibleFrom="sm">
-            <Indicator id='indicator-cart' inline label="1" size={16} color='#1E1E2D' className={classes.indicatorContainer}>
-              <IconShoppingCart size={25} color="#F3C96B" />
-            </Indicator>
+            <Link href='/cart'>
+              <Indicator id='indicator-cart' inline label="1" size={16} color='#1E1E2D' className={classes.indicatorContainer}>
+                <IconShoppingCart size={25} color="#F3C96B" />
+              </Indicator>
+            </Link>
             <Button variant="default">Log in</Button>
             <Button color='#F3C96B' style={{ color: '#1E1E2D'}}>Registráte</Button>
             <LanguagePicker />
