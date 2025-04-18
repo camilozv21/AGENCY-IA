@@ -8,7 +8,7 @@ const openai = new OpenAI({
 
 export async function POST(request: Request) {
     const body = await request.json();
-    const { messages } = body;
+    const { usermessages } = body;
   
     const response = await openai.responses.create({
         model: "gpt-4-turbo-2024-04-09",
@@ -22,7 +22,7 @@ export async function POST(request: Request) {
             "content": [
               {
                 "type": "input_text",
-                "text": messages.toString()
+                "text": usermessages.toString()
               }
             ]
           },          
