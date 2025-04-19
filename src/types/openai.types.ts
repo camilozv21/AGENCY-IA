@@ -17,16 +17,11 @@ export interface Gtp4Turbo {
   temperature:          number;
   text:                 Text;
   tool_choice:          string;
-  tools:                any[];
   top_p:                number;
   truncation:           string;
   usage:                Usage;
   user:                 null;
-  metadata:             Metadata;
   output_text:          string;
-}
-
-export interface Metadata {
 }
 
 export interface Output {
@@ -39,7 +34,7 @@ export interface Output {
 
 export interface Content {
   type:        string;
-  annotations: any[];
+  annotations: string[];
   text:        string;
 }
 
