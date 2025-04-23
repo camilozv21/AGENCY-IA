@@ -24,7 +24,7 @@ export const plansData = [
     price: '$99.00',
     features: [
       {text: '5 publicaciones semanales en redes sociales (con tu estilo y logo)', icon: IconBrandMeta},
-      {text: '2 videos cortos semanales tipo reel o TikTok para aumentar el alcance', icon: IconBrandTiktok},
+      {text: '4 videos cortos semanales tipo reel o TikTok para aumentar el alcance', icon: IconBrandTiktok},
       {text: 'Activación de campañas básicas en Google Ads', icon: IconAdFilled},
       {text: 'Asistente con IA para generar ideas y textos cuando lo necesites', icon: IconRobot}
     ],
@@ -37,10 +37,10 @@ export const plansData = [
     title: 'Para marcas que quieren dominar su nicho y atraer clientes de forma constante.',
     description:
       'Pensado para empresas consolidadas o ambiciosas, este paquete incluye todo lo necesario para posicionar tu marca como líder: contenido avanzado, campañas de Google Ads, reportes de resultados y automatización total.',
-    price: '$149.00',
+    price: '$169.00',
     features: [
-      {text: '10 publicaciones semanales (textos + imágenes optimizadas por IA)', icon: IconBrandMeta},
-      {text: '3 videos tipo reel o TikTok semanales con branding integrado', icon: IconBrandTiktok},
+      {text: '15 publicaciones semanales (textos + imágenes optimizadas por IA)', icon: IconBrandMeta},
+      {text: '10 videos tipo reel o TikTok semanales con branding integrado', icon: IconBrandTiktok},
       {text: 'Campañas activas en Google Ads para atraer nuevos clientes', icon: IconAdFilled},
       {text: 'Reporte mensual de rendimiento + recomendaciones de mejora', icon: IconRobot},
       {text: 'Automatización avanzada: agenda, modifica o aprueba contenido con 1 clic', icon: IconAutomation}
