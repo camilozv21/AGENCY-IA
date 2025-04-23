@@ -5,11 +5,12 @@ import { BedrockRuntimeClient, StartAsyncInvokeCommand } from '@aws-sdk/client-b
 
 interface RequestBody {
   prompt: string;
+  duration?: number;
 }
 
 export async function POST(request: Request) {
   const body: RequestBody = await request.json();
-  const { prompt } = body;
+  const { prompt, duration } = body;
 
   if (!prompt) {
     return new Response(JSON.stringify({ error: 'Prompt requerido' }), {
@@ -21,8 +22,8 @@ export async function POST(request: Request) {
   const client = new BedrockRuntimeClient({
     region: 'us-east-1', // Asegúrate de que coincida con tu bucket
     credentials: {
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+      accessKeyId: process.env.ACCESS_KEY_AWS!,
+      secretAccessKey: process.env.SECRET_ACCESS_KEY_AWS!,
     },
   });
 
@@ -34,7 +35,7 @@ export async function POST(request: Request) {
         text: prompt,
       },
       videoGenerationConfig: {
-        durationSeconds: 6,
+        durationSeconds: duration || 6,
         fps: 24,
         dimension: '1280x720',
         seed: 42,
@@ -42,7 +43,7 @@ export async function POST(request: Request) {
     },
     outputDataConfig: {
       s3OutputDataConfig: {
-        s3Uri: 's3://tu-bucket-de-salida', // Cambia esto por el tuyo
+        s3Uri: process.env.BUCKET_S3_URI,
       },
     },
   });
