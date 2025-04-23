@@ -10,6 +10,7 @@
     "trx": "i18nexus pull"
   },
   "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.787.0",
     "@mantine/core": "^7.17.4",
     "@mantine/form": "^7.17.4",
     "@mantine/hooks": "^7.17.4",
