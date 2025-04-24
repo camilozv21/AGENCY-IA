@@ -1,3 +1,10 @@
 .inputArea textarea {
   height: 100px;
 }
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}

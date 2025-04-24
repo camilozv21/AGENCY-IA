@@ -1,4 +1,4 @@
-export interface Gtp4Turbo {
+export interface GeneratePromptTextImage {
   id:                   string;
   object:               string;
   created_at:           number;
@@ -17,12 +17,14 @@ export interface Gtp4Turbo {
   temperature:          number;
   text:                 Text;
   tool_choice:          string;
+  tools:                string[];
   top_p:                number;
   truncation:           string;
   usage:                Usage;
   user:                 null;
   output_text:          string;
 }
+
 
 export interface Output {
   id:      string;
