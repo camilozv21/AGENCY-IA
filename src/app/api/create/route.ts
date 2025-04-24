@@ -60,8 +60,8 @@ export async function POST(request: Request) {
   
       return Response.json(dataImage, { status: 200 });
   
-    } catch (error: any) {
-      return Response.json({ error: 'Error interno', details: error.message }, { status: 500 });
+    } catch (error: unknown) {
+      return Response.json({ error: 'Error interno', details: (error as Error).message }, { status: 500 });
     }
   }
   
