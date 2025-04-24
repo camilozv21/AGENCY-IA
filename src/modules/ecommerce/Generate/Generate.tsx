@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import classes from './Generate.module.css';
-import { Center, Flex, Paper, Text, Textarea, Button, Modal } from '@mantine/core';
+import { Center, Flex, Text, Textarea, Button, Modal } from '@mantine/core';
 import Image from 'next/image';
 
 export default function Generate() {
