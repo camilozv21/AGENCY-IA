@@ -68,7 +68,7 @@ export async function POST(request: Request) {
     return new Response(
       JSON.stringify({
         error: 'Error al generar el video',
-        details: (error as any).message,
+        details: (error as unknown as Error).message,
       }),
       {
         status: 500,
