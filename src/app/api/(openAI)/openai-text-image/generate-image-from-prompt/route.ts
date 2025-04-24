@@ -14,6 +14,18 @@ export async function POST(request: Request) {
   const body: RequestBody = await request.json();
   const { prompt }: { prompt: string } = body;
 
+  if (!prompt) {
+    return Response.json({ error: '"Prompt" Field is required' }, { status: 400 });
+  }
+
+  if (typeof prompt !== 'string') {
+    return Response.json({ error: '"Prompt" Field must be a string' }, { status: 400 });
+  }
+
+  if (!prompt.trim()) {
+    return Response.json({ error: '"Prompt" Field cannot be empty' }, { status: 400 });
+  }
+
   const response = await openai.images.generate({
     model: "dall-e-3",
     prompt: prompt,

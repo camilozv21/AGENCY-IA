@@ -1,4 +1,4 @@
-export interface Dalle3 {
+export interface CreateImageFromForm {
   created: number;
   data:    Datum[];
 }

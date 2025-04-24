@@ -9,6 +9,12 @@ const nextConfig: NextConfig = {
         hostname: "i.imgur.com",
         port: "",
         pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "oaidalleapiprodscus.blob.core.windows.net",
+        port: "",
+        pathname: "/**",
       }
     ],
     minimumCacheTTL: 60 * 60 * 24
