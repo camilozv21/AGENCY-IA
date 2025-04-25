@@ -11,45 +11,47 @@ interface RequestBody {
 }
 
 export async function POST(request: Request) {
-    const body: RequestBody = await request.json();
-    const { prompt }: { prompt: string } = body;
-  
-    const response = await openai.responses.create({
-        model: "gpt-4-turbo-2024-04-09",
-        input: [
-        {
-            "role": "system",
-            "content": "You are a world-class cinematic director and prompt engineer. Your job is to turn any brief input — a brand, place, product, or theme — into a highly realistic, professional-grade video prompt. Respond with a single, polished paragraph no longer than 512 characters.The video must feel like a real, directed shoot: include lens type (e.g., 85mm), aperture (e.g., f/1.8), ISO, lighting setup (natural, ambient, soft key light, golden hour), camera angles (low, tracking, close-up), depth of field (shallow or deep), textures, natural motion, and atmosphere. Use vivid but concise cinematic language. NEVER use fantasy, CGI, surrealism, or cartoons. Only return the final prompt — no formatting or explanation."
-          
-            }, 
-          {
-            "role": "user",
-            "content": [
-              {
-                "type": "input_text",
-                "text": prompt
-              }
-            ]
-          },          
-        ],
-        text: {
-          "format": {
-            "type": "text"
-          }
-        },
-        reasoning: {},
-        tools: [],
-        temperature: 0.7,
-        max_output_tokens: 2048,
-        top_p: 1,
-        store: true
-      });
-  
+  const body: RequestBody = await request.json();
+  const { prompt }: { prompt: string } = body;
 
-    return new Response(JSON.stringify(response), {
-      status: 200,
-      headers: {
-        "Content-Type": "application/json",
+  const response = await openai.responses.create({
+    model: "gpt-4-turbo-2024-04-09",
+    input: [
+      {
+        role: "system",
+        content:
+          "You are a world-class cinematic director and visual prompt engineer. Your mission is to transform any brief input—whether it’s a person, brand, product, place, or object—into a polished, ultra-realistic cinematic video prompt of exactly 480 characters. Count all punctuation, spaces, and characters precisely—never 479 or 481. The video must simulate a real-world, high-end shoot with no visual flaws. For people: ensure perfect anatomy, natural posture, clean teeth, expressive eyes, smooth skin, realistic motion—no glitches or warped features. For objects, products, and interiors: describe textures, shadows, materials, and real-world lighting interactions. Use details like condensation, soft reflections, fabric motion, or wear to evoke realism. Always include: lighting mood (e.g., soft daylight, warm glow), cinematic movement (e.g., slow pan, top-down, dolly), ambiance (e.g., wind, piano, silence), and context (e.g., skincare ad, luxury living, fashion editorial). Never mention cameras or lenses. Strictly avoid fantasy, CGI, surrealism, AI glitches, distorted anatomy, or floating parts. Output must be a single cinematic paragraph of exactly 480 characters—no formatting, disclaimers, or truncation."
+
       },
-    });
-  }
+      {
+        role: "user",
+        content: [
+          {
+            type: "input_text",
+            text: prompt,
+          },
+        ],
+      },
+    ],
+    text: {
+      format: {
+        type: "text",
+      },
+    },
+    reasoning: {},
+    tools: [],
+    temperature: 0.7,
+    max_output_tokens: 2048,
+    top_p: 1,
+    store: true,
+  });
+
+  const trimmedText = response.output_text.slice(0, 512);
+
+  return new Response(JSON.stringify({ result: trimmedText }), {
+    status: 200,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
