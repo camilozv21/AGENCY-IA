@@ -13,10 +13,15 @@ export async function POST(request: Request) {
   const { prompt, duration } = body;
 
   if (!prompt) {
-    return new Response(JSON.stringify({ error: 'Prompt requerido' }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return Response.json({ error: '"Prompt" Field is required' }, { status: 400 });
+  }
+
+  if (typeof prompt !== 'string') {
+    return Response.json({ error: '"Prompt" Field must be a string' }, { status: 400 });
+  }
+
+  if (!prompt.trim()) {
+    return Response.json({ error: '"Prompt" Field cannot be empty' }, { status: 400 });
   }
 
   const client = new BedrockRuntimeClient({
