@@ -25,7 +25,6 @@ export async function POST(request: Request) {
       user: {
         id: newUser._id,
         email: newUser.email,
-        role: newUser.role,
       },
     }, { status: 201 });
 
