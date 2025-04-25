@@ -6,7 +6,7 @@ export async function POST(request: Request) {
   await dbConnect();
 
   try {
-    const { email, password, role } = await request.json();
+    const { email, password } = await request.json();
     if (!email || !password) {
       return new Response(JSON.stringify({ error: "Email and Password required" }), {
         status: 400,
@@ -18,14 +18,13 @@ export async function POST(request: Request) {
         status: 409,
         headers: { "Content-Type": "application/json"},});
     }
-    const newUser = new User({ email, password, role });
+    const newUser = new User({ email, password });
     await newUser.save();
     return Response.json({
       message: 'Usuario creado',
       user: {
         id: newUser._id,
         email: newUser.email,
-        role: newUser.role,
       },
     }, { status: 201 });
 
@@ -38,4 +37,3 @@ export async function POST(request: Request) {
     });}
   
 }
- 
