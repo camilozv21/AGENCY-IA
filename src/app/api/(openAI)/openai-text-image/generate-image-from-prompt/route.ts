@@ -26,20 +26,29 @@ export async function POST(request: Request) {
     return Response.json({ error: '"Prompt" Field cannot be empty' }, { status: 400 });
   }
 
-  const response = await openai.images.generate({
-    model: "dall-e-3",
-    prompt: prompt,
-    n: 1,
-    size: "1024x1024", 
-    response_format: "url", 
-    quality: "hd",
-    style: "natural", 
-  });
+  try {
+    const responses = await Promise.all(
+      Array.from({ length: 3 }).map(() =>
+        openai.images.generate({
+          model: "dall-e-3",
+          prompt: prompt,
+          n: 1,
+          size: "1024x1024",
+          response_format: "url",
+          quality: "hd",
+          style: "natural",
+        })
+      )
+    );
 
-  return new Response(JSON.stringify(response), {
-    status: 200,
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+    return new Response(JSON.stringify(responses), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  } catch (error) {
+    console.error("Image generation error:", error);
+    return Response.json({ error: "Failed to generate images" }, { status: 500 });
+  }
 }
