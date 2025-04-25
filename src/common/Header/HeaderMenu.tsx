@@ -167,7 +167,11 @@ export function HeaderMenu() {
                 <IconShoppingCart size={25} color="#F3C96B" />
               </Indicator>
             </Link>
-            <Button variant="default">Log in</Button>
+            <Button variant="default" component='div'>
+              <Link href='/auth/login'>
+                Log in
+              </Link>
+            </Button>
             <Button color='#F3C96B' style={{ color: '#1E1E2D'}}>Registráte</Button>
             <LanguagePicker />
           </Group>
@@ -210,7 +214,11 @@ export function HeaderMenu() {
           <Divider my="sm" />
 
           <Group justify="center" grow pb="xl" px="md">
-            <Button variant="default">Log in</Button>
+            <Button variant="default" component='div'>
+              <Link href='/auth/login'>
+                Log in
+              </Link>
+            </Button>
             <Button>Sign up</Button>
             <LanguagePicker />
           </Group>
