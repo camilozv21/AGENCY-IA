@@ -6,13 +6,13 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "i.imgur.com",
+        hostname: "oaidalleapiprodscus.blob.core.windows.net",
         port: "",
         pathname: "/**",
       },
       {
         protocol: "https",
-        hostname: "oaidalleapiprodscus.blob.core.windows.net",
+        hostname: "df50lbm4qcrt6.cloudfront.net",
         port: "",
         pathname: "/**",
       }

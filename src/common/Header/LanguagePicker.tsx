@@ -15,8 +15,8 @@ type Language = {
 };
 
 const data: Language[] = [
-  { label: 'Español', image: 'https://i.imgur.com/v72UaHG.png', value: 'es' },
-  { label: 'English', image: 'https://i.imgur.com/NVCmjWC.png', value: 'en' },
+  { label: 'Español', image: 'https://df50lbm4qcrt6.cloudfront.net/spainbadge.png', value: 'es' },
+  { label: 'English', image: 'https://df50lbm4qcrt6.cloudfront.net/ukbadge.png', value: 'en' },
 ];
 
 export function LanguagePicker() {

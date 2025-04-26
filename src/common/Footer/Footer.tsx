@@ -64,10 +64,10 @@ export function Footer() {
         <picture>
           <source
             media="(min-width: 600px)"
-            srcSet="https://i.imgur.com/Sifv7bZ.png"
+            srcSet="https://df50lbm4qcrt6.cloudfront.net/logonobg.png"
           />
             <Image
-              src="https://i.imgur.com/Sifv7bZ.png"
+              src="https://df50lbm4qcrt6.cloudfront.net/logonobg.png"
               alt="carson logo"
               width={97} 
               height={32} 
