@@ -1,0 +1,28 @@
+.wrapper {
+  min-height: 900px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url(https://df50lbm4qcrt6.cloudfront.net/backgroundsingup.png);
+}
+
+.form {
+  min-height: 900px;
+  max-width: 450px;
+  padding-top: 80px;
+}
+
+@media (max-width: 768px) {  /* Reemplaza 768px por tu breakpoint deseado */
+  .form {
+    max-width: 100%;
+  }
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.link {
+  color: #F3C96B;
+  font-weight: 700;
+}

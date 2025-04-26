@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  Anchor,
   Button,
   // Checkbox,
   Paper,
@@ -9,13 +8,18 @@ import {
   Text,
   TextInput,
 } from "@mantine/core";
-import classes from "./Signup.module.css";
+import classes from "./Login.module.css";
 import { useForm } from "@mantine/form";
-import { createNewUser } from "@/services/auth/signup";
+import { notifications } from "@mantine/notifications";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { loginUser } from "@/services/auth/login";
 
 interface FormValues { email: string; password: string }
 
-export function Signup() {
+export function Login() {
+  const router = useRouter();
+
   const form = useForm<FormValues>({
     mode: "uncontrolled",
     validateInputOnChange: ["email", "password"],
@@ -29,24 +33,45 @@ export function Signup() {
     },
   });
 
-  const handleSubmit = async (values: FormValues) => {
-    const { email, password } = values;
+const handleSubmit = async (values: FormValues) => {
+  const { email, password } = values;
 
-    const response = await createNewUser({ email, password });
+  try {
+    const response = await loginUser({ email, password });
 
-    if (!response) {
-      alert("Error creating user");
+    if (!response.success) {
+      notifications.show({
+        title: "Error",
+        message: response.error || "No se pudo iniciar sesión",
+        color: "red",
+      });
       return;
     }
 
-    alert("User created successfully");
-  };
+    notifications.show({
+      title: "Éxito",
+      message: "Inicio de sesión exitoso",
+      color: "green",
+    });
+
+    form.reset();
+    // Redirige al dashboard u otra ruta protegida una vez logueado
+    router.push("/generate");
+  } catch (error) {
+      console.error("Error durante el login:", error);
+      notifications.show({
+        title: "Error",
+        message: "Error durante el inicio de sesión",
+        color: "red",
+      });
+    }
+};
 
   return (
     <div className={classes.wrapper}>
       <Paper className={classes.form} radius={0} p={30}>
         <Text className={classes.title} ta="center" mt="md" mb={50}>
-          ¡Bienvenido! <br /> Crea tu cuenta
+          ¡Bienvenido de vuelta!
         </Text>
 
         <form onSubmit={form.onSubmit(handleSubmit)}>
@@ -65,7 +90,7 @@ export function Signup() {
             {...form.getInputProps("password")}
             key={form.key("password")}
           />
-          {/* <Checkbox label="Keep me logged in" mt="xl" size="md" /> */}
+          {/* <Checkbox label="Mantenerme logeado" mt="xl" size="md" /> */}
           <Button
             type="submit"
             fullWidth
@@ -74,20 +99,18 @@ export function Signup() {
             color="#F3C96B"
             style={{ color: "#1E1E2D" }}
           >
-            Registrarse
+            Iniciar sesión
           </Button>
         </form>
 
         <Text ta="center" mt="md">
-          Ya tienes una cuenta?{" "}
-          <Anchor<"a">
-            href="#"
-            fw={700}
-            onClick={(event) => event.preventDefault()}
+          Aun no tienes una cuenta?{" "}
+          <Link
+            href="/auth/signup"
             className={classes.link}
           >
-            Iniciar sesión
-          </Anchor>
+            Registrarse
+          </Link>
         </Text>
       </Paper>
     </div>

@@ -172,7 +172,11 @@ export function HeaderMenu() {
                 Log in
               </Link>
             </Button>
-            <Button color='#F3C96B' style={{ color: '#1E1E2D'}}>Registráte</Button>
+            <Button color='#F3C96B' style={{ color: '#1E1E2D'}} component='div'>
+              <Link href='/auth/signup'>
+                Registrate
+              </Link>
+            </Button>
             <LanguagePicker />
           </Group>
 

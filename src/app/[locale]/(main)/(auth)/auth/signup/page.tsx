@@ -1,4 +1,4 @@
-import { Signup } from '@/modules/auth/Signup'
+import { Signup } from '@/modules/auth/Signup/Signup'
 import React from 'react'
 
 export default function SignUpPage() {

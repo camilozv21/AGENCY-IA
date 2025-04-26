@@ -2,11 +2,10 @@
   min-height: 900px;
   background-size: cover;
   background-repeat: no-repeat;
-  background-image: url(https://i.imgur.com/5P8tkBH.png);
+  background-image: url(https://df50lbm4qcrt6.cloudfront.net/backgroundlogin.png);
 }
 
 .form {
-  border-right: 1px solid var(--mantine-color-gray-3); /* Ajusta el color según el tema */
   min-height: 900px;
   max-width: 450px;
   padding-top: 80px;
@@ -25,4 +24,5 @@
 
 .link {
   color: #F3C96B;
+  font-weight: 700;
 }
