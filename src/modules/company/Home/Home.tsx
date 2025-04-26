@@ -16,6 +16,7 @@ export default function Home() {
       <div className={styles.container}>
       <Image 
         priority={true} 
+        quality={75}
         src={
           isMobile 
             ? (i18n.language === 'en' 
@@ -27,7 +28,7 @@ export default function Home() {
         } 
         alt="Logo" 
         width={isMobile ? 500 : 1000} 
-        height={isMobile ? 100 : 712} 
+        height={isMobile ? 589 : 742} 
         className={styles.logo}
         placeholder="blur"
         blurDataURL={
