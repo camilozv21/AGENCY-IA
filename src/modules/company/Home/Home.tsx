@@ -3,10 +3,6 @@
 import React from 'react'
 import styles from './Home.module.css'
 import Image from 'next/image'
-import bannerSpanish from './images/bannerSpanish.svg'
-import bannerEnglish from './images/bannerEnglish.svg'
-import bannerEnglishMobile from './images/bannerEnglishMobile.svg'
-import bannerSpanishMobile from './images/bannerSpanishMobile.svg'
 import { useTranslation } from 'react-i18next'
 import { useMediaQuery } from '@mantine/hooks'
 import { CardsPlans } from './CardsPlans'
@@ -20,7 +16,7 @@ export default function Home() {
       <div className={styles.container}>
         <Image 
           priority={true} 
-          src={isMobile ? (i18n.language === 'en' ? bannerEnglishMobile : bannerSpanishMobile) : (i18n.language === 'en' ? bannerEnglish : bannerSpanish)} 
+          src={isMobile ? (i18n.language === 'en' ? 'https://df50lbm4qcrt6.cloudfront.net/bannerEnglishMobile.svg' : 'https://df50lbm4qcrt6.cloudfront.net/bannerSpanishMobile.svg') : (i18n.language === 'en' ? 'https://df50lbm4qcrt6.cloudfront.net/bannerEnglish.svg' : 'https://df50lbm4qcrt6.cloudfront.net/bannerSpanish.svg')} 
           alt="Logo" width={isMobile ? 500 : 1000} height={isMobile ? 100 : 200} 
           className={styles.logo} 
         />

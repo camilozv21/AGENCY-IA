@@ -15,6 +15,12 @@ const nextConfig: NextConfig = {
         hostname: "oaidalleapiprodscus.blob.core.windows.net",
         port: "",
         pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "df50lbm4qcrt6.cloudfront.net",
+        port: "",
+        pathname: "/**",
       }
     ],
     minimumCacheTTL: 60 * 60 * 24
