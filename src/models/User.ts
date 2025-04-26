@@ -14,19 +14,19 @@ const UserSchema: Schema = new Schema({
   role: { type: String, required: true, default: 'user' },
 });
 
-// Middleware: hashear la contraseña antes de guardar
-UserSchema.pre<User>('save', async function (next) {
-  if (!this.isModified('password')) return next(); // Si no se modificó, continuar
-
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-
-  next();
-});
+UserSchema.methods.comparePassword = async function (candidatePassword: string) {
+  console.log("Comparando contraseña:", candidatePassword);
+  console.log("Con el hash almacenado:", this.password);
+  const isMatch = await bcrypt.compare(candidatePassword, this.password);
+  console.log("¿Las contraseñas coinciden?", isMatch);
+  return isMatch;
+};
 
 // Método para comparar contraseñas
 UserSchema.methods.comparePassword = async function (candidatePassword: string) {
-  return bcrypt.compare(candidatePassword, this.password);
+  return bcrypt.compare(candidatePassword, this.password); // Compara la contraseña enviada con el hash
 };
+
+
 
 export default mongoose.models.User || mongoose.model<User>('User', UserSchema, 'users');
