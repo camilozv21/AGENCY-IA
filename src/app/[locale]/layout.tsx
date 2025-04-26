@@ -5,6 +5,7 @@ import "./globals.css";
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 import { MantineProvider } from "@mantine/core";
+import { Notifications } from '@mantine/notifications';
 import { i18nConfig } from "@/i18nConfig";
 import { notFound } from "next/navigation";
 import initTranslations from "../i18n";
@@ -45,6 +46,7 @@ export default async function RootLayout({ children, params }: { children: React
     <html lang={locale} dir={dir(locale)}>
       <body className={manrope.variable}>
         <MantineProvider defaultColorScheme="dark">
+        <Notifications />
           <TranslationsProvider locale={locale} namespaces={namespaces} resources={resources}>
             <HeaderMenu />
             <main>{children}</main>
