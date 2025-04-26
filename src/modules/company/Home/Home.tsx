@@ -14,12 +14,32 @@ export default function Home() {
   return (
     <>
       <div className={styles.container}>
-        <Image 
-          priority={true} 
-          src={isMobile ? (i18n.language === 'en' ? 'https://df50lbm4qcrt6.cloudfront.net/bannerEnglishMobile.svg' : 'https://df50lbm4qcrt6.cloudfront.net/bannerSpanishMobile.svg') : (i18n.language === 'en' ? 'https://df50lbm4qcrt6.cloudfront.net/bannerEnglish.svg' : 'https://df50lbm4qcrt6.cloudfront.net/bannerSpanish.svg')} 
-          alt="Logo" width={isMobile ? 500 : 1000} height={isMobile ? 100 : 200} 
-          className={styles.logo} 
-        />
+      <Image 
+        priority={true} 
+        src={
+          isMobile 
+            ? (i18n.language === 'en' 
+                ? 'https://df50lbm4qcrt6.cloudfront.net/bannerEnglishMobile.svg' 
+                : 'https://df50lbm4qcrt6.cloudfront.net/bannerSpanishMobile.svg')
+            : (i18n.language === 'en' 
+                ? 'https://df50lbm4qcrt6.cloudfront.net/bannerEnglish.svg' 
+                : 'https://df50lbm4qcrt6.cloudfront.net/bannerSpanish.svg')
+        } 
+        alt="Logo" 
+        width={isMobile ? 500 : 1000} 
+        height={isMobile ? 100 : 712} 
+        className={styles.logo}
+        placeholder="blur"
+        blurDataURL={
+          isMobile 
+            ? (i18n.language === 'en' 
+                ? 'https://df50lbm4qcrt6.cloudfront.net/bannerEnglishMobile_pre.jpg' 
+                : 'https://df50lbm4qcrt6.cloudfront.net/bannerSpanishMobile_pre.jpg')
+            : (i18n.language === 'en' 
+                ? 'https://df50lbm4qcrt6.cloudfront.net/bannerEnglish_pre.jpg' 
+                : 'https://df50lbm4qcrt6.cloudfront.net/bannerSpanish_pre.jpg')
+        }
+      />
       </div>
       <CardsPlans />
     </>
