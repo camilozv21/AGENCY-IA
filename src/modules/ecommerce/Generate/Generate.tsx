@@ -10,6 +10,7 @@ import Image from 'next/image';
 import SkeletonImage from './SkeletonImage';
 import { useMediaQuery } from '@mantine/hooks';
 import { IconDownload } from '@tabler/icons-react';
+import { notifications } from '@mantine/notifications';
 
 interface FormValues {
   prompt: string;
@@ -51,7 +52,27 @@ export default function Generate() {
     setLoading(true);
     const response = await createImageFromForm(body);
     // Ensure responseImages is always an array
-    setRresponseImages(Array.isArray(response) ? response : [response]);
+    if (!response.success) {
+      notifications.show({
+        title: "Error",
+        message: response.error || "No se pudo generar las imagenes",
+        color: "red",
+      });
+      setLoading(false);
+      return;
+    }
+    setRresponseImages(
+      Array.isArray(response.data) 
+        ? response.data.filter((item): item is CreateImageFromForm => item !== undefined) 
+        : [response.data].filter((item): item is CreateImageFromForm => item !== undefined)
+    );
+
+    notifications.show({
+      title: "Éxito",
+      message: "Inicio de sesión exitoso",
+      color: "green",
+    });
+
     setLoading(false);
   };
 

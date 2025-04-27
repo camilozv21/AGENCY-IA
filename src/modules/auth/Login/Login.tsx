@@ -11,9 +11,9 @@ import {
 import classes from "./Login.module.css";
 import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { loginUser } from "@/services/auth/login";
+import type { Login } from "@/types/login.types";
+import { useRouter } from "next/navigation";
 
 interface FormValues { email: string; password: string }
 
@@ -37,9 +37,17 @@ const handleSubmit = async (values: FormValues) => {
   const { email, password } = values;
 
   try {
-    const response = await loginUser({ email, password });
+    // const response = await loginUser({ email, password });
+    const responseFetch = await fetch("/api/login", {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+    
+    const response: Login = await responseFetch.json();
 
-    if (!response.success) {
+    if (response.error) {
       notifications.show({
         title: "Error",
         message: response.error || "No se pudo iniciar sesión",
@@ -55,7 +63,6 @@ const handleSubmit = async (values: FormValues) => {
     });
 
     form.reset();
-    // Redirige al dashboard u otra ruta protegida una vez logueado
     router.push("/generate");
   } catch (error) {
       console.error("Error durante el login:", error);

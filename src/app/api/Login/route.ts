@@ -1,16 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from "@/lib/dbConnect";
 import User from '@/models/User';
-import jwt from 'jsonwebtoken';
 import sanitize from 'mongo-sanitize';
 import { z } from 'zod';
 import bcrypt from 'bcrypt';
-
-// Verificar que exista la variable secreta
-if (!process.env.JWT_SECRET) {
-  throw new Error('JWT_SECRET no está definida');
-}
-const JWT_SECRET = process.env.JWT_SECRET;
+import { createSession } from '@/lib/session';
 
 export async function POST(req: NextRequest) {
   await dbConnect();
@@ -41,21 +35,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Credenciales inválidas' }, { status: 401 });
     }
 
-    const token = jwt.sign(
-      { id: user._id, email: user.email, role: user.role },
-      JWT_SECRET,
-      { expiresIn: '1h' }
-    );
+    const session = await createSession({ id: user._id.toString(), role: user.role });
 
-    const response = NextResponse.json({ message: 'Login exitoso', token }, { status: 200 });
-    response.cookies.set('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 60 * 60, // 1 hora
-      path: '/',
-      sameSite: 'lax',
+    const response = new NextResponse(JSON.stringify({ message: "Login exitoso", session }), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Set-Cookie": `session=${session}; HttpOnly; Path=/; Max-Age=604800; SameSite=Lax; Secure`,
+      },
     });
-
+    
     return response;
 
   } catch (err) {
