@@ -7,12 +7,13 @@ export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
 
   const currentLocaleD = req.cookies.get('NEXT_LOCALE')?.value || 'es';
+  const localePrefix = currentLocaleD === 'es' ? '' : `/${currentLocaleD}`;
 
-  const protectedRoutes = [`/${currentLocaleD}/generate`];
+  const protectedRoutes = [`${localePrefix}/generate`];
   const publicRoutes = [
-    `/${currentLocaleD}/auth/login`,
-    `/${currentLocaleD}/auth/signup`,
-    `/${currentLocaleD}/`,
+    `${localePrefix}/auth/login`,
+    `${localePrefix}/auth/signup`,
+    `${localePrefix}/`,
   ];
 
   const isProtectedRoute = protectedRoutes.includes(path);
@@ -26,11 +27,11 @@ export default async function middleware(req: NextRequest) {
   }
 
   if (isProtectedRoute && !session?.id) {
-    return NextResponse.redirect(new URL(`/${currentLocaleD}/auth/login`, req.nextUrl));
+    return NextResponse.redirect(new URL(`${localePrefix}/auth/login`, req.nextUrl));
   }
 
-  if (isPublicRoute && session?.id && !path.startsWith(`/${currentLocaleD}/generate`)) {
-    return NextResponse.redirect(new URL(`/${currentLocaleD}/generate`, req.nextUrl));
+  if (isPublicRoute && session?.id && !path.startsWith(`${localePrefix}/generate`)) {
+    return NextResponse.redirect(new URL(`${localePrefix}/generate`, req.nextUrl));
   }
 
   const i18nResponse = i18nRouter(req, i18nConfig);
