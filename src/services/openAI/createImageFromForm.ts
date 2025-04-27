@@ -1,8 +1,24 @@
 "use server";
 
+import { cookies } from "next/headers";
 import { httpService } from "../common/http.service";
 import { CreateImageFromForm } from "@/types/createImageFromForm.type";
 
-export async function createImageFromForm({ prompt }: { prompt: string }): Promise<CreateImageFromForm> {
-  return await httpService.post<CreateImageFromForm>("/openai-text-image/create-image-from-form", { prompt });
+export async function createImageFromForm({ prompt }: { prompt: string }): Promise<{ success: boolean; data?: CreateImageFromForm; error?: string }> {
+  const cookie = (await cookies()).get('session')?.value
+  try {
+        const response = await httpService.post<CreateImageFromForm>("/openai-text-image/create-image-from-form", { prompt }, { credentials: "include", headers: { "cookie": `session=${cookie}` } });
+        return { success: true, data: response };
+    } catch (error: unknown) {
+        console.error("Error during image creation:", (error as Error).message);
+        let errorMessage = "No se pudo generar la imagen. Por favor verifica los datos o contacta soporte.";
+        if ((error as Error).message.includes("400")) {
+            errorMessage = "Error de validación: revisa que los datos ingresados sean correctos.";
+        } else if ((error as Error).message.includes("401")) {
+            errorMessage = "No autorizado: verifica tu sesión.";
+        } else if ((error as Error).message.includes("500")) {
+            errorMessage = "Error interno del servidor. Inténtalo más tarde.";
+        }
+        return { success: false, error: errorMessage };
+    }
 }
