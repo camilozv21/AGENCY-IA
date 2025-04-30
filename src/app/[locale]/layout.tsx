@@ -4,6 +4,7 @@ import "./globals.css";
 
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
+import '@mantine/carousel/styles.css';
 import { MantineProvider } from "@mantine/core";
 import { Notifications } from '@mantine/notifications';
 import { i18nConfig } from "@/i18nConfig";
@@ -14,6 +15,7 @@ import { dir } from "i18next";
 import TranslationsProvider from "./TranslationsProvider";
 import { Footer } from "@/common/Footer/Footer";
 import { HeaderMenu } from "@/common/Header/HeaderMenu";
+import icon from "../favicon.ico";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -27,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: 'ContiA',
     description: 'Create your AI content for your brand.',
     icons: {
-      icon: "/favicon.ico",
+      icon: icon.src,
     },
   }
 };
