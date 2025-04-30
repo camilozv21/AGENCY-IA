@@ -25,7 +25,7 @@ export async function POST(request: Request) {
   }
 
   const client = new BedrockRuntimeClient({
-    region: 'us-east-1', // Asegúrate de que coincida con tu bucket
+    region: 'us-east-1',
     credentials: {
       accessKeyId: process.env.ACCESS_KEY_AWS!,
       secretAccessKey: process.env.SECRET_ACCESS_KEY_AWS!,
@@ -56,9 +56,14 @@ export async function POST(request: Request) {
   try {
     const response = await client.send(command);
 
+    const invocationArn = response.invocationArn || '';
+    const match = invocationArn.match(/invoke\/([^"]+)$/);
+    const videoRequestId = match ? match[1] : '';
+    const fileName = `https://df50lbm4qcrt6.cloudfront.net/${videoRequestId}/output.mp4`;
     return new Response(
       JSON.stringify({
         invocationArn: response.invocationArn,
+        fileName, // Aquí se devuelve el ID limpio
         message: 'Video request enviado correctamente',
       }),
       {
