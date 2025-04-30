@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+const path = require("path");
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -18,7 +19,11 @@ const nextConfig: NextConfig = {
       }
     ],
     minimumCacheTTL: 60 * 60 * 24
-  }
+  },
+  webpack: (config) => {
+    config.resolve.alias["@"] = path.resolve(__dirname, "src");
+    return config;
+  },
 };
 
 export default nextConfig;
