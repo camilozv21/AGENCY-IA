@@ -59,7 +59,7 @@ export async function POST(request: Request) {
     const invocationArn = response.invocationArn || '';
     const match = invocationArn.match(/invoke\/([^"]+)$/);
     const videoRequestId = match ? match[1] : '';
-    const fileName = `https://df50lbm4qcrt6.cloudfront.net/${videoRequestId}/output.mp4`;
+    const fileName = `https://d23wy7ffkttxiu.cloudfront.net/${videoRequestId}/output.mp4`;
     return new Response(
       JSON.stringify({
         invocationArn: response.invocationArn,

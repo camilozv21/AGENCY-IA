@@ -92,7 +92,7 @@ export function HeaderMenu() {
   ));
 
   return (
-    <Box>
+    <Box style={{ zIndex: 100, position: 'relative' }}>
       <header className={classes.header}>
         <Group justify="space-between" h="100%">
           <Link href='/'>
