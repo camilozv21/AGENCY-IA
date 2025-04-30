@@ -17,6 +17,8 @@ export function CardsPlans() {
       pt={30}
       pb={30}
       px='sm'
+      mt={50}
+      style={{ zIndex: '1000', position: 'relative' }}
     >
       {plansData.map((plan) => (
         <div key={plan.name}>
