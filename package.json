@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-bedrock-runtime": "^3.787.0",
+    "@mantine/carousel": "^7.17.4",
     "@mantine/core": "^7.17.4",
     "@mantine/form": "^7.17.4",
     "@mantine/hooks": "^7.17.4",
@@ -20,6 +21,8 @@
     "@types/bcrypt": "^5.0.2",
     "bcrypt": "^5.1.1",
     "bcrypt-ts": "^6.0.0",
+    "embla-carousel-autoplay": "^7.1.0",
+    "embla-carousel-react": "^7.1.0",
     "i18next": "^24.2.3",
     "i18next-resources-to-backend": "^1.2.1",
     "jose": "^6.0.10",
