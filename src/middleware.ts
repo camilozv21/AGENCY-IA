@@ -1,12 +1,48 @@
 import { i18nRouter } from 'next-i18n-router';
 import { i18nConfig } from './i18nConfig';
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { decrypt } from './lib/session';
 
-export function middleware(request: NextRequest) {
-  return i18nRouter(request, i18nConfig);
+export default async function middleware(req: NextRequest) {
+  const path = req.nextUrl.pathname;
+
+  const currentLocaleD = req.cookies.get('NEXT_LOCALE')?.value || 'es';
+  const localePrefix = currentLocaleD === 'es' ? '' : `/${currentLocaleD}`;
+
+  const protectedRoutes = [`${localePrefix}/generate`];
+  const publicRoutes = [
+    `${localePrefix}/auth/login`,
+    `${localePrefix}/auth/signup`,
+    `${localePrefix}/`,
+  ];
+
+  const isProtectedRoute = protectedRoutes.includes(path);
+  const isPublicRoute = publicRoutes.includes(path);
+
+  // Desencriptar sesión SOLO si existe cookie
+  let session = null;
+  const cookie = req.cookies.get('session')?.value;
+  if (cookie) {
+    session = await decrypt(cookie);
+  }
+
+  if (isProtectedRoute && !session?.id) {
+    return NextResponse.redirect(new URL(`${localePrefix}/auth/login`, req.nextUrl));
+  }
+
+  if (isPublicRoute && session?.id && !path.startsWith(`${localePrefix}/generate`)) {
+    return NextResponse.redirect(new URL(`${localePrefix}/generate`, req.nextUrl));
+  }
+
+  const i18nResponse = i18nRouter(req, i18nConfig);
+  if (i18nResponse) {
+    return i18nResponse;
+  }
+
+  return NextResponse.next();
 }
 
-// applies this middleware only to files in the app directory
+// Routes Middleware should not run on
 export const config = {
-  matcher: '/((?!api|static|.*\\..*|_next).*)'
-};
+  matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
+}
