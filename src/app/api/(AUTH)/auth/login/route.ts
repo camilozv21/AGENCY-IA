@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
         "Set-Cookie": `session=${session}; HttpOnly; Path=/; Max-Age=604800; SameSite=Lax; Secure`,
       },
     });
-    
+    console.log("Set-Cookie header:", response.headers.get("Set-Cookie"));
     return response;
 
   } catch (err) {
