@@ -27,6 +27,7 @@ async function request<T>(method: string, endpoint: string, data?: object, optio
             "Content-Type": "application/json",
             ...options?.headers
         },
+        credentials: options?.credentials || "include",
         // Extender otras opciones pasadas (evitando duplicar params)
         ...options,
     };

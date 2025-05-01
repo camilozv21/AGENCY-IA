@@ -38,7 +38,7 @@ const handleSubmit = async (values: FormValues) => {
 
   try {
     // const response = await loginUser({ email, password });
-    const responseFetch = await fetch("/api/login", {
+    const responseFetch = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`, {
       method: "POST",
       body: JSON.stringify({ email, password }),
       headers: { "Content-Type": "application/json" },
