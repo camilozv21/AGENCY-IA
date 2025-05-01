@@ -1,4 +1,4 @@
-export interface AWSPromptVideoGenerated {
+export interface AWSPromptImageGenerated {
   id:                   string;
   object:               string;
   created_at:           number;

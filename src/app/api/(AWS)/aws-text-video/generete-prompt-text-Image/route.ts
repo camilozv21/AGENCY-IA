@@ -8,12 +8,10 @@ const openai = new OpenAI({
 });
 
 // Tipado del cuerpo de la solicitud
-interface RequestBody {
+export interface PromptSettings {
   prompt: string;
   settings: {
-    model: string;
-    aspectRatio: string;
-    styles: string;
+    type: string;
     lighting: string;
     camera: string;
   };
@@ -21,7 +19,7 @@ interface RequestBody {
 
 // Handler para POST
 export async function POST(request: Request) {
-  const body: RequestBody = await request.json();
+  const body: PromptSettings = await request.json();
   const { prompt, settings } = body;
 
   // Validación del prompt
@@ -35,9 +33,7 @@ export async function POST(request: Request) {
   // Validación de settings
   const isSettingsValid =
     settings &&
-    typeof settings.model === "string" &&
-    typeof settings.aspectRatio === "string" &&
-    typeof settings.styles === "string" &&
+    typeof settings.type === "string" &&
     typeof settings.lighting === "string" &&
     typeof settings.camera === "string";
 
@@ -48,15 +44,13 @@ export async function POST(request: Request) {
     );
   }
 
-  // ✅ Solo los campos requeridos para el prompt enriquecido
   const composedPrompt = `
 Prompt: ${prompt}
-Styles: ${settings.styles}
+Styles: ${settings.type}
 Lighting: ${settings.lighting}
 Camera: ${settings.camera}
   `.trim();
 
-  // Solicitud al modelo de OpenAI
   const response = await openai.chat.completions.create({
     model: "gpt-4-turbo-2024-04-09",
     messages: [

@@ -1,19 +1,37 @@
-// app/api/generate-titan/route.ts
 "use server";
 
 import { BedrockRuntimeClient, InvokeModelCommand } from "@aws-sdk/client-bedrock-runtime";
+import { applyStyleToPrompt } from "@/utils/applyStyleToPrompt";
+import { getDimensions } from "@/utils/getDimensions";
 
-interface RequestBody {
+export interface ImageSettings {
   prompt: string;
+  settings: {
+    style: string;
+    aspectRatio: string;
+  };
 }
 
+
 export async function POST(request: Request) {
-  const body: RequestBody = await request.json();
-  const { prompt } = body;
+  const body: ImageSettings = await request.json();
+  const { prompt, settings } = body;
 
   if (!prompt || typeof prompt !== "string" || !prompt.trim()) {
     return Response.json({ error: '"prompt" field is required and must be a non-empty string' }, { status: 400 });
   }
+
+  const isSettingsValid =
+    settings &&
+    typeof settings.style === "string" &&
+    typeof settings.aspectRatio === "string";
+
+  if (!isSettingsValid) {
+    return Response.json({ error: '"settings" object is invalid or incomplete' }, { status: 400 });
+  }
+
+  const { width, height } = getDimensions(settings.aspectRatio);
+  const styledPrompt = applyStyleToPrompt(prompt, settings.style); 
 
   const client = new BedrockRuntimeClient({
     region: 'us-east-1',
@@ -26,14 +44,14 @@ export async function POST(request: Request) {
   const payload = {
     taskType: "TEXT_IMAGE",
     textToImageParams: {
-      text: prompt,
-      negativeText: "blurry, distorted, cartoon, low quality",
+      text: styledPrompt,
+      negativeText: "blurry, distorted, low quality",
     },
     imageGenerationConfig: {
-      quality: "standard",
+      quality: "premium",
       numberOfImages: 1,
-      height: 1024,
-      width: 1024,
+      height,
+      width,
       cfgScale: 5.0,
       seed: 42,
     },
@@ -42,7 +60,7 @@ export async function POST(request: Request) {
   const command = new InvokeModelCommand({
     modelId: "amazon.titan-image-generator-v2:0",
     contentType: "application/json",
-    accept: "image/png", 
+    accept: "image/png",
     body: JSON.stringify(payload),
   });
 
@@ -52,7 +70,7 @@ export async function POST(request: Request) {
     return new Response(response.body, {
       status: 200,
       headers: {
-        "Content-Type": "image/png", 
+        "Content-Type": "JSON.stringify",
       },
     });
   } catch (error) {
@@ -60,7 +78,7 @@ export async function POST(request: Request) {
     return new Response(
       JSON.stringify({
         error: "Error al generar la imagen",
-        details: (error as unknown as Error).message,
+        details: (error as Error).message,
       }),
       {
         status: 500,
