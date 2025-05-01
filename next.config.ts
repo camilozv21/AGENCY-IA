@@ -16,6 +16,12 @@ const nextConfig: NextConfig = {
         hostname: "df50lbm4qcrt6.cloudfront.net",
         port: "",
         pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "d23wy7ffkttxiu.cloudfront.net",
+        port: "",
+        pathname: "/**",
       }
     ],
     minimumCacheTTL: 60 * 60 * 24
