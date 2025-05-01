@@ -9,7 +9,7 @@ export default async function middleware(req: NextRequest) {
   const currentLocaleD = req.cookies.get('NEXT_LOCALE')?.value || 'es';
   const localePrefix = currentLocaleD === 'es' ? '' : `/${currentLocaleD}`;
 
-  const protectedRoutes = [`${localePrefix}/generate`];
+  const protectedRoutes = [`${localePrefix}/dashboard/tool/text-to-image`];
   const publicRoutes = [
     `${localePrefix}/auth/login`,
     `${localePrefix}/auth/signup`,
@@ -30,8 +30,8 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL(`${localePrefix}/auth/login`, req.nextUrl));
   }
 
-  if (isPublicRoute && session?.id && !path.startsWith(`${localePrefix}/generate`)) {
-    return NextResponse.redirect(new URL(`${localePrefix}/generate`, req.nextUrl));
+  if (isPublicRoute && session?.id && !path.startsWith(`${localePrefix}/dashboard/tool/text-to-image`)) {
+    return NextResponse.redirect(new URL(`${localePrefix}/dashboard/tool/text-to-image`, req.nextUrl));
   }
 
   const i18nResponse = i18nRouter(req, i18nConfig);
