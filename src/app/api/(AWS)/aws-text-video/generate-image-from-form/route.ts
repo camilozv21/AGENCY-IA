@@ -7,9 +7,9 @@ import { NextRequest } from "next/server";
 
 interface RequestBody {
     prompt: string;
-    settings:SettingsBody;
+    settings: SettingsBody;
 }
-interface SettingsBody{    
+interface SettingsBody {
     style: string;
     aspectRatio: string;
     type: string;
@@ -42,9 +42,11 @@ try {
             camera:settings.camera
         }
     }
+
     const formTextImageFromPrompt = await generetePromptTextImage({ promptSettings });
+
     const imageSettings = {
-        prompt: formTextImageFromPrompt.data?.output_text || "",        
+        prompt: formTextImageFromPrompt.data?.result || "",      
         settings:{
             style:settings.style,
             aspectRatio:settings.aspectRatio,

@@ -9,7 +9,7 @@ import { ImageSettings } from "@/app/api/(AWS)/aws-text-video/generate-image-fro
 export async function generateImagesFromPrompt({ imageSettings }: { imageSettings: ImageSettings}): Promise<{ success: boolean; data?: AWSImageGenerated; error?: string }> {
     const cookie = (await cookies()).get('session')?.value
     try {
-          const response = await httpService.post<AWSImageGenerated>("/aws-text-video/generate-image-from-prompt", { imageSettings },{credentials:"include",headers:{"cookie":`session=${cookie}`}});
+          const response = await httpService.post<AWSImageGenerated>("/aws-text-video/generate-image-from-prompt", { ...imageSettings },{credentials:"include",headers:{"cookie":`session=${cookie}`}});
           return { success: true, data: response };
       } catch (error: unknown) {
           console.error("Error during image creation:", (error as Error).message);
