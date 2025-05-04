@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import { useMediaQuery } from '@mantine/hooks';
 import {
   Icon2fa,
   IconDatabaseImport,
@@ -12,13 +13,13 @@ import {
   IconSettings,
   IconSwitchHorizontal,
 } from '@tabler/icons-react';
-import { Code, Group } from '@mantine/core';
+import { Stack, Tooltip, UnstyledButton, Center } from '@mantine/core';
 import classes from './Sidebar.module.css';
 import Link from 'next/link';
 
-const data = [
+const navData = [
   { link: '/dashboard', label: 'Home', icon: IconHome },
-  { link: '/dashboard/tool/text-to-image', label: 'Texto a Imagen', icon: IconPhoto },
+  { link: '/dashboard/tool/text-to-image', label: 'Crear Post', icon: IconPhoto },
   { link: '/dashboard/', label: 'Security', icon: IconFingerprint },
   { link: '/dashboard/', label: 'SSH Keys', icon: IconKey },
   { link: '/dashboard/', label: 'Databases', icon: IconDatabaseImport },
@@ -26,45 +27,72 @@ const data = [
   { link: '/dashboard/', label: 'Other Settings', icon: IconSettings },
 ];
 
-export function Sidebar() {
-  const [active, setActive] = useState('Billing');
+interface NavbarLinkProps {
+  icon: typeof IconHome;
+  label: string;
+  active?: boolean;
+  onClick?: () => void;
+}
 
-  const links = data.map((item) => (
-    <Link
-      className={classes.link}
-      data-active={item.label === active || undefined}
-      href={item.link}
-      key={item.label}
-      onClick={(event) => {
-        setActive(item.label);
-      }}
-    >
-      <item.icon className={classes.linkIcon} stroke={1.5} />
-      <span>{item.label}</span>
-    </Link>
-  ));
+function NavbarLink({ icon: Icon, label, active, onClick }: NavbarLinkProps) {
+  return (
+    <Tooltip label={label} position="right" transitionProps={{ duration: 0 }}>
+      <UnstyledButton onClick={onClick} className={classes.link} data-active={active || undefined}>
+        <Icon size={20} stroke={1.5} />
+      </UnstyledButton>
+    </Tooltip>
+  );
+}
+
+export function Sidebar() {
+  const isMobile = useMediaQuery('(max-width: 768px)');
+  const [active, setActive] = useState(1);
+
+  const links = navData.map((item, index) => {
+    if (isMobile) {
+      // Render minimal links for mobile
+      return (
+        <NavbarLink
+          key={item.label}
+          icon={item.icon}
+          label={item.label}
+          active={index === active}
+          onClick={() => setActive(index)}
+        />
+      );
+    }
+
+    // Render full links for desktop
+    return (
+      <Link
+        key={item.label}
+        href={item.link}
+        className={classes.link}
+        data-active={index === active || undefined}
+        onClick={() => setActive(index)}
+      >
+        <item.icon className={classes.linkIcon} stroke={1.5} />
+        <span>{item.label}</span>
+      </Link>
+    );
+  });
 
   return (
     <nav className={classes.navbar}>
+      {isMobile && (
+        <Center>
+          <span className={classes.logo}>Logo</span>
+        </Center>
+      )}
       <div className={classes.navbarMain}>
-        <Group className={classes.header} justify="space-between">
-          {/* <MantineLogo size={28} /> */}
-          <Code fw={700}>v3.1.2</Code>
-        </Group>
-        {links}
+        <Stack justify="center" gap={0}>
+          {links}
+        </Stack>
       </div>
-
-      <div className={classes.footer}>
-        <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
-          <IconSwitchHorizontal className={classes.linkIcon} stroke={1.5} />
-          <span>Change account</span>
-        </a>
-
-        <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
-          <IconLogout className={classes.linkIcon} stroke={1.5} />
-          <span>Logout</span>
-        </a>
-      </div>
+      <Stack justify="center" gap={0}>
+        <NavbarLink icon={IconSwitchHorizontal} label="Change account" />
+        <NavbarLink icon={IconLogout} label="Logout" />
+      </Stack>
     </nav>
   );
 }
