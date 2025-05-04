@@ -46,7 +46,7 @@ function NavbarLink({ icon: Icon, label, active, onClick }: NavbarLinkProps) {
 
 export function Sidebar() {
   const isMobile = useMediaQuery('(max-width: 768px)');
-  const [active, setActive] = useState(1);
+  const [active, setActive] = useState(0);
 
   const links = navData.map((item, index) => {
     if (isMobile) {

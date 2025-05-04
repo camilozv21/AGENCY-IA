@@ -1,16 +1,14 @@
 "use client";
 
-import { createImageFromForm } from '@/services/openAI/createImageFromForm';
 import classes from './Generate.module.css';
 import { Center, Flex, Text, Textarea, Button, TextInput, Select } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
-import { CreateImageFromForm } from '@/types/createImageFromForm.type';
-import Image from 'next/image';
 import SkeletonImage from './SkeletonImage';
 import { useMediaQuery } from '@mantine/hooks';
 import { IconDownload } from '@tabler/icons-react';
 import { notifications } from '@mantine/notifications';
+import { generateImagesFromPrompt } from '@/services/aws/generateImagesFromPrompt';
 
 interface FormValues {
   prompt: string;
@@ -19,68 +17,67 @@ interface FormValues {
 }
 
 export default function Generate() {
-  // Change the state type to an array of CreateImageFromForm
-  const [responseImages, setRresponseImages] = useState<CreateImageFromForm[]>([]);
+  const [responseImages, setResponseImages] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const issmallScreen = useMediaQuery('(min-width: 768px)');
 
   const form = useForm<FormValues>({
     mode: 'uncontrolled',
-    validateInputOnChange: [
-      'prompt',
-      'typeOfBusiness',
-      'typeOfLighting',
-    ],
+    validateInputOnChange: ['prompt', 'typeOfBusiness', 'typeOfLighting'],
     initialValues: { prompt: '', typeOfBusiness: '', typeOfLighting: '' },
     validate: {
       prompt: (value) =>
         !value ? 'Campo obligatorio' : value.length > 512 ? 'Máximo de caracteres 512' : null,
       typeOfBusiness: (value) =>
         !value ? 'Campo obligatorio' : value.length < 10 ? 'Ingresa mínimo 10 letras' : null,
-      // typeOfLighting: (value) =>
-      //   !value ? 'Campo obligatorio' : value.length < 10 ? 'Ingresa mínimo 10 letras' : null,
-    }
+    },
   });
 
   const handleCreateImage = async (values: FormValues) => {
-    const { prompt, typeOfBusiness, typeOfLighting } = values;
+    const { prompt, typeOfLighting } = values;
 
     const body = {
-      prompt: `Type of business: ${typeOfBusiness}. Type of lighting: ${typeOfLighting}. How the image has to be: ${prompt}`,
+      imageSettings: {
+        prompt: `${prompt}`,
+        settings: {
+          style: "Realista",
+          aspectRatio: "16:9",
+          type: "photo",
+          lighting: typeOfLighting,
+          camera: "close-up",
+        },
+      },
     };
 
     setLoading(true);
-    const response = await createImageFromForm(body);
-    // Ensure responseImages is always an array
+    const response = await generateImagesFromPrompt(body);
+
     if (!response.success) {
       notifications.show({
         title: "Error",
-        message: response.error || "No se pudo generar las imagenes",
+        message: response.error || "No se pudo generar las imágenes",
         color: "red",
       });
+      setResponseImages([]);
       setLoading(false);
       return;
     }
-    setRresponseImages(
-      Array.isArray(response.data) 
-        ? response.data.filter((item): item is CreateImageFromForm => item !== undefined) 
-        : [response.data].filter((item): item is CreateImageFromForm => item !== undefined)
-    );
+
+    setResponseImages(response.data?.images || []);
 
     notifications.show({
       title: "Éxito",
-      message: "Inicio de sesión exitoso",
+      message: "Imágenes generadas exitosamente",
       color: "green",
     });
 
     setLoading(false);
   };
 
-  const handleDownload = (url: string) => {
+  const handleDownload = (base64: string, index: number) => {
     const link = document.createElement('a');
-    link.href = url;
-    link.target = '_blank';
-    link.download = url.substring(url.lastIndexOf('/') + 1);
+    link.href = `data:image/png;base64,${base64}`;
+    link.download = `image-${index + 1}.png`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -88,13 +85,7 @@ export default function Generate() {
 
   return (
     <>
-      <Center
-        mx={15}
-        mb={50}
-        mt={50}
-        inline={false}
-        className={classes.container}
-      >
+      <Center mx={15} mb={50} mt={50} inline={false} className={classes.container}>
         <Flex direction="column" align="center" justify="center" mb={50}>
           <Text my={30} fw={700} fz={35} component="h1">
             Describe tu negocio y la imagen que quieres crear
@@ -115,7 +106,7 @@ export default function Generate() {
             <Select
               mb={10}
               withAsterisk
-              label="Tipo de Iluminacion"
+              label="Tipo de Iluminación"
               data={[
                 { value: "", label: "" },
                 { value: "Natural", label: "Natural" },
@@ -132,7 +123,7 @@ export default function Generate() {
               w={"100%"}
               label={"Describe la imagen que quieres crear"}
               className={classes.inputArea}
-              placeholder="Un reloj de pulsera hiperrealista de lujo de alta gama inspirado en Rolex. El reloj tiene caja de oro, esfera negra con índices dorados y brazalete de metal pulido. La escena muestra el reloj colocado sobre un cojín de terciopelo oscuro, bajo una iluminación suave y cálida que resalta sus superficies brillantes y sus intrincados detalles. El fondo es elegante y minimalista, y evoca un ambiente sofisticado y de calidad. La imagen debe resaltar el lujo, la precisión y la exclusividad."
+              placeholder="Un reloj de pulsera hiperrealista de lujo de alta gama inspirado en Rolex..."
               key={form.key("prompt")}
               {...form.getInputProps("prompt")}
             />
@@ -172,7 +163,7 @@ export default function Generate() {
           responseImages.length > 0 && (
             <>
               <Text my={30} fw={700} fz={35}>
-                ¡Imagenes Generadas!
+                ¡Imágenes Generadas!
               </Text>
               <Flex
                 direction={issmallScreen ? "row" : "column"}
@@ -183,31 +174,28 @@ export default function Generate() {
                 gap={20}
                 style={{ maxWidth: '1200px' }}
               >
-                {responseImages.map((image: CreateImageFromForm, index: number) => (
-                  image.data?.map((img: { url?: string }, idx: number) => (
-                    <div
-                      key={`${index}-${idx}`}
-                      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+                {responseImages.map((base64, index) => (
+                  <div
+                    key={index}
+                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+                  >
+                    <img
+                      src={`data:image/png;base64,${base64}`}
+                      alt="Generated"
+                      width={500}
+                      height={500}
+                      className={classes.image}
+                    />
+                    <Button
+                      leftSection={<IconDownload />}
+                      mt="sm"
+                      color="#F3C96B"
+                      style={{ color: "#1E1E2D" }}
+                      onClick={() => handleDownload(base64, index)}
                     >
-                      <Image
-                        priority={true}
-                        src={img.url || ""}
-                        alt="Generated"
-                        width={500}
-                        height={500}
-                        className={classes.image}
-                      />
-                      <Button
-                        leftSection={<IconDownload />}
-                        mt="sm"
-                        color="#F3C96B"
-                        style={{ color: "#1E1E2D" }}
-                        onClick={() => handleDownload(img.url || "")}
-                      >
-                        Descarga
-                      </Button>
-                    </div>
-                  ))
+                      Descarga
+                    </Button>
+                  </div>
                 ))}
               </Flex>
             </>
