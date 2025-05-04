@@ -63,7 +63,7 @@ const handleSubmit = async (values: FormValues) => {
     });
 
     form.reset();
-    router.push("/generate");
+    router.push("/dashboard");
   } catch (error) {
       console.error("Error durante el login:", error);
       notifications.show({
