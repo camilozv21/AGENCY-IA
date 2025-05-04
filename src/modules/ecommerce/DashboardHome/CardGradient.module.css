@@ -1,0 +1,13 @@
+.card {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  transition:
+    transform 150ms ease,
+    box-shadow 100ms ease;
+  padding: 0;
+  max-width: 240px;
+
+  box-shadow: var(--mantine-shadow-md);
+  transform: scale(1.02);
+}

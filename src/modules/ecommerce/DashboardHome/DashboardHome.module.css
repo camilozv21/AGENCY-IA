@@ -71,12 +71,19 @@
   background-color: var(--mantine-color-fill-inverse-hover);
 }
 
+.subtitle {
+  color: #FFFFFF;
+}
+
+.descriptionText {
+  color: #C7C7C7;
+  font-size: 16px;
+}
+
 @media screen and (min-width: 768px) {
   .carouselContainer {
-    margin: 0;
-    border-radius: 0;
     aspect-ratio: 1138 / 300;
-
+    margin: 1rem;
   }
   .content {
     top: 2rem;
