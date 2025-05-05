@@ -45,11 +45,11 @@ export async function POST(request: Request) {
   }
 
   const composedPrompt = `
-Prompt: ${prompt}
-Styles: ${settings.type}
-Lighting: ${settings.lighting}
-Camera: ${settings.camera}
-  `.trim();
+  Prompt: ${prompt}
+  Styles: ${settings.type}
+  Lighting: ${settings.lighting}
+  Camera: ${settings.camera}
+    `.trim();
 
   const response = await openai.chat.completions.create({
     model: "gpt-4-turbo-2024-04-09",
@@ -71,7 +71,7 @@ Camera: ${settings.camera}
 
   // Extracción del resultado
   const resultText = response.choices[0]?.message?.content || "";
-  const trimmedText = resultText.slice(0, 512);
+  const trimmedText = resultText.slice(0, 512).replaceAll('"', '').trim();
 
   // Respuesta al cliente
   return new Response(JSON.stringify({ result: trimmedText }), {

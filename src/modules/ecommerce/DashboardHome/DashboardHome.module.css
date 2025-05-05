@@ -1,0 +1,102 @@
+.carouselContainer {
+  position: relative;
+  display: flex;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 1rem;
+  background-color: var(--mantine-color-neutral-21);
+  margin: 10px;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.3) 100%);
+}
+
+.content {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 800px;
+}
+
+.title {
+  font-size: 18px;
+  /* line-height: 2.5rem; */
+  font-weight: 600;
+  color: var(--mantine-color-white);
+}
+
+.description {
+  /* font-size: 1.25rem; */
+  font-size: 15px;
+  font-weight: 00;
+  /* line-height: 1.875rem; */
+  color: var(--mantine-color-neutral-11);
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 14px;
+  padding: 0.625rem 1rem;
+  border-radius: 0.75rem;
+  color: #1E1E2D;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.button:hover {
+  background-color: var(--mantine-color-fill-inverse-hover);
+}
+
+.subtitle {
+  color: #FFFFFF;
+}
+
+.descriptionText {
+  color: #C7C7C7;
+  font-size: 16px;
+}
+
+@media screen and (min-width: 768px) {
+  .carouselContainer {
+    aspect-ratio: 1138 / 300;
+    margin: 1rem;
+  }
+  .content {
+    top: 2rem;
+    left: 2rem;
+    max-width: 600px;
+  }
+  .title {
+    font-size: 2rem;
+    line-height: 2.5rem;
+  }
+  .description {
+    font-size: 18px;
+    line-height: 1.875rem;
+  }
+  
+}

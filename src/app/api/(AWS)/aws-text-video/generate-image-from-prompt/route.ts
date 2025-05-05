@@ -66,6 +66,24 @@ export async function POST(request: Request) {
 
   try {
     const response = await client.send(command);
+    // const response = await client.send(command);
+    // const decodedImage = Buffer.from(response.body as Uint8Array).toString("base64");
+    // const imageUrl = `data:image/png;base64,${decodedImage}`;
+
+    // return new Response(
+    //   JSON.stringify({
+    //     success: true,
+    //     data: {
+    //       images: [imageUrl],
+    //     },
+    //   }),
+    //   {
+    //     status: 200,
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
 
     return new Response(response.body, {
       status: 200,
