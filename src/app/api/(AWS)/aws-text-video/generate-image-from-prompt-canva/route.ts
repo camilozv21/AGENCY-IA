@@ -4,7 +4,7 @@ import { BedrockRuntimeClient, InvokeModelCommand } from "@aws-sdk/client-bedroc
 import { applyStyleToPrompt } from "@/utils/applyStyleToPrompt";
 import { getDimensions } from "@/utils/getDimensions";
 
-export interface ImageSettings {
+export interface ImageSetting {
   prompt: string;
   settings: {
     style: string;
@@ -14,7 +14,7 @@ export interface ImageSettings {
 
 
 export async function POST(request: Request) {
-  const body: ImageSettings = await request.json();
+  const body: ImageSetting = await request.json();
   const { prompt, settings } = body;
 
   if (!prompt || typeof prompt !== "string" || !prompt.trim()) {
