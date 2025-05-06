@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { AWSPromptImageGenerated } from "@/types/generetePromptTextImage";
 import { httpService } from "../common/http.service";
-import { PromptSettings } from "@/app/api/(AWS)/aws-text-video/generate-prompt-text-image/route";
+import { PromptSettings } from "@/app/api/(AWS)/aws-text-image/generate-prompt-text-image/route";
 
 export async function generetePromptTextImage({ promptSettings }: { promptSettings: PromptSettings }): Promise<{ success: boolean; data?: AWSPromptImageGenerated; error?: string }> {
     const cookie = (await cookies()).get('session')?.value
