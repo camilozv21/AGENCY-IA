@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { AWSImageGenerated } from "@/types/generateImagesFromPrompt.type";
 import { httpService } from "../common/http.service";
-import { ImageSettings } from "@/app/api/(AWS)/aws-text-video/generate-image-from-prompt/route";
+import { ImageSettings } from "@/app/api/(AWS)/aws-text-image/generate-image-from-prompt/route";
 
 
 export async function generateImagesFromPrompt({ imageSettings }: { imageSettings: ImageSettings}): Promise<{ success: boolean; data?: AWSImageGenerated; error?: string }> {
