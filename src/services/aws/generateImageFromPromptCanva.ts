@@ -20,7 +20,8 @@ export async function generateImagesFromPromptCanva({ imageSettings }: { imageSe
               errorMessage = "No autorizado: verifica tu sesión.";
           } else if ((error as Error).message.includes("500")) {
               errorMessage = "Error interno del servidor. Inténtalo más tarde.";
-          }
+              console.log ("Hola")
+            }
           return { success: false, error: errorMessage };
       }
 }
