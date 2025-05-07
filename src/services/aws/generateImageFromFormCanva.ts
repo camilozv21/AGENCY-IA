@@ -1,15 +1,14 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { AWSImageGenerated } from "@/types/generateImagesFromPrompt.type";
 import { httpService } from "../common/http.service";
-import { ImageSettings } from "@/app/api/(AWS)/aws-text-image/generate-image-from-prompt/route";
+import { Prompt,Settings} from "@/app/api/(AWS)/aws-text-image-canva/generate-image-from-form-canva/route";
+import { GenerateImageFromFormCanva } from "@/types/generateImageFromFormCanva.type";
 
-
-export async function generateImagesFromPrompt({ imageSettings }: { imageSettings: ImageSettings}): Promise<{ success: boolean; data?: AWSImageGenerated; error?: string }> {
+export async function generateImagesFromFormCanva({ prompt,settings }: { prompt: Prompt,settings: Settings}): Promise<{ success: boolean; data?: GenerateImageFromFormCanva; error?: string }> {
     const cookie = (await cookies()).get('session')?.value
     try {
-          const response = await httpService.post<AWSImageGenerated>("/aws-text-video/generate-image-from-prompt", { ...imageSettings },{credentials:"include",headers:{"cookie":`session=${cookie}`}});
+          const response = await httpService.post<GenerateImageFromFormCanva>("/aws-text-image-canva/generate-image-from-form-canva", {prompt,settings},{credentials:"include",headers:{"cookie":`session=${cookie}`}});
           return { success: true, data: response };
       } catch (error: unknown) {
           console.error("Error during image creation:", (error as Error).message);
@@ -20,7 +19,7 @@ export async function generateImagesFromPrompt({ imageSettings }: { imageSetting
               errorMessage = "No autorizado: verifica tu sesión.";
           } else if ((error as Error).message.includes("500")) {
               errorMessage = "Error interno del servidor. Inténtalo más tarde.";
-          }
+            }
           return { success: false, error: errorMessage };
       }
 }

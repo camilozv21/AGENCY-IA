@@ -11,7 +11,6 @@ const openai = new OpenAI({
 export interface PromptSettings {
   prompt: string;
   settings: {
-    type: string;
     lighting: string;
     camera: string;
   };
@@ -33,7 +32,6 @@ export async function POST(request: Request) {
   // Validación de settings
   const isSettingsValid =
     settings &&
-    typeof settings.type === "string" &&
     typeof settings.lighting === "string" &&
     typeof settings.camera === "string";
 
@@ -46,7 +44,6 @@ export async function POST(request: Request) {
 
   const composedPrompt = `
   Prompt: ${prompt}
-  Styles: ${settings.type}
   Lighting: ${settings.lighting}
   Camera: ${settings.camera}
     `.trim();

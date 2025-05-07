@@ -4,17 +4,18 @@ import { BedrockRuntimeClient, InvokeModelCommand } from "@aws-sdk/client-bedroc
 import { applyStyleToPrompt } from "@/utils/applyStyleToPrompt";
 import { getDimensions } from "@/utils/getDimensions";
 
-export interface ImageSetting {
+export interface ImageSettings {
   prompt: string;
   settings: {
     style: string;
     aspectRatio: string;
+    numberOfImages: number;
   };
 }
 
 
 export async function POST(request: Request) {
-  const body: ImageSetting = await request.json();
+  const body: ImageSettings = await request.json();
   const { prompt, settings } = body;
 
   if (!prompt || typeof prompt !== "string" || !prompt.trim()) {
@@ -25,6 +26,7 @@ export async function POST(request: Request) {
     settings &&
     typeof settings.style === "string" &&
     typeof settings.aspectRatio === "string";
+  
 
   if (!isSettingsValid) {
     return Response.json({ error: '"settings" object is invalid or incomplete' }, { status: 400 });
@@ -49,7 +51,7 @@ export async function POST(request: Request) {
     },
     imageGenerationConfig: {
       quality: "premium",
-      numberOfImages: 1,
+      numberOfImages: settings.numberOfImages || 3,
       height,
       width,
       cfgScale: 5.0,
@@ -58,7 +60,7 @@ export async function POST(request: Request) {
   };
 
   const command = new InvokeModelCommand({
-    modelId: "amazon.nova-canvas-v1:0",
+    modelId: "amazon.titan-image-generator-v2:0",
     contentType: "application/json",
     accept: "image/png",
     body: JSON.stringify(payload),
@@ -66,6 +68,24 @@ export async function POST(request: Request) {
 
   try {
     const response = await client.send(command);
+    // const response = await client.send(command);
+    // const decodedImage = Buffer.from(response.body as Uint8Array).toString("base64");
+    // const imageUrl = `data:image/png;base64,${decodedImage}`;
+
+    // return new Response(
+    //   JSON.stringify({
+    //     success: true,
+    //     data: {
+    //       images: [imageUrl],
+    //     },
+    //   }),
+    //   {
+    //     status: 200,
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
 
     return new Response(response.body, {
       status: 200,

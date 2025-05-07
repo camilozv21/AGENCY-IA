@@ -3,12 +3,12 @@
 import { cookies } from "next/headers";
 import { AWSPromptImageGenerated } from "@/types/generetePromptTextImage";
 import { httpService } from "../common/http.service";
-import { PromptSettings } from "@/app/api/(AWS)/aws-text-image/generate-prompt-text-image/route";
+import { PromptSettings } from "@/app/api/(AWS)/aws-text-prompt/generate-prompt-text-image/route";
 
 export async function generetePromptTextImage({ promptSettings }: { promptSettings: PromptSettings }): Promise<{ success: boolean; data?: AWSPromptImageGenerated; error?: string }> {
     const cookie = (await cookies()).get('session')?.value
     try {
-          const response = await httpService.post<AWSPromptImageGenerated>("/aws-text-video/generate-prompt-text-image", { ...promptSettings },{credentials:"include",headers:{"cookie":`session=${cookie}`}});
+          const response = await httpService.post<AWSPromptImageGenerated>("/aws-text-prompt/generate-prompt-text-image", { ...promptSettings },{credentials:"include",headers:{"cookie":`session=${cookie}`}});
           return { success: true, data: response };
       } catch (error: unknown) {
           console.error("Error during image creation:", (error as Error).message);
