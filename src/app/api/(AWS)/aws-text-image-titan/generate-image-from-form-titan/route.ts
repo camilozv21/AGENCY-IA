@@ -1,22 +1,24 @@
 "use server"
 
 import { getSession } from "@/lib/session";
-import { generateImagesFromPrompt } from "@/services/aws/generateImagesFromPrompt"
+import { generateImagesFromPromptTitan } from "@/services/aws/generateImagesFromPromptTitan"
 import { generetePromptTextImage } from "@/services/aws/generetePromptTextImage"
 import { NextRequest } from "next/server";
 
-interface RequestBody {
+export interface Prompt {
     prompt: string;
-    settings: SettingsBody;
+  }
+  
+export interface Settings {
+    settings: {
+        style: string;
+        aspectRatio: string;
+        lighting: string;
+        camera: string;
+        numberOfImages: number;
+    };
 }
-interface SettingsBody {
-    style: string;
-    aspectRatio: string;
-    type: string;
-    lighting: string;
-    camera: string;  
-}
-
+export interface RequestBody extends Prompt, Settings {}
 export async function POST(request: NextRequest) {
 const session = await getSession(request);
 if (!session) {
@@ -37,7 +39,6 @@ try {
     const promptSettings = {
         prompt,        
         settings:{
-            type:settings.type,
             lighting:settings.lighting,
             camera:settings.camera
         }
@@ -49,10 +50,11 @@ try {
         prompt: formTextImageFromPrompt.data?.result || "",      
         settings:{
             style:settings.style,
-            aspectRatio:settings.aspectRatio,
+            aspectRatio:settings.aspectRatio || "1:1",
+            numberOfImages:settings.numberOfImages || 3,
         }
     }
-    const generateImageFromPrompt = await generateImagesFromPrompt({ imageSettings });
+    const generateImageFromPrompt = await generateImagesFromPromptTitan({ imageSettings });
 
     return Response.json(generateImageFromPrompt, { status: 200 });
 
