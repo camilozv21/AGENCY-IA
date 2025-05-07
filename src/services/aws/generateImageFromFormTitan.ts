@@ -5,10 +5,10 @@ import { httpService } from "../common/http.service";
 import { Prompt,Settings} from "@/app/api/(AWS)/aws-text-image-titan/generate-image-from-form-titan/route";
 import { GenerateImageFromFormTitan } from "@/types/generateImageFromFormTitan.type";
 
-export async function generateImagesFromFormTitan({ prompt }: { prompt: Prompt},{settings}: {settings: Settings}): Promise<{ success: boolean; data?: GenerateImageFromFormTitan; error?: string }> {
+export async function generateImagesFromFormTitan({ prompt,settings }: { prompt: Prompt,settings: Settings}): Promise<{ success: boolean; data?: GenerateImageFromFormTitan; error?: string }> {
     const cookie = (await cookies()).get('session')?.value
     try {
-          const response = await httpService.post<GenerateImageFromFormTitan>("/aws-text-image-canva/generate-image-from-form-canva", {prompt,settings},{credentials:"include",headers:{"cookie":`session=${cookie}`}});
+          const response = await httpService.post<GenerateImageFromFormTitan>("/aws-text-image-titan/generate-image-from-form-titan", {prompt,settings},{credentials:"include",headers:{"cookie":`session=${cookie}`}});
           return { success: true, data: response };
       } catch (error: unknown) {
           console.error("Error during image creation:", (error as Error).message);

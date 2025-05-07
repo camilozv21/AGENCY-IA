@@ -47,7 +47,6 @@ try {
     }
 
     const formTextImageFromPrompt = await generetePromptTextImage({ promptSettings });
-    console.log (formTextImageFromPrompt)
     const imageSettings = {
         prompt: formTextImageFromPrompt.data?.result || "",      
         settings:{

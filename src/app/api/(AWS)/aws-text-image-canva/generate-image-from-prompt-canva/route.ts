@@ -48,7 +48,7 @@ export async function POST(request: Request) {
     },
     imageGenerationConfig: {
       quality: "premium",
-      numberOfImages: settings.numberOfImages,
+      numberOfImages: settings.numberOfImages || 3,
       height,
       width,
       cfgScale: 5.0,
