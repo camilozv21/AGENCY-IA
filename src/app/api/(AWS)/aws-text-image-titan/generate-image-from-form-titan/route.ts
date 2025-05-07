@@ -5,20 +5,18 @@ import { generateImagesFromPromptTitan } from "@/services/aws/generateImagesFrom
 import { generetePromptTextImage } from "@/services/aws/generetePromptTextImage"
 import { NextRequest } from "next/server";
 
-export interface Prompt {
-    prompt: string;
-  }
-  
+interface RequestBody{
+    prompt:string;
+    settings:Settings;
+}
 export interface Settings {
-    settings: {
         style: string;
         aspectRatio: string;
         lighting: string;
         camera: string;
         numberOfImages: number;
-    };
 }
-export interface RequestBody extends Prompt, Settings {}
+
 export async function POST(request: NextRequest) {
 const session = await getSession(request);
 if (!session) {
