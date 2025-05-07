@@ -2,10 +2,10 @@
 
 import { cookies } from "next/headers";
 import { httpService } from "../common/http.service";
-import { Prompt,Settings} from "@/app/api/(AWS)/aws-text-image-titan/generate-image-from-form-titan/route";
+import { Settings} from "@/app/api/(AWS)/aws-text-image-titan/generate-image-from-form-titan/route";
 import { GenerateImageFromFormTitan } from "@/types/generateImageFromFormTitan.type";
 
-export async function generateImagesFromFormTitan({ prompt,settings }: { prompt: Prompt,settings: Settings}): Promise<{ success: boolean; data?: GenerateImageFromFormTitan; error?: string }> {
+export async function generateImagesFromFormTitan({ prompt,settings }: { prompt: string ,settings: Settings}): Promise<{ success: boolean; data?: GenerateImageFromFormTitan; error?: string }> {
     const cookie = (await cookies()).get('session')?.value
     try {
           const response = await httpService.post<GenerateImageFromFormTitan>("/aws-text-image-titan/generate-image-from-form-titan", {prompt,settings},{credentials:"include",headers:{"cookie":`session=${cookie}`}});
