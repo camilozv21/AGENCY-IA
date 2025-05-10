@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { httpService } from "../common/http.service";
 import {Settings} from "@/app/api/(AWS)/aws-text-image-canva/generate-image-from-form-canva/route";
 import { GenerateImageFromFormCanva } from "@/types/generateImageFromFormCanva.type";
-import { data } from "@/utils/cardsDashboard";
+
 
 export async function generateImagesFromFormCanva({ prompt,settings }: { prompt: string , settings: Settings}): Promise<{ success: boolean; data?: GenerateImageFromFormCanva; error?: string }> {
     const cookie = (await cookies()).get('session')?.value
