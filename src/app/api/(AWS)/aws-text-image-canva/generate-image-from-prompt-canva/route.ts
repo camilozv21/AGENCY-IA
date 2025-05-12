@@ -31,7 +31,7 @@ export async function POST(request: Request) {
 
   const { width, height } = getDimensions(settings.aspectRatio);
   const styledPrompt = applyStyleToPrompt(prompt, settings.style); 
-
+  console.log("width ",width,"Heigt",height)
   const client = new BedrockRuntimeClient({
     region: 'us-east-1',
     credentials: {
