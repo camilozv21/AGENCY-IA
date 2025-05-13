@@ -1,56 +1,55 @@
 "use client";
 
 import classes from './Generate.module.css';
-import { Center, Flex, Text, Textarea, Button, TextInput, Select } from '@mantine/core';
+import { Center, Flex, Button, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
 import SkeletonImage from './SkeletonImage';
-import { useMediaQuery } from '@mantine/hooks';
-import { IconDownload } from '@tabler/icons-react';
+import { IconDownload, IconPhoto, IconSparkles } from '@tabler/icons-react';
 import { notifications } from '@mantine/notifications';
-import { generateImagesFromPrompt } from '@/services/aws/generateImagesFromPrompt';
+import { generateImagesFromFormCanva } from '@/services/aws/generateImageFromFormCanva';
+import { camera, iluminations, sizes, styles } from '@/utils/aspectsRatio';
+import SidebarFilters from './SidebarFilters';
+import Image from 'next/image';
 
 interface FormValues {
   prompt: string;
-  typeOfBusiness: string;
-  typeOfLighting: string;
 }
 
 export default function Generate() {
   const [responseImages, setResponseImages] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
-  const issmallScreen = useMediaQuery('(min-width: 768px)');
+  const [selectedAspectRatio, setSelectedAspectRatio] = useState<typeof sizes[0]>(sizes[0]);
+  const [selectedStyles, setSelectedStyles] = useState<typeof styles[0]>();
+  const [selectedIlumination, setSelectedIlumination] = useState<typeof iluminations[0]>();
+  const [selectedCamera, setSelectedCamera] = useState<typeof camera[0]>();
+  const [menuOpened, setMenuOpened] = useState(false);
+  const [menuOpenedStyle, setMenuOpenedStyle] = useState(false);
+  const [menuOpenedIlumination, setMenuOpenedIlumination] = useState(false);
+  const [menuOpenedCamera, setMenuOpenedCamera] = useState(false);
 
   const form = useForm<FormValues>({
     mode: 'uncontrolled',
-    validateInputOnChange: ['prompt', 'typeOfBusiness', 'typeOfLighting'],
-    initialValues: { prompt: '', typeOfBusiness: '', typeOfLighting: '' },
+    validateInputOnChange: ['prompt'],
+    initialValues: { prompt: '' },
     validate: {
       prompt: (value) =>
         !value ? 'Campo obligatorio' : value.length > 512 ? 'Máximo de caracteres 512' : null,
-      typeOfBusiness: (value) =>
-        !value ? 'Campo obligatorio' : value.length < 10 ? 'Ingresa mínimo 10 letras' : null,
     },
   });
 
   const handleCreateImage = async (values: FormValues) => {
-    const { prompt, typeOfLighting } = values;
-
-    const body = {
-      imageSettings: {
-        prompt: `${prompt}`,
-        settings: {
-          style: "Realista",
-          aspectRatio: "16:9",
-          type: "photo",
-          lighting: typeOfLighting,
-          camera: "close-up",
-        },
-      },
-    };
+    const { prompt } = values;
+    const settings = {
+        style: selectedStyles?.name || "realistic",
+        aspectRatio: selectedAspectRatio?.ratio || "1:1-lg",
+        lighting: selectedIlumination?.type || "none",
+        camera: selectedCamera?.type || "none",
+        numberOfImages: 1,
+      };
 
     setLoading(true);
-    const response = await generateImagesFromPrompt(body);
+    const response = await generateImagesFromFormCanva({prompt, settings});
 
     if (!response.success) {
       notifications.show({
@@ -84,102 +83,57 @@ export default function Generate() {
   };
 
   return (
-    <>
-      <Center mx={15} mb={50} mt={50} inline={false} className={classes.container}>
-        <Flex direction="column" align="center" justify="center" mb={50}>
-          <Text my={30} fw={700} fz={35} component="h1">
-            Describe tu negocio y la imagen que quieres crear
-          </Text>
+    <Flex>
+      <SidebarFilters
+        selectedAspectRatio={selectedAspectRatio}
+        setSelectedAspectRatio={setSelectedAspectRatio}
+        selectedStyles={selectedStyles}
+        setSelectedStyles={setSelectedStyles}
+        selectedIlumination={selectedIlumination}
+        setSelectedIlumination={setSelectedIlumination}
+        selectedCamera={selectedCamera}
+        setSelectedCamera={setSelectedCamera}
+        menuOpened={menuOpened}
+        setMenuOpened={setMenuOpened}
+        menuOpenedStyle={menuOpenedStyle}
+        setMenuOpenedStyle={setMenuOpenedStyle}
+        menuOpenedIlumination={menuOpenedIlumination}
+        setMenuOpenedIlumination={setMenuOpenedIlumination}
+        menuOpenedCamera={menuOpenedCamera}
+        setMenuOpenedCamera={setMenuOpenedCamera}
+      />
+      <Center px={15} pb={50} inline={false} className={classes.container}>
+        <Flex direction="column" align="center" justify="center" h={'100%'} w={'100%'}>
           <form
+            className={classes.form}
             onSubmit={form.onSubmit((values) => handleCreateImage(values))}
-            style={{ width: "100%" }}
           >
-            <TextInput
-              mb={10}
-              withAsterisk
-              label={"Tipo de Negocio"}
-              placeholder="Tienda de perfumes, relojes, etc."
-              key={form.key("typeOfBusiness")}
-              {...form.getInputProps("typeOfBusiness")}
-            />
-
-            <Select
-              mb={10}
-              withAsterisk
-              label="Tipo de Iluminación"
-              data={[
-                { value: "", label: "" },
-                { value: "Natural", label: "Natural" },
-                { value: "Artificial", label: "Artificial" },
-                { value: "Mixto", label: "Mixto" },
-              ]}
-              key={form.key("typeOfLighting")}
-              {...form.getInputProps("typeOfLighting")}
-            />
-
-            <Textarea
-              mb={10}
-              withAsterisk
-              w={"100%"}
-              label={"Describe la imagen que quieres crear"}
-              className={classes.inputArea}
-              placeholder="Un reloj de pulsera hiperrealista de lujo de alta gama inspirado en Rolex..."
-              key={form.key("prompt")}
-              {...form.getInputProps("prompt")}
-            />
-
-            <Button
-              type="submit"
-              mt={10}
-              fullWidth
-              color="#F3C96B"
-              style={{ color: "#1E1E2D" }}
-            >
-              Generar Imagen
-            </Button>
-          </form>
-        </Flex>
-
-        {loading ? (
-          <>
-            <Text my={30} fw={700} fz={35}>
-              Generando imagen...
-            </Text>
-            <Flex
-              direction={issmallScreen ? "row" : "column"}
-              align="center"
-              justify="center"
-              mb={50}
-              w={"100%"}
-              gap={20}
-              style={{ maxWidth: '1200px' }}
-            >
-              <SkeletonImage />
-              <SkeletonImage />
-              <SkeletonImage />
-            </Flex>
-          </>
-        ) : (
-          responseImages.length > 0 && (
-            <>
-              <Text my={30} fw={700} fz={35}>
-                ¡Imágenes Generadas!
-              </Text>
+            {loading ? (
               <Flex
-                direction={issmallScreen ? "row" : "column"}
+                direction="row"
                 align="center"
                 justify="center"
-                mb={50}
-                w={"100%"}
                 gap={20}
-                style={{ maxWidth: '1200px' }}
+                my={30}
+              >
+                <SkeletonImage />
+                <SkeletonImage />
+                <SkeletonImage />
+              </Flex>
+            ) : responseImages.length > 0 ? (
+              <Flex
+                direction="row"
+                align="center"
+                justify="center"
+                gap={20}
+                style={{ marginBottom: 30 }}
               >
                 {responseImages.map((base64, index) => (
                   <div
                     key={index}
                     style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
                   >
-                    <img
+                    <Image
                       src={`data:image/png;base64,${base64}`}
                       alt="Generated"
                       width={500}
@@ -198,10 +152,33 @@ export default function Generate() {
                   </div>
                 ))}
               </Flex>
-            </>
-          )
-        )}
+            ) : (
+              <IconPhoto className={classes.placeHolder} size={'100%'} stroke={1} color='#575757' />
+            )}
+
+            <TextInput
+              className={classes.input}
+              size="lg"
+              placeholder="¿Qué quieres ver en la imagen?"
+              rightSectionWidth={42}
+              leftSection={<IconSparkles size={18} stroke={1.5} color='#FFFFFF' />}
+              rightSection={
+                <Button
+                  type="submit"
+                  color="#7438FF"
+                  size="sm"
+                  style={{ color: "#FFFFFF", marginRight: 6 }}
+                >
+                  Generar Imagen
+                </Button>
+              }
+              rightSectionProps={{ style: { width: 'auto' } }}
+              {...form.getInputProps('prompt')}
+              key={form.key('prompt')}
+            />
+          </form>
+        </Flex>
       </Center>
-    </>
+    </Flex>
   );
 }

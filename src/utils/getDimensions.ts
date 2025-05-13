@@ -1,5 +1,3 @@
-import { Estonia } from "next/font/google";
-
 interface Dimension {
     width: number;
     height: number;

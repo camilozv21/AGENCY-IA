@@ -31,7 +31,6 @@ export async function POST(request: Request) {
 
   const { width, height } = getDimensions(settings.aspectRatio);
   const styledPrompt = applyStyleToPrompt(prompt, settings.style); 
-  console.log("width ",width,"Heigt",height)
   const client = new BedrockRuntimeClient({
     region: 'us-east-1',
     credentials: {
@@ -51,8 +50,8 @@ export async function POST(request: Request) {
       numberOfImages: settings.numberOfImages || 3,
       height,
       width,
-      cfgScale: 5.0,
-      seed: 42,
+      cfgScale: 7.5,
+      seed: Math.floor(Math.random() * 1000),
     },
   };
 

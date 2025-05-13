@@ -1,11 +1,12 @@
 /* Estilos generales para la barra lateral */
 .navbar {
-  height: 700px;
+  height: 100%;
+  min-height: 700px;
   width: 300px;
   padding: var(--mantine-spacing-md);
   display: flex;
   flex-direction: column;
-  border-right: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  /* border-right: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4)); */
 }
 
 .navbarMain {
