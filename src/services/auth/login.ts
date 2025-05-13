@@ -5,7 +5,7 @@ import { httpService } from "../common/http.service";
 
 export async function loginUser({ email, password }: { email: string; password: string }): Promise<{ success: boolean; data?: Login; error?: string }> {
     try {
-        const response = await httpService.post<Login>("/login", { email, password }, { credentials: "include" });
+        const response = await httpService.post<Login>("/auth/login", { email, password }, { credentials: "include" });
         return { success: true, data: response };
     } catch (error: unknown) {
         console.error("Error during login:", (error as Error).message);
