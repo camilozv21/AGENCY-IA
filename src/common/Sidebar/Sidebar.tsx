@@ -16,6 +16,7 @@ import {
 import { Stack, Tooltip, UnstyledButton, Center } from '@mantine/core';
 import classes from './Sidebar.module.css';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const navData = [
   { link: '/dashboard', label: 'Home', icon: IconHome },
@@ -47,6 +48,9 @@ function NavbarLink({ icon: Icon, label, active, onClick }: NavbarLinkProps) {
 export function Sidebar() {
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [active, setActive] = useState(0);
+  const pathname = usePathname();
+
+  if (pathname.includes('/dashboard/tool/text-to-image')) return null;
 
   const links = navData.map((item, index) => {
     if (isMobile) {

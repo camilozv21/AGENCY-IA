@@ -10,7 +10,7 @@ export async function generateImagesFromPromptCanva({ imageSettings }: { imageSe
     const cookie = (await cookies()).get('session')?.value
     try {
           const response = await httpService.post<AWSImageGeneratedCanva>("/aws-text-image-canva/generate-image-from-prompt-canva", { ...imageSettings },{credentials:"include",headers:{"cookie":`session=${cookie}`}});
-          return { success: true, data: response };
+          return { ...response, success: true };
       } catch (error: unknown) {
           console.error("Error during image creation:", (error as Error).message);
           let errorMessage = "No se pudo generar la imagen. Por favor verifica los datos o contacta soporte.";

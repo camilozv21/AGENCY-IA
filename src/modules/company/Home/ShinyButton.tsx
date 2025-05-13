@@ -4,7 +4,7 @@ import styles from './ShinyButton.module.css';
 
 export default function ShinyButton() {
   return (
-    <Box component="a" href="/auth/signup" className={styles.wrapper}>
+    <Box component="a" href="/dashboard" className={styles.wrapper}>
       <Box className={styles.glow} />
       <Box className={styles.button}>
         <Group gap={8}>

@@ -2,7 +2,7 @@
 
 import { Carousel } from '@mantine/carousel';
 import { ActionIcon, Avatar, Card, Group, Paper, Stack, Text, Title, useMantineTheme } from '@mantine/core';
-import Autoplay from 'embla-carousel-autoplay';
+import AutoScroll from 'embla-carousel-auto-scroll'
 import { useMediaQuery } from '@mantine/hooks';
 import classes from './ImagesCarousel.module.css';
 import { useRef } from 'react';
@@ -78,7 +78,7 @@ function CardCustom({ image, avatar }: CardProps) {
 
 export function ImagesCarousel() {
   const theme = useMantineTheme();
-  const autoplay = useRef(Autoplay({ delay: 2000 }));
+  const autoScroll = useRef(AutoScroll({ speed: 1, stopOnInteraction: false, stopOnMouseEnter: false, stopOnFocusIn: false }));
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
   const slides = data.map((item) => (
     <Carousel.Slide key={item.image}>
@@ -130,11 +130,11 @@ export function ImagesCarousel() {
         draggable={false}
         slideSize={{ base: '0%', sm: '0%' }}
         slideGap={{ base: 'xs', sm: 'sm' }}
-        align="start"
-        slidesToScroll={mobile ? 2 : 2}
-        loop
+        // align="start"
+        // slidesToScroll={mobile ? 2 : 2}
+        // loop
         height={700}
-        plugins={[autoplay.current]}
+        plugins={[autoScroll.current]}
       >
         {slides}
       </Carousel>

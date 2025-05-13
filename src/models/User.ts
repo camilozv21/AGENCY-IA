@@ -19,10 +19,7 @@ const UserSchema: Schema = new Schema({
 });
 
 UserSchema.methods.comparePassword = async function (candidatePassword: string) {
-  console.log("Comparando contraseña:", candidatePassword);
-  console.log("Con el hash almacenado:", this.password);
   const isMatch = await bcrypt.compare(candidatePassword, this.password);
-  console.log("¿Las contraseñas coinciden?", isMatch);
   return isMatch;
 };
 

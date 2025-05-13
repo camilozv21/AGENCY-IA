@@ -1,3 +1,4 @@
 export interface GenerateImageFromFormCanva {
-    images: string[];
+    images:  string[];
+    success: boolean;
 }

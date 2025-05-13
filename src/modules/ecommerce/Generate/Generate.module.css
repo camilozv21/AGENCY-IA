@@ -4,7 +4,62 @@
 
 .container {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
+  flex: 1;
+  background: #0f0f0f;
+}
+
+.form {
+  width: 100%;
+  /* max-width: 700px; */
+  height: 100%;
+  margin: 2rem;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.placeHolder {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.input {
+  display: block;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Settings styles */
+
+.header {
+  padding-bottom: var(--mantine-spacing-md);
+  /* margin-bottom: calc(var(--mantine-spacing-md) * 1.5); */
+  /* border-bottom: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4)); */
+}
+
+.styleName {
+  text-transform: capitalize;
+  font-size: small;
+}
+
+.styleImage {
+  border-radius: 20%;
+}
+
+.navbar {
+  height: 93vh;
+  width: 300px;
+  padding: var(--mantine-spacing-md);
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+}
+
+.navbarMain {
+  flex: 1;
 }
