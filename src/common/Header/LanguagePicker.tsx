@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { IconChevronDown } from '@tabler/icons-react';
-import { Group, Image, Menu, UnstyledButton } from '@mantine/core';
+import { Flex, Image, Menu, UnstyledButton } from '@mantine/core';
 import classes from './LanguagePicker.module.css';
 import { useTranslation } from 'react-i18next';
 import { usePathname, useRouter } from 'next/navigation';
@@ -80,10 +80,10 @@ export function LanguagePicker() {
     >
       <Menu.Target>
         <UnstyledButton className={classes.control} data-expanded={opened || undefined}>
-          <Group gap="xs">
+          <Flex gap="xs">
             <Image src={selected.image} alt={selected.label} width={22} height={22} />
             <span className={classes.label}>{selected.label}</span>
-          </Group>
+          </Flex>
           <IconChevronDown size={16} className={classes.icon} stroke={1.5} />
         </UnstyledButton>
       </Menu.Target>
