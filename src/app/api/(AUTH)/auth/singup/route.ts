@@ -58,16 +58,19 @@ export async function POST(request: Request) {
   const newUser = new User({
     email,
     password: hashedPassword,
+    tokensQuantity: 0,
+    tokensExpDate: null
   });
 
   await newUser.save();
-
   return new Response(
     JSON.stringify({
       message: 'Usuario creado',
       user: {
         id: newUser._id,
         email: newUser.email,
+        tokensQuantity: newUser.tokensQuantity,
+        tokensExpDate: newUser.tokensExpDate
       },
     }),
     {
