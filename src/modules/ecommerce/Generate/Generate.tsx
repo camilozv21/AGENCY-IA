@@ -23,6 +23,7 @@ export default function Generate() {
   const [selectedStyles, setSelectedStyles] = useState<typeof styles[0]>();
   const [selectedIlumination, setSelectedIlumination] = useState<typeof iluminations[0]>();
   const [selectedCamera, setSelectedCamera] = useState<typeof camera[0]>();
+  const [quantityImages, setQuantityImages] = useState(3);
   const [menuOpened, setMenuOpened] = useState(false);
   const [menuOpenedStyle, setMenuOpenedStyle] = useState(false);
   const [menuOpenedIlumination, setMenuOpenedIlumination] = useState(false);
@@ -45,7 +46,7 @@ export default function Generate() {
         aspectRatio: selectedAspectRatio?.ratio || "1:1-lg",
         lighting: selectedIlumination?.type || "none",
         camera: selectedCamera?.type || "none",
-        numberOfImages: 1,
+        numberOfImages: quantityImages || 3,
       };
 
     setLoading(true);
@@ -93,6 +94,8 @@ export default function Generate() {
         setSelectedIlumination={setSelectedIlumination}
         selectedCamera={selectedCamera}
         setSelectedCamera={setSelectedCamera}
+        setQuantityImages={setQuantityImages}
+        quantityImages={quantityImages}
         menuOpened={menuOpened}
         setMenuOpened={setMenuOpened}
         menuOpenedStyle={menuOpenedStyle}
@@ -108,66 +111,85 @@ export default function Generate() {
             className={classes.form}
             onSubmit={form.onSubmit((values) => handleCreateImage(values))}
           >
-            {loading ? (
-              <Flex
-                direction="row"
-                align="center"
-                justify="center"
-                gap={20}
-                my={30}
-              >
-                <SkeletonImage />
-                <SkeletonImage />
-                <SkeletonImage />
-              </Flex>
-            ) : responseImages.length > 0 ? (
-              <Flex
-                direction="row"
-                align="center"
-                justify="center"
-                gap={20}
-                style={{ marginBottom: 30 }}
-              >
-                {responseImages.map((base64, index) => (
-                  <div
-                    key={index}
-                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-                  >
-                    <Image
-                      src={`data:image/png;base64,${base64}`}
-                      alt="Generated"
-                      width={500}
-                      height={500}
-                      className={classes.image}
-                    />
-                    <Button
-                      leftSection={<IconDownload />}
-                      mt="sm"
-                      color="#F3C96B"
-                      style={{ color: "#1E1E2D" }}
-                      onClick={() => handleDownload(base64, index)}
+            <Flex
+              direction="row"
+              align="center"
+              justify="flex-start"
+              gap={20}
+              style={{ marginBottom: 30, flexWrap: 'wrap' }}
+            >
+              {loading
+                ? // Render skeletons based on quantityImages
+                  Array.from({ length: quantityImages }).map((_, index) => (
+                    <div
+                      key={index}
+                      style={{
+                        width: `calc(100% / ${quantityImages > 3 ? 3 : quantityImages} - 20px)`,
+                        aspectRatio: selectedAspectRatio?.ratio || '1 / 1',
+                      }}
                     >
-                      Descarga
-                    </Button>
-                  </div>
-                ))}
-              </Flex>
-            ) : (
-              <IconPhoto className={classes.placeHolder} size={'100%'} stroke={1} color='#575757' />
-            )}
-
+                      <SkeletonImage />
+                    </div>
+                  ))
+                : // Render images if available
+                  responseImages.length > 0
+                  ? responseImages.map((base64, index) => (
+                      <div
+                        key={index}
+                        style={{
+                          width: `calc(100% / ${quantityImages > 3 ? 3 : quantityImages} - 20px)`,
+                          aspectRatio: selectedAspectRatio?.ratio || '1 / 1',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <Image
+                          src={`data:image/png;base64,${base64}`}
+                          alt="Generated"
+                          layout="responsive"
+                          width={1}
+                          height={1}
+                          className={classes.image}
+                          style={{
+                            objectFit: 'cover',
+                            width: '100%',
+                            height: 'auto',
+                          }}
+                        />
+                        <Button
+                          leftSection={<IconDownload />}
+                          mt="sm"
+                          color="#F3C96B"
+                          style={{ color: '#1E1E2D' }}
+                          onClick={() => handleDownload(base64, index)}
+                        >
+                          Descarga
+                        </Button>
+                      </div>
+                    ))
+                  : // Render placeholder if no images and not loading
+                    <IconPhoto
+                      className={classes.placeHolder}
+                      size={'100%'}
+                      stroke={1}
+                      color="#575757"
+                    />
+              }
+            </Flex>
+      
             <TextInput
               className={classes.input}
               size="lg"
               placeholder="¿Qué quieres ver en la imagen?"
               rightSectionWidth={42}
-              leftSection={<IconSparkles size={18} stroke={1.5} color='#FFFFFF' />}
+              leftSection={<IconSparkles size={18} stroke={1.5} color="#FFFFFF" />}
               rightSection={
                 <Button
                   type="submit"
                   color="#7438FF"
                   size="sm"
-                  style={{ color: "#FFFFFF", marginRight: 6 }}
+                  style={{ color: '#FFFFFF', marginRight: 6 }}
                 >
                   Generar Imagen
                 </Button>
