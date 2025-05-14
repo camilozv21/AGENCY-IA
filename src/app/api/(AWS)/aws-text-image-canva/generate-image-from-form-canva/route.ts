@@ -1,5 +1,6 @@
 "use server"
 
+import { validateTokens } from "@/helpers/validateTokens";
 import { getSession } from "@/lib/session";
 import { generateImagesFromPromptCanva } from "@/services/aws/generateImageFromPromptCanva"
 import { generetePromptTextImage } from "@/services/aws/generetePromptTextImage"
@@ -21,6 +22,11 @@ export async function POST(request: NextRequest) {
 const session = await getSession(request);
 if (!session) {
     return new Response('Unauthorized', { status: 401 })
+}
+
+const isTokenValid = await validateTokens(session.userId, 100);
+if (!isTokenValid) {
+    return new Response('Not enough tokens', { status: 403 })
 }
 
 try {
