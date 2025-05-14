@@ -19,11 +19,13 @@ export default function SidebarFilters({
   setMenuOpenedIlumination,
   menuOpenedCamera,
   setMenuOpenedCamera,
+  quantityImages,
+  setQuantityImages,
 }: ImageSettingsProps) {
   return (
     <nav className={classes.navbar}>
       <div className={classes.navbarMain}>
-        <ScrollAreaAutosize mah="90vh" maw={400} mx="auto">
+        <ScrollAreaAutosize mah="90vh" maw={400} mx="auto" scrollbarSize={10} type="always" classNames={{ viewport: classes.viewportScroll }}>
           <Group className={classes.header} justify="space-between">
             <Text fz={20}>Ajustes de Imagen</Text>
           </Group>
@@ -37,6 +39,8 @@ export default function SidebarFilters({
             setSelectedIlumination={setSelectedIlumination}
             selectedCamera={selectedCamera}
             setSelectedCamera={setSelectedCamera}
+            setQuantityImages={setQuantityImages}
+            quantityImages={quantityImages}
             menuOpened={menuOpened}
             setMenuOpened={setMenuOpened}
             menuOpenedStyle={menuOpenedStyle}
