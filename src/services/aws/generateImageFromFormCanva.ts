@@ -18,6 +18,8 @@ export async function generateImagesFromFormCanva({ prompt,settings }: { prompt:
               errorMessage =  error + "Error de validación: revisa que los datos ingresados sean correctos.";
           } else if ((error as Error).message.includes("401")) {
               errorMessage = "No autorizado: verifica tu sesión.";
+          } else if ((error as Error).message.includes("403")) {
+              errorMessage = "No suficientes tokens.";
           } else if ((error as Error).message.includes("500")) {
               errorMessage = "Error interno del servidor. Inténtalo más tarde.";
             }

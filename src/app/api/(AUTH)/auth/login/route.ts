@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
 
     const session = await createSession({ id: user._id.toString(), role: user.role });
 
-    const response = new NextResponse(JSON.stringify({ message: "Login exitoso", session }), {
+    const response = new NextResponse(JSON.stringify({ message: "Login exitoso", session, tokenInfo: { tokensQuantity: user.tokensQuantity, tokensExpDate: user.tokensExpDate } }), {
       status: 200,
       headers: {
         "Content-Type": "application/json",
