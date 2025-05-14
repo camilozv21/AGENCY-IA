@@ -1,4 +1,4 @@
-import { Menu, Text, Divider, Grid, Flex, ActionIcon, CloseButton, MenuTarget, NavLink, MenuDropdown, ScrollAreaAutosize, GridCol, Group, useMantineTheme } from "@mantine/core";
+import { Menu, Text, Divider, Grid, Flex, ActionIcon, CloseButton, MenuTarget, NavLink, MenuDropdown, ScrollAreaAutosize, GridCol, Group, useMantineTheme, Select } from "@mantine/core";
 import { useRef } from "react";
 import { sizes, styles, iluminations, camera } from "@/utils/aspectsRatio";
 import { IconChevronRight, IconCloudUpload, IconDownload, IconPalette, IconSunLowFilled, IconX } from "@tabler/icons-react";
@@ -24,6 +24,8 @@ export interface ImageSettingsProps {
   setMenuOpenedIlumination: React.Dispatch<React.SetStateAction<boolean>>;
   menuOpenedCamera: boolean;
   setMenuOpenedCamera: React.Dispatch<React.SetStateAction<boolean>>;
+  quantityImages: number;
+  setQuantityImages: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function ImageSettings({
@@ -35,6 +37,8 @@ export default function ImageSettings({
   setSelectedIlumination,
   selectedCamera,
   setSelectedCamera,
+  setQuantityImages,
+  quantityImages,
   menuOpened,
   setMenuOpened,
   menuOpenedStyle,
@@ -386,6 +390,7 @@ export default function ImageSettings({
       </Menu>
 
       <div className={classesDrop.wrapper}>
+        <Text color='#C7C7C7' my={10}>Sube tu propia imagen</Text>
         <Dropzone
           openRef={openRef}
           onDrop={() => {}}
@@ -415,13 +420,25 @@ export default function ImageSettings({
 
             <Text className={classesDrop.description}>
               Or <br />
-              <Text component="span" fw={700} fz="md" color={'var(--mantine-color-violet-4'} inherit>
+              <Text component="span" fw={700} fz="md" color={theme.colors.violet[6]} inherit>
                 click to upload
               </Text>
             </Text>
           </div>
         </Dropzone>
       </div>
+      
+      <Text color='#C7C7C7' my={10}>Numero de imagenes</Text>
+      <Select
+        my="md"
+        comboboxProps={{ withinPortal: true }}
+        data={['1', '2', '3']}
+        defaultValue={'3'}
+        placeholder="Selecciona un número"
+        classNames={classes}
+        onChange={(value) => setQuantityImages(Number(value))}
+        value={quantityImages.toString()}
+      />
     </>
   );
 }
