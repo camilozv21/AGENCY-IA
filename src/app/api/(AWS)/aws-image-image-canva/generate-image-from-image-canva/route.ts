@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
         numberOfImages: settings.numberOfImages || 3,
         height,
         width,
-        cfgScale: 5.0,
+        cfgScale: 7.5,
         seed: 1000,
       },
     };
