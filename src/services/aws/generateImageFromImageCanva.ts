@@ -9,7 +9,7 @@ import { CreateImagefromImageCanva } from "@/types/createImageFromImageCanva.typ
 export async function generateImagesFromImagesCanvas({ imageSettings }: { imageSettings: ImageSetting}): Promise<{ success: boolean; data?: CreateImagefromImageCanva; error?: string }> {
     const cookie = (await cookies()).get('session')?.value
     try {
-          const response = await httpService.post<CreateImagefromImageCanva>("aws-image-image-canva/generate-image-from-image-canva", { ...imageSettings },{credentials:"include",headers:{"cookie":`session=${cookie}`}});
+          const response = await httpService.post<CreateImagefromImageCanva>("/aws-image-image-canva/generate-image-from-image-canva", { ...imageSettings },{credentials:"include",headers:{"cookie":`session=${cookie}`}});
           return { ...response, success: true };
       } catch (error: unknown) {
           console.error("Error during image creation:", (error as Error).message);
