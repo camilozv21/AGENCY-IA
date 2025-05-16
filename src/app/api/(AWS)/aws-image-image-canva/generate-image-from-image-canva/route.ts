@@ -24,12 +24,14 @@ export async function POST(request: NextRequest) {
   }
   try{
     const body: ImageSetting = await request.json();
-    const { prompt, imageBase64, settings } = body;
+    const { prompt,imageBase64 , settings } = body;
+    const cleanBase64 = imageBase64.replace(/^data:image\/\w+;base64,/, "");
+
     
     if (!prompt || typeof prompt !== "string" || !prompt.trim()) {
       return Response.json({ error: '"prompt" field is required and must be a non-empty string' }, { status: 400 });
     }
-    if (!imageBase64 || typeof imageBase64 !== "string" || !imageBase64.trim()) {
+    if (!cleanBase64 || typeof cleanBase64 !== "string" || !cleanBase64.trim()) {
       return Response.json({ error: '"imageBase64" field is required and must be a non-empty string' }, { status: 400 });
     }
     const isSettingsValid =
@@ -55,7 +57,7 @@ export async function POST(request: NextRequest) {
     const payload = {
       taskType: "IMAGE_VARIATION",
       imageVariationParams: {
-        images:[imageBase64],
+        images:[cleanBase64],
         similarityStrength: 0.8,
         text: styledPrompt,
         negativeText: "blurry, distorted, low quality",
@@ -73,19 +75,20 @@ export async function POST(request: NextRequest) {
     const command = new InvokeModelCommand({
       modelId: "amazon.nova-canvas-v1:0",
       contentType: "application/json",
-      accept: "image/png",
+      accept: "application/json",
       body: JSON.stringify(payload),
     });
   
     try {
       const response = await client.send(command);
-  
+      
       return new Response(response.body, {
         status: 200,
         headers: {
           "Content-Type": "application/json",
         },
       });
+      console.log(response)
     } catch (error) {
       console.error("Error al generar imagen:", error);
       return new Response(
