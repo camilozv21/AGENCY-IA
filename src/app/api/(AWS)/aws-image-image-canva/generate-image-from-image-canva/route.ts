@@ -54,11 +54,20 @@ export async function POST(request: NextRequest) {
       },
     });
   
+    // const payload = {
+    //   taskType: "IMAGE_VARIATION",
+    //   imageVariationParams: {
+    //     images:[cleanBase64],
+    //     similarityStrength: 0.8,
+    //     text: styledPrompt,
+    //     negativeText: "blurry, distorted, low quality",
+    //   },
     const payload = {
-      taskType: "IMAGE_VARIATION",
-      imageVariationParams: {
-        images:[cleanBase64],
-        similarityStrength: 0.8,
+      taskType: "OUTPAINTING",
+      outPaintingParams: {
+        image: cleanBase64,
+        maskPrompt: prompt,
+        outPaintingMode: "PRECISE",
         text: styledPrompt,
         negativeText: "blurry, distorted, low quality",
       },
@@ -88,7 +97,7 @@ export async function POST(request: NextRequest) {
           "Content-Type": "application/json",
         },
       });
-      console.log(response)
+
     } catch (error) {
       console.error("Error al generar imagen:", error);
       return new Response(
