@@ -26,6 +26,8 @@ export interface ImageSettingsProps {
   setMenuOpenedCamera: React.Dispatch<React.SetStateAction<boolean>>;
   quantityImages: number;
   setQuantityImages: React.Dispatch<React.SetStateAction<number>>;
+  uploadedImage: string | null;
+  setUploadedImage: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 export default function ImageSettings({
@@ -47,9 +49,21 @@ export default function ImageSettings({
   setMenuOpenedIlumination,
   menuOpenedCamera,
   setMenuOpenedCamera,
+  uploadedImage,
+  setUploadedImage
 }: ImageSettingsProps) {
     const theme = useMantineTheme();
     const openRef = useRef<() => void>(null);
+
+    const handleDrop = (files: File[]) => {
+      if (files.length > 0) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          setUploadedImage(e.target?.result as string);
+        };
+        reader.readAsDataURL(files[0]);
+      }
+    };
 
   return (
     <>
@@ -393,38 +407,61 @@ export default function ImageSettings({
         <Text color='#C7C7C7' my={10}>Sube tu propia imagen</Text>
         <Dropzone
           openRef={openRef}
-          onDrop={() => {}}
+          onDrop={handleDrop}
           className={classesDrop.dropzone}
           radius="md"
           accept={[MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.svg, MIME_TYPES.webp]}
           maxSize={30 * 1024 ** 2}
         >
-          <div style={{ pointerEvents: 'none' }}>
-            <Group justify="center">
-              <Dropzone.Accept>
-                <IconDownload size={50} color={theme.colors.violet[6]} stroke={1.5} />
-              </Dropzone.Accept>
-              <Dropzone.Reject>
-                <IconX size={50} color={theme.colors.red[6]} stroke={1.5} />
-              </Dropzone.Reject>
-              <Dropzone.Idle>
-                <IconCloudUpload size={50} stroke={1.5} className={classesDrop.icon} />
-              </Dropzone.Idle>
-            </Group>
-
-            <Text ta="center" fw={700} fz="lg" mt="xl">
-              <Dropzone.Accept>Drop files here</Dropzone.Accept>
-              <Dropzone.Reject>File not supported</Dropzone.Reject>
-              <Dropzone.Idle>Drag your images here</Dropzone.Idle>
-            </Text>
-
-            <Text className={classesDrop.description}>
-              Or <br />
-              <Text component="span" fw={700} fz="md" color={theme.colors.violet[6]} inherit>
-                click to upload
+          {uploadedImage ? (
+            <>
+              <img 
+                src={uploadedImage} 
+                alt="Preview" 
+                style={{ width: "100%", height: "auto", objectFit: "contain" }} 
+              />
+              {/* <IconX 
+                size={24}
+                style={{ 
+                  position: 'absolute', 
+                  top: 20, 
+                  right: 20, 
+                  cursor: 'pointer', 
+                  background: 'rgba(0, 0, 0, 0.5)', 
+                  borderRadius: '10%',
+                  zIndex: 100
+                }}
+                onClick={() => setUploadedImage(null)}
+              /> */}
+            </>
+          ) : (
+            <div style={{ pointerEvents: 'none' }}>
+              <Group justify="center">
+                <Dropzone.Accept>
+                  <IconDownload size={50} color={theme.colors.violet[6]} stroke={1.5} />
+                </Dropzone.Accept>
+                <Dropzone.Reject>
+                  <IconX size={50} color={theme.colors.red[6]} stroke={1.5} />
+                </Dropzone.Reject>
+                <Dropzone.Idle>
+                  <IconCloudUpload size={50} stroke={1.5} className={classesDrop.icon} />
+                </Dropzone.Idle>
+              </Group>
+  
+              <Text ta="center" fw={700} fz="lg" mt="xl">
+                <Dropzone.Accept>Drop files here</Dropzone.Accept>
+                <Dropzone.Reject>File not supported</Dropzone.Reject>
+                <Dropzone.Idle>Drag your images here</Dropzone.Idle>
               </Text>
-            </Text>
-          </div>
+  
+              <Text className={classesDrop.description}>
+                Or <br />
+                <Text component="span" fw={700} fz="md" color={theme.colors.violet[6]} inherit>
+                  click to upload
+                </Text>
+              </Text>
+            </div>
+          )}
         </Dropzone>
       </div>
       
