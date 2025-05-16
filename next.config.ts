@@ -24,7 +24,12 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       }
     ],
-    minimumCacheTTL: 60 * 60 * 24
+    minimumCacheTTL: 60 * 60 * 24,
+  },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "10mb",
+    }
   },
   webpack: (config) => {
     config.resolve.alias["@"] = path.resolve(__dirname, "src");

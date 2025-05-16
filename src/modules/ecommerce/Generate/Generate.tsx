@@ -11,6 +11,7 @@ import { generateImagesFromFormCanva } from '@/services/aws/generateImageFromFor
 import { camera, iluminations, sizes, styles } from '@/utils/aspectsRatio';
 import SidebarFilters from './SidebarFilters';
 import Image from 'next/image';
+import { generateImagesFromFormImageCanva } from '@/services/aws/generateImageFromFormImageCanva';
 
 interface FormValues {
   prompt: string;
@@ -28,6 +29,7 @@ export default function Generate() {
   const [menuOpenedStyle, setMenuOpenedStyle] = useState(false);
   const [menuOpenedIlumination, setMenuOpenedIlumination] = useState(false);
   const [menuOpenedCamera, setMenuOpenedCamera] = useState(false);
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
 
   const form = useForm<FormValues>({
     mode: 'uncontrolled',
@@ -51,6 +53,42 @@ export default function Generate() {
 
     setLoading(true);
     const response = await generateImagesFromFormCanva({prompt, settings});
+
+    if (!response.success) {
+      notifications.show({
+        title: "Error",
+        message: response.error || "No se pudo generar las imágenes",
+        color: "red",
+      });
+      setResponseImages([]);
+      setLoading(false);
+      return;
+    }
+
+    setResponseImages(response.data?.images || []);
+
+    notifications.show({
+      title: "Éxito",
+      message: "Imágenes generadas exitosamente",
+      color: "green",
+    });
+
+    setLoading(false);
+  };
+
+  const handleCreateImageFromImage = async (values: FormValues) => {
+    const { prompt } = values;
+    const settings = {
+        style: selectedStyles?.name || "realistic",
+        aspectRatio: selectedAspectRatio?.ratio || "1:1-lg",
+        lighting: selectedIlumination?.type || "none",
+        camera: selectedCamera?.type || "none",
+        numberOfImages: quantityImages || 3,
+      };
+    const imageBase64 = uploadedImage || '';
+
+    setLoading(true);
+    const response = await generateImagesFromFormImageCanva({prompt, imageBase64, settings});
 
     if (!response.success) {
       notifications.show({
@@ -104,12 +142,14 @@ export default function Generate() {
         setMenuOpenedIlumination={setMenuOpenedIlumination}
         menuOpenedCamera={menuOpenedCamera}
         setMenuOpenedCamera={setMenuOpenedCamera}
+        uploadedImage={uploadedImage}
+        setUploadedImage={setUploadedImage}
       />
       <Center px={15} pb={50} inline={false} className={classes.container}>
         <Flex direction="column" align="center" justify="center" h={'100%'} w={'100%'}>
           <form
             className={classes.form}
-            onSubmit={form.onSubmit((values) => handleCreateImage(values))}
+            onSubmit={form.onSubmit((values) => uploadedImage ? handleCreateImageFromImage(values) : handleCreateImage(values))}
           >
             <Flex
               direction="row"
