@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
         height,
         width,
         cfgScale: 7.5,
-        seed: 1000,
+        seed: Math.floor(Math.random() * 1000)
       },
     };
   
