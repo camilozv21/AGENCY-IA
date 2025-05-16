@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
       return new Response(response.body, {
         status: 200,
         headers: {
-          "Content-Type": "JSON.stringify",
+          "Content-Type": "application/json",
         },
       });
     } catch (error) {
