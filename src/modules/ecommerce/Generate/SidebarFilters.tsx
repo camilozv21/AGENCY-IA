@@ -21,6 +21,8 @@ export default function SidebarFilters({
   setMenuOpenedCamera,
   quantityImages,
   setQuantityImages,
+  uploadedImage,
+  setUploadedImage
 }: ImageSettingsProps) {
   return (
     <nav className={classes.navbar}>
@@ -49,6 +51,8 @@ export default function SidebarFilters({
             setMenuOpenedIlumination={setMenuOpenedIlumination}
             menuOpenedCamera={menuOpenedCamera}
             setMenuOpenedCamera={setMenuOpenedCamera}
+            uploadedImage={uploadedImage}
+            setUploadedImage={setUploadedImage}
           />
         </ScrollAreaAutosize>
       </div>
