@@ -54,7 +54,6 @@ export async function POST(request: NextRequest){
                 
             }
         }
-
         const formTextImageFromPrompt = await generetePromptTextImage({ promptSettings });
 
         const imageSettings = {
