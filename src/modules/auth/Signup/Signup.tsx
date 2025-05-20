@@ -14,11 +14,13 @@ import { createNewUser } from "@/services/auth/signup";
 import { notifications } from "@mantine/notifications";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useState } from "react";
 
 interface FormValues { email: string; password: string }
 
 export function Signup() {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<FormValues>({
     mode: "uncontrolled",
@@ -37,9 +39,11 @@ export function Signup() {
     const { email, password } = values;
 
     try {
+      setIsLoading(true);
       const response = await createNewUser({ email, password });
 
       if (!response.success) {
+        setIsLoading(false);
         notifications.show({
           title: "Error",
           message: response.error || "Error creating user",
@@ -48,6 +52,7 @@ export function Signup() {
         return;
       }
 
+      setIsLoading(false);
       notifications.show({
         title: "Success",
         message: "User created successfully",
@@ -57,6 +62,7 @@ export function Signup() {
       form.reset();
       router.push("/auth/login");
     } catch (error) {
+      setIsLoading(false);
       console.error("Error creating user:", error);
       notifications.show({
         title: "Error",
