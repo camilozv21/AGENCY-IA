@@ -5,7 +5,7 @@ import { applyStyleToPrompt } from "@/utils/applyStyleToPrompt";
 import { getDimensions } from "@/utils/getDimensions";
 import { getSession } from "@/lib/session";
 import { NextRequest } from "next/server";
-
+import { applyselectPayload } from "@/helpers/selectPayload";
 export interface ImageSetting {
   prompt: string;
   imageBase64: string;
@@ -13,7 +13,8 @@ export interface ImageSetting {
     style: string;
     aspectRatio: string;
     numberOfImages: number;
-  };
+  }
+  typeTask:string;
 }
 
 
@@ -24,10 +25,9 @@ export async function POST(request: NextRequest) {
   }
   try{
     const body: ImageSetting = await request.json();
-    const { prompt,imageBase64 , settings } = body;
+    const { prompt,imageBase64 , settings, typeTask } = body;
     const cleanBase64 = imageBase64.replace(/^data:image\/\w+;base64,/, "");
 
-    
     if (!prompt || typeof prompt !== "string" || !prompt.trim()) {
       return Response.json({ error: '"prompt" field is required and must be a non-empty string' }, { status: 400 });
     }
@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
   
     const { width, height } = getDimensions(settings.aspectRatio);
     const styledPrompt = applyStyleToPrompt(prompt, settings.style); 
-  
+    const payload = applyselectPayload(typeTask, cleanBase64, prompt, styledPrompt, settings.numberOfImages, height, width ); 
     const client = new BedrockRuntimeClient({
       region: 'us-east-1',
       credentials: {
@@ -53,34 +53,7 @@ export async function POST(request: NextRequest) {
         secretAccessKey: process.env.SECRET_ACCESS_KEY_AWS!,
       },
     });
-  
-    // const payload = {
-    //   taskType: "IMAGE_VARIATION",
-    //   imageVariationParams: {
-    //     images:[cleanBase64],
-    //     similarityStrength: 0.8,
-    //     text: styledPrompt,
-    //     negativeText: "blurry, distorted, low quality",
-    //   },
-    const payload = {
-      taskType: "OUTPAINTING",
-      outPaintingParams: {
-        image: cleanBase64,
-        maskPrompt: prompt,
-        outPaintingMode: "PRECISE",
-        text: styledPrompt,
-        negativeText: "blurry, distorted, low quality",
-      },
-      imageGenerationConfig: {
-        quality: "premium",
-        numberOfImages: settings.numberOfImages || 3,
-        height,
-        width,
-        cfgScale: 7.5,
-        seed: Math.floor(Math.random() * 1000)
-      },
-    };
-  
+    console.log(payload)
     const command = new InvokeModelCommand({
       modelId: "amazon.nova-canvas-v1:0",
       contentType: "application/json",
