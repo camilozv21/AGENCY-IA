@@ -14,11 +14,13 @@ import { notifications } from "@mantine/notifications";
 import Link from "next/link";
 import type { Login } from "@/types/login.types";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface FormValues { email: string; password: string }
 
 export function Login() {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<FormValues>({
     mode: "uncontrolled",
@@ -38,6 +40,7 @@ const handleSubmit = async (values: FormValues) => {
 
   try {
     // const response = await loginUser({ email, password });
+    setIsLoading(true);
     const responseFetch = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`, {
       method: "POST",
       body: JSON.stringify({ email, password }),
@@ -45,9 +48,11 @@ const handleSubmit = async (values: FormValues) => {
       credentials: "include",
     });
     
+    setIsLoading(false);
     const response: Login = await responseFetch.json();
 
     if (response.error) {
+      setIsLoading(false);
       notifications.show({
         title: "Error",
         message: response.error || "No se pudo iniciar sesión",
@@ -65,6 +70,7 @@ const handleSubmit = async (values: FormValues) => {
     form.reset();
     router.push("/dashboard");
   } catch (error) {
+      setIsLoading(false);
       console.error("Error durante el login:", error);
       notifications.show({
         title: "Error",
@@ -105,6 +111,7 @@ const handleSubmit = async (values: FormValues) => {
             size="md"
             color="#F3C96B"
             style={{ color: "#1E1E2D" }}
+            loading={isLoading}
           >
             Iniciar sesión
           </Button>

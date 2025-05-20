@@ -9,7 +9,8 @@ import { NextRequest } from "next/server";
 interface RequestBody{
     prompt:string;
     imageBase64:string;
-    settings:Settings; 
+    settings:Settings;
+    typeTask:string; 
 }
 
 export interface Settings {
@@ -33,7 +34,7 @@ export async function POST(request: NextRequest){
     try{
       
         const body: RequestBody = await request.json();
-        const { prompt, imageBase64, settings} = body;
+        const { prompt, imageBase64, settings, typeTask} = body;
 
         if (!prompt) {
             return Response.json({ error: '"Prompt" Field is required' }, { status: 400 });
@@ -63,7 +64,8 @@ export async function POST(request: NextRequest){
                 style:settings.style,
                 aspectRatio:settings.aspectRatio || "1:1",
                 numberOfImages:settings.numberOfImages || 3
-            }
+            },
+            typeTask:typeTask
         }
         const generateImageFromImage = await generateImagesFromImagesCanvas({ imageSettings });
         return Response.json(generateImageFromImage, { status: 200 });
