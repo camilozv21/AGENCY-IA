@@ -6,6 +6,7 @@ import Image from "next/image";
 import classes from "./Generate.module.css";
 import classesDrop from './DropzoneButton.module.css';
 import { Dropzone, MIME_TYPES } from "@mantine/dropzone";
+import { useMediaQuery } from "@mantine/hooks";
 
 export interface ImageSettingsProps {
   selectedAspectRatio: typeof sizes[0];
@@ -54,6 +55,7 @@ export default function ImageSettings({
 }: ImageSettingsProps) {
     const theme = useMantineTheme();
     const openRef = useRef<() => void>(null);
+    const isMobile = useMediaQuery('(max-width: 768px)');
 
     const handleDrop = (files: File[]) => {
       if (files.length > 0) {
@@ -70,9 +72,9 @@ export default function ImageSettings({
       <Text color='#C7C7C7'>Aspect Ratio</Text>
       <Menu
         width={320}
-        offset={25}
+        offset={isMobile ? 10 : 25}
         shadow="md"
-        position="right-start"
+        position={isMobile ? "bottom" : "right-start"}
         closeOnClickOutside
         closeOnEscape
         closeOnItemClick
@@ -144,9 +146,9 @@ export default function ImageSettings({
       <Text color='#C7C7C7'>Estilo</Text>
       <Menu
         width={320}
-        offset={25}
+        offset={isMobile ? 10 : 25}
         shadow="md"
-        position="right-start"
+        position={isMobile ? "bottom" : "right-start"}
         closeOnClickOutside
         closeOnEscape
         closeOnItemClick
@@ -232,9 +234,9 @@ export default function ImageSettings({
       <Text color='#C7C7C7'>Iluminacion</Text>
       <Menu
         width={320}
-        offset={25}
+        offset={isMobile ? 10 : 25}
         shadow="md"
-        position="right-start"
+        position={isMobile ? "bottom" : "right-start"}
         closeOnClickOutside
         closeOnEscape
         closeOnItemClick
@@ -320,9 +322,9 @@ export default function ImageSettings({
       <Text color='#C7C7C7'>Camera</Text>
       <Menu
         width={320}
-        offset={25}
+        offset={isMobile ? 10 : 25}
         shadow="md"
-        position="right-start"
+        position={isMobile ? "bottom" : "right-start"}
         closeOnClickOutside
         closeOnEscape
         closeOnItemClick

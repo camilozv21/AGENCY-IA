@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { Group, Button, Text, Title, Flex } from '@mantine/core';
+import { Button, Text, Title, Flex } from '@mantine/core';
 import classes from './DashboardHome.module.css';
 import { useMediaQuery } from '@mantine/hooks';
 import { CardGradient } from './CardGradient';
@@ -11,12 +11,13 @@ export default function DashboardHome() {
   const isMobile = useMediaQuery('(max-width: 768px)');
   return (
     <>
-      <Group className={classes.carouselContainer}>
+      <Flex direction="column" justify="center" align="center" className={classes.container}>
         <div className={classes.imageWrapper}>
           <img
             src="https://df50lbm4qcrt6.cloudfront.net/dashboard/dashboardHomeImage.png"
             alt="Dashboard Home"
             className={classes.image}
+
           />
         </div>
         <div className={classes.overlay}></div>
@@ -36,26 +37,36 @@ export default function DashboardHome() {
             Provar Ahora
           </Button>
         </div>
-      </Group>
-      
-      <Title order={3} className={classes.subtitle} mx={'1rem'}>
-        ContiA Estudio
-      </Title>
-      <Text className={classes.descriptionText} mx={'1rem'} size='sm'>
-        Crea posts desde cero, edita imagenes y mucho mas!
-      </Text>
-
-      <Flex justify="flex-start" align="center" mx={'1rem'} gap={'2rem'} my={20}>
-        {data.map((item, index) => (
-          <CardGradient
-            key={index}
-            imageUrl={item.imageUrl}
-            title={item.title}
-            description={item.description}
-            buttonText={item.buttonText}
-          />
-        ))}
       </Flex>
+      
+      <div className={classes.containerStudio}>
+        <Title order={3} className={classes.subtitle} mx={'1rem'}>
+          ContiA Estudio
+        </Title>
+        <Text className={classes.descriptionText} mx={'1rem'} size='sm'>
+          Crea posts desde cero, edita imagenes y mucho mas!
+        </Text>
+
+        <Flex
+          justify="flex-start" 
+          direction={'row'}
+          align="center" 
+          wrap="wrap"
+          mx={'1rem'} 
+          gap={'2rem'} 
+          my={20}
+        >
+          {data.map((item, index) => (
+            <CardGradient
+              key={index}
+              imageUrl={item.imageUrl}
+              title={item.title}
+              description={item.description}
+              buttonText={item.buttonText}
+            />
+          ))}
+        </Flex>
+      </div>
     </>
   );
 }

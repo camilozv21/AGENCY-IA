@@ -8,12 +8,10 @@ import {
   IconFingerprint,
   IconHome,
   IconKey,
-  IconLogout,
   IconPhoto,
   IconSettings,
-  IconSwitchHorizontal,
 } from '@tabler/icons-react';
-import { Stack, Tooltip, UnstyledButton, Center } from '@mantine/core';
+import { Stack, Tooltip, UnstyledButton } from '@mantine/core';
 import classes from './Sidebar.module.css';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -56,13 +54,14 @@ export function Sidebar() {
     if (isMobile) {
       // Render minimal links for mobile
       return (
-        <NavbarLink
-          key={item.label}
-          icon={item.icon}
-          label={item.label}
-          active={index === active}
-          onClick={() => setActive(index)}
-        />
+        <Link key={item.label} href={item.link}>
+          <NavbarLink
+            icon={item.icon}
+            label={item.label}
+            active={index === active}
+            onClick={() => setActive(index)}
+          />
+        </Link>
       );
     }
 
@@ -83,20 +82,11 @@ export function Sidebar() {
 
   return (
     <nav className={classes.navbar}>
-      {isMobile && (
-        <Center>
-          <span className={classes.logo}>Logo</span>
-        </Center>
-      )}
       <div className={classes.navbarMain}>
         <Stack justify="center" gap={0}>
           {links}
         </Stack>
       </div>
-      <Stack justify="center" gap={0}>
-        <NavbarLink icon={IconSwitchHorizontal} label="Change account" />
-        <NavbarLink icon={IconLogout} label="Logout" />
-      </Stack>
     </nav>
   );
 }

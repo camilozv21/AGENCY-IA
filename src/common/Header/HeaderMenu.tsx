@@ -8,7 +8,7 @@ import {
   IconCoin,
   IconFingerprint,
   IconNotification,
-  IconShoppingCart,
+  IconUser,
 } from '@tabler/icons-react';
 import {
   Anchor,
@@ -19,9 +19,10 @@ import {
   Collapse,
   Divider,
   Drawer,
+  Flex,
   Group,
   HoverCard,
-  Indicator,
+  Menu,
   ScrollArea,
   SimpleGrid,
   Text,
@@ -34,6 +35,7 @@ import classes from './HeaderMenu.module.css';
 import Image from 'next/image';
 import { LanguagePicker } from './LanguagePicker';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const mockdata = [
   {
@@ -72,6 +74,7 @@ export function HeaderMenu() {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
   const theme = useMantineTheme();
+  const pathname = usePathname();
 
   const links = mockdata.map((item) => (
     <UnstyledButton className={classes.subLink} key={item.title}>
@@ -90,6 +93,8 @@ export function HeaderMenu() {
       </Group>
     </UnstyledButton>
   ));
+
+  if (pathname.includes('dashboard/tool/text-to-image')) return null;
 
   return (
     <Box style={{ zIndex: 100, position: 'relative' }}>
@@ -159,25 +164,43 @@ export function HeaderMenu() {
             <Link href="#" className={classes.link}>
               Soporte
             </Link>
-          </Group>
 
-          <Group visibleFrom="sm">
-            <Link href='/cart'>
-              <Indicator id='indicator-cart' inline label="1" size={16} color='#1E1E2D' className={classes.indicatorContainer}>
-                <IconShoppingCart size={25} color="#F3C96B" />
-              </Indicator>
-            </Link>
-            <Button variant="default" component='div'>
-              <Link href='/auth/login'>
-                Log in
-              </Link>
-            </Button>
-            <Button color='#F3C96B' style={{ color: '#1E1E2D'}} component='div'>
-              <Link href='/auth/signup'>
-                Registrate
-              </Link>
-            </Button>
-            <LanguagePicker />
+            <Group visibleFrom="sm" gap={0}>
+              {/* <Link href='/cart'>
+                <Indicator id='indicator-cart' inline label="1" size={16} color='#1E1E2D' className={classes.indicatorContainer}>
+                  <IconShoppingCart size={25} color="#F3C96B" />
+                </Indicator>
+              </Link> */}
+              {/* <Button variant="default" component='div'>
+                <Link href='/auth/login'>
+                  Log in
+                </Link>
+              </Button>
+              <Button color='#F3C96B' style={{ color: '#1E1E2D'}} component='div'>
+                <Link href='/auth/signup'>
+                  Registrate
+                </Link>
+              </Button> */}
+              <LanguagePicker />
+              <Menu radius="md" width="auto" withinPortal={false}>
+                <Menu.Target>
+                  <UnstyledButton className={classes.control}>
+                    <Flex gap="xs" align="center">
+                      <IconUser stroke={2} />
+                      <IconChevronDown size={16} stroke={1.5} className={classes.icon} />
+                    </Flex>
+                  </UnstyledButton>
+                </Menu.Target>
+                <Menu.Dropdown>
+                  <Menu.Item component="a" href="/auth/login">
+                    Log in
+                  </Menu.Item>
+                  <Menu.Item component="a" href="/auth/signup">
+                    Registrate
+                  </Menu.Item>
+                </Menu.Dropdown>
+              </Menu>
+            </Group>
           </Group>
 
           <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" />

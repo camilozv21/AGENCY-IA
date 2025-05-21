@@ -71,7 +71,7 @@ export async function POST(request: NextRequest){
         return Response.json(generateImageFromImage, { status: 200 });
    
     } catch (error: unknown) {
-        return Response.json({ error: 'Error interno', details: (error as Error).message }, { status: 500 });
+        return Response.json({ error: 'Error interno', details: (error as Error).message, success: false, }, { status: 500 });
     }
 }
 

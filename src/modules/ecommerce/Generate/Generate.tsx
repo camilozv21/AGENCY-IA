@@ -1,7 +1,7 @@
 "use client";
 
 import classes from './Generate.module.css';
-import { Center, Flex, Button, TextInput } from '@mantine/core';
+import { Center, Flex, Button, Textarea } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
 import SkeletonImage from './SkeletonImage';
@@ -12,6 +12,7 @@ import { camera, iluminations, sizes, styles } from '@/utils/aspectsRatio';
 import SidebarFilters from './SidebarFilters';
 import Image from 'next/image';
 import { generateImagesFromFormImageCanva } from '@/services/aws/generateImageFromFormImageCanva';
+import { useMediaQuery } from '@mantine/hooks';
 
 interface FormValues {
   prompt: string;
@@ -30,6 +31,7 @@ export default function Generate() {
   const [menuOpenedIlumination, setMenuOpenedIlumination] = useState(false);
   const [menuOpenedCamera, setMenuOpenedCamera] = useState(false);
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const isMobile = useMediaQuery('(max-width: 768px)');
 
   const form = useForm<FormValues>({
     mode: 'uncontrolled',
@@ -122,7 +124,7 @@ export default function Generate() {
   };
 
   return (
-    <Flex>
+    <Flex className={classes.flexContainer}>
       <SidebarFilters
         selectedAspectRatio={selectedAspectRatio}
         setSelectedAspectRatio={setSelectedAspectRatio}
@@ -152,7 +154,7 @@ export default function Generate() {
             onSubmit={form.onSubmit((values) => uploadedImage ? handleCreateImageFromImage(values) : handleCreateImage(values))}
           >
             <Flex
-              direction="row"
+              direction={isMobile ? "column" : "row"}
               align="center"
               justify="flex-start"
               gap={20}
@@ -164,8 +166,9 @@ export default function Generate() {
                     <div
                       key={index}
                       style={{
-                        width: `calc(100% / ${quantityImages > 3 ? 3 : quantityImages} - 20px)`,
+                        width: isMobile ? '100%' : `calc(100% / ${quantityImages > 3 ? 3 : quantityImages} - 20px)`,
                         aspectRatio: selectedAspectRatio?.ratio || '1 / 1',
+                        marginTop: '3rem'
                       }}
                     >
                       <SkeletonImage />
@@ -177,11 +180,12 @@ export default function Generate() {
                       <div
                         key={index}
                         style={{
-                          width: `calc(100% / ${quantityImages > 3 ? 3 : quantityImages} - 20px)`,
+                          width: isMobile ? '100%' : `calc(100% / ${quantityImages > 3 ? 3 : quantityImages} - 20px)`,
                           aspectRatio: selectedAspectRatio?.ratio || '1 / 1',
                           display: 'flex',
                           flexDirection: 'column',
                           alignItems: 'center',
+                          marginTop: '3rem'
                         }}
                       >
                         <Image
@@ -218,26 +222,34 @@ export default function Generate() {
               }
             </Flex>
       
-            <TextInput
-              className={classes.input}
-              size="lg"
-              placeholder="¿Qué quieres ver en la imagen?"
-              rightSectionWidth={42}
-              leftSection={<IconSparkles size={18} stroke={1.5} color="#FFFFFF" />}
-              rightSection={
-                <Button
-                  type="submit"
-                  color="#7438FF"
-                  size="sm"
-                  style={{ color: '#FFFFFF', marginRight: 6 }}
-                >
-                  Generar Imagen
-                </Button>
-              }
-              rightSectionProps={{ style: { width: 'auto' } }}
-              {...form.getInputProps('prompt')}
-              key={form.key('prompt')}
-            />
+            <Flex
+              direction={isMobile ? 'column' : 'row'}
+              align="center"
+              justify="center"
+              gap={5}
+              className={classes.inputContainer}
+            >
+              <Textarea
+                className={classes.input}
+                size="lg"
+                autosize
+                placeholder="¿Qué quieres ver en la imagen?"
+                rightSectionWidth={42}
+                leftSection={<IconSparkles size={18} stroke={1.5} color="#FFFFFF" />}
+                rightSectionProps={{ style: { width: 'auto' } }}
+                {...form.getInputProps('prompt')}
+                key={form.key('prompt')}
+              />
+              <Button
+                type="submit"
+                color="#7438FF"
+                size="sm"
+                style={{ color: '#FFFFFF', maxWidth: '700px' }}
+                className={classes.button}
+              >
+                Generar Imagen
+              </Button>
+            </Flex>
           </form>
         </Flex>
       </Center>
