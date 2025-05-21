@@ -103,6 +103,7 @@ export function Signup() {
             size="md"
             color="#F3C96B"
             style={{ color: "#1E1E2D" }}
+            loading={isLoading}
           >
             Registrarse
           </Button>

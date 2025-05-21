@@ -11,6 +11,9 @@ export async function generateImagesFromFormImageCanva({ prompt,imageBase64,sett
     const cookie = (await cookies()).get('session')?.value
     try {
           const response = await httpService.post<CreateImageFromFormImageCanva>("/aws-image-image-canva/generate-image-from-form-image-canva", {prompt,imageBase64,settings},{credentials:"include",headers:{"cookie":`session=${cookie}`}});
+          if (response.success === false) {
+            return { success: false, error: response.error || "No se pudo generar la imagen" };
+          }
           return { success: true, data: response };
       } catch (error: unknown) {
           console.error("Error during image creation:", (error as Error).message);

@@ -52,7 +52,7 @@ export default async function RootLayout({ children, params }: { children: React
         <Notifications />
           <TranslationsProvider locale={locale} namespaces={namespaces} resources={resources}>
             <HeaderMenu />
-            <main>{children}</main>
+            <main style={{height: '100dvh', width: '100dvw'}}>{children}</main>
             <Footer />
           </TranslationsProvider>
         </MantineProvider>

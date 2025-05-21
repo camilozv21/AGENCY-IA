@@ -1,11 +1,11 @@
-.carouselContainer {
+.container {
   position: relative;
-  display: flex;
   aspect-ratio: 16 / 9;
   overflow: hidden;
   border-radius: 1rem;
   background-color: var(--mantine-color-neutral-21);
-  margin: 10px;
+  /* margin: 10px 90px 10px 10px; */
+  margin: 1rem;
 }
 
 .imageWrapper {
@@ -80,8 +80,9 @@
   font-size: 16px;
 }
 
+
 @media screen and (min-width: 768px) {
-  .carouselContainer {
+  .container {
     aspect-ratio: 1138 / 300;
     margin: 1rem;
   }
