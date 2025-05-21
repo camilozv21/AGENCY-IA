@@ -77,6 +77,7 @@ export async function POST(request: NextRequest) {
         JSON.stringify({
           error: "Error al generar la imagen",
           details: (error as Error).message,
+          success: false,
         }),
         {
           status: 500,
@@ -88,7 +89,7 @@ export async function POST(request: NextRequest) {
     }
 
   }catch (error: unknown) {
-    return Response.json({ error: 'Error interno', details: (error as Error).message }, { status: 500 });
-}
+      return new Response(JSON.stringify({ error: 'Error interno', details: (error as Error).message, success: false, }), { status: 500, headers: { "Content-Type": "application/json" } });
+  }
  
 }

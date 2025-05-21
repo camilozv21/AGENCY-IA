@@ -1,4 +1,4 @@
-export function applyselectPayload(typeTask: string, cleanBase64: string, prompt: string, styledPrompt: string, numberOfImages:number, height:number, width:number) {
+export function applyselectPayload(typeTask: string = "OUTPAINTING", cleanBase64: string, prompt: string, styledPrompt: string, numberOfImages:number, height:number, width:number) {
     let payload;  
     switch (typeTask) {
       case 'OUTPAINTING':
