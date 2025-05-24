@@ -29,6 +29,10 @@ export interface ImageSettingsProps {
   setQuantityImages: React.Dispatch<React.SetStateAction<number>>;
   uploadedImage: string | null;
   setUploadedImage: React.Dispatch<React.SetStateAction<string | null>>;
+  setSelectedTypeTask: React.Dispatch<React.SetStateAction<string>>;
+  selectedTypeTask: string;
+  menuOpenedTypeTask: boolean;
+  setMenuOpenedTypeTask: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function ImageSettings({
@@ -51,7 +55,11 @@ export default function ImageSettings({
   menuOpenedCamera,
   setMenuOpenedCamera,
   uploadedImage,
-  setUploadedImage
+  setUploadedImage,
+  selectedTypeTask,
+  setSelectedTypeTask,
+  menuOpenedTypeTask,
+  setMenuOpenedTypeTask
 }: ImageSettingsProps) {
     const theme = useMantineTheme();
     const openRef = useRef<() => void>(null);
@@ -69,6 +77,75 @@ export default function ImageSettings({
 
   return (
     <>
+      <Text color='#C7C7C7'>Tipo de Generacion</Text>
+      <Menu
+        width={320}
+        offset={isMobile ? 10 : 25}
+        shadow="md"
+        position={isMobile ? "bottom" : "right-start"}
+        closeOnClickOutside
+        closeOnEscape
+        closeOnItemClick
+        clickOutsideEvents={['mousedown', 'touchstart']}
+        keepMounted={true}
+        transitionProps={{ duration: 150, transition: 'fade' }}
+        onOpen={() => {
+          setMenuOpenedTypeTask(true);
+        }}
+        onClose={() => {
+          setMenuOpenedTypeTask(false);
+        }}
+        opened={menuOpenedTypeTask}
+      >
+        <MenuTarget>
+          <NavLink
+            label={
+              <Flex align="center" gap="sm">
+                <selectedAspectRatio.icon size={16} />
+                {selectedAspectRatio.ratio.replace(/-/g, ' ')}
+              </Flex>
+            }
+            color="gray"
+            rightSection={
+              <IconChevronRight size={12} stroke={1.5} className="mantine-rotate-rtl" />
+            }
+            active
+          />
+        </MenuTarget>
+        <MenuDropdown>
+          <ScrollAreaAutosize mah={'500px'} maw={400} scrollbars='y' mx="auto" offsetScrollbars scrollbarSize={4}>
+          <Flex justify="space-between" align="center" px={10} py={5}>
+            <Text size="sm" fw={700}>
+              Aspect Ratio
+            </Text>
+            <CloseButton
+              onClick={() => setMenuOpened(false)}
+              aria-label="Close menu"
+              size={20}
+            />
+          </Flex>
+          <Divider />
+          <Grid my={10}>
+            {sizes.map((ratio, index) => (
+              <GridCol
+                span={3}
+                key={index}
+                onClick={() => setSelectedAspectRatio(ratio)}
+                style={{ cursor: "pointer" }}
+              >
+                <Flex direction="column" align="center">
+                  <ActionIcon variant={selectedAspectRatio === ratio ? 'outline' : 'light'} aria-label='Aspect Ratio' color='gray' size={60}>
+                    <ratio.icon size={24} />
+                  </ActionIcon>
+                  <Text size="xs">{ratio.ratio.replace(/-/g, ' ')}</Text>
+                </Flex>
+              </GridCol>
+            ))}
+          </Grid>
+          </ScrollAreaAutosize>
+        </MenuDropdown>
+      </Menu>
+
       <Text color='#C7C7C7'>Aspect Ratio</Text>
       <Menu
         width={320}

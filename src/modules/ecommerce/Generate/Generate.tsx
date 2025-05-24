@@ -26,10 +26,12 @@ export default function Generate() {
   const [selectedIlumination, setSelectedIlumination] = useState<typeof iluminations[0]>();
   const [selectedCamera, setSelectedCamera] = useState<typeof camera[0]>();
   const [quantityImages, setQuantityImages] = useState(3);
+  const [selectedTypeTask, setSelectedTypeTask] = useState('');
   const [menuOpened, setMenuOpened] = useState(false);
   const [menuOpenedStyle, setMenuOpenedStyle] = useState(false);
   const [menuOpenedIlumination, setMenuOpenedIlumination] = useState(false);
   const [menuOpenedCamera, setMenuOpenedCamera] = useState(false);
+  const [menuOpenedTypeTask, setMenuOpenedTypeTask] = useState(false);
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const isMobile = useMediaQuery('(max-width: 768px)');
 
@@ -146,6 +148,10 @@ export default function Generate() {
         setMenuOpenedCamera={setMenuOpenedCamera}
         uploadedImage={uploadedImage}
         setUploadedImage={setUploadedImage}
+        setSelectedTypeTask={setSelectedTypeTask}
+        selectedTypeTask={selectedTypeTask}
+        menuOpenedTypeTask={menuOpenedTypeTask}
+        setMenuOpenedTypeTask={setMenuOpenedTypeTask}
       />
       <Center px={15} pb={50} inline={false} className={classes.container}>
         <Flex direction="column" align="center" justify="center" h={'100%'} w={'100%'}>
@@ -204,8 +210,8 @@ export default function Generate() {
                         <Button
                           leftSection={<IconDownload />}
                           mt="sm"
-                          color="#F3C96B"
-                          style={{ color: '#1E1E2D' }}
+                          color="var(--yellow-contia)"
+                          style={{ color: 'var(--text-brown)' }}
                           onClick={() => handleDownload(base64, index)}
                         >
                           Descarga

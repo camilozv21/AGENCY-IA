@@ -11,12 +11,37 @@ interface User extends Document {
 }
 
 const UserSchema: Schema = new Schema({
-  email: { type: String, required: true, unique: true },
+  name: { type: String, trim: true },
+  email: { type: String, required: true, unique: true, lowercase: true },
+  image: { type: String },
   password: { type: String, required: true },
-  role: { type: String, required: true, default: 'user' },
+  role: { type: String, required: true, default: "user" },
   tokensQuantity: { type: Number, default: 10 },
-  tokensExpDate: { type: Date, default: null }
-});
+  tokensExpDate: { type: Date, default: null },
+  // stripe
+  customerId: {
+      type: String,
+      validate(value: string): boolean {
+        return value.includes("cus_");
+      },
+    },
+    // Used in the Stripe webhook. should match a plan in config.js file.
+    priceId: {
+      type: String,
+      validate(value: string): boolean {
+        return value.includes("price_");
+      },
+    },
+    // Used to determine if the user has access to the product—it's turn on/off by the Stripe webhook
+    hasAccess: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
 UserSchema.methods.comparePassword = async function (candidatePassword: string) {
   const isMatch = await bcrypt.compare(candidatePassword, this.password);

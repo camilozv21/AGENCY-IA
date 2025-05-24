@@ -23,6 +23,6 @@
 }
 
 .link {
-  color: #F3C96B;
+  color: var(--yellow-contia);
   font-weight: 700;
 }

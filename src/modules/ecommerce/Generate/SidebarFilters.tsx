@@ -25,7 +25,11 @@ export default function SidebarFilters({
   quantityImages,
   setQuantityImages,
   uploadedImage,
-  setUploadedImage
+  setUploadedImage,
+  setSelectedTypeTask,
+  selectedTypeTask,
+  menuOpenedTypeTask,
+  setMenuOpenedTypeTask
 }: ImageSettingsProps) {
   const isMobile = useMediaQuery('(max-width: 768px)');
   const isBigScreen = useMediaQuery('(min-width: 1402px)');
@@ -79,6 +83,10 @@ export default function SidebarFilters({
                 setMenuOpenedCamera={setMenuOpenedCamera}
                 uploadedImage={uploadedImage}
                 setUploadedImage={setUploadedImage}
+                setSelectedTypeTask={setSelectedTypeTask}
+                selectedTypeTask={selectedTypeTask}
+                menuOpenedTypeTask={menuOpenedTypeTask}
+                setMenuOpenedTypeTask={setMenuOpenedTypeTask}
               />
             {/* </ScrollAreaAutosize> */}
           </div>

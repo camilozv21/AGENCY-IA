@@ -15,12 +15,15 @@ import Link from "next/link";
 import type { Login } from "@/types/login.types";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { userInfoFailure, userInfoStart, userInfoSuccess } from "@/lib/features/user/user";
+import { useAppDispatch } from "@/lib/hooks";
 
 interface FormValues { email: string; password: string }
 
 export function Login() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useAppDispatch();
 
   const form = useForm<FormValues>({
     mode: "uncontrolled",
@@ -40,6 +43,7 @@ const handleSubmit = async (values: FormValues) => {
 
   try {
     // const response = await loginUser({ email, password });
+    dispatch(userInfoStart());
     setIsLoading(true);
     const responseFetch = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`, {
       method: "POST",
@@ -50,8 +54,10 @@ const handleSubmit = async (values: FormValues) => {
     
     setIsLoading(false);
     const response: Login = await responseFetch.json();
+    dispatch(userInfoSuccess(response));
 
     if (response.error) {
+      dispatch(userInfoFailure(response.error));
       setIsLoading(false);
       notifications.show({
         title: "Error",
@@ -70,6 +76,7 @@ const handleSubmit = async (values: FormValues) => {
     form.reset();
     router.push("/dashboard");
   } catch (error) {
+      dispatch(userInfoFailure("Error durante el inicio de sesión"));
       setIsLoading(false);
       console.error("Error durante el login:", error);
       notifications.show({
@@ -109,8 +116,8 @@ const handleSubmit = async (values: FormValues) => {
             fullWidth
             mt="xl"
             size="md"
-            color="#F3C96B"
-            style={{ color: "#1E1E2D" }}
+            color="var(--yellow-contia)"
+            style={{ color: "var(--text-brown)" }}
             loading={isLoading}
           >
             Iniciar sesión
