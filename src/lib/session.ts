@@ -10,6 +10,7 @@ const encodedKey = new TextEncoder().encode(secretKey)
 interface SessionPayload extends JwtPayload {
   id: string
   role: string
+  email: string
   expiresAt: Date
 }
  
@@ -32,9 +33,9 @@ export async function decrypt(session: string | undefined = '') {
   }
 }
 
-export async function createSession({ id, role }: { id: string; role: string }) {
+export async function createSession({ id, role, email }: { id: string; role: string, email: string }) {
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-  const session = await encrypt({ id, role, expiresAt })
+  const session = await encrypt({ id, role, email, expiresAt })
   return session
 }
 
@@ -45,7 +46,7 @@ export async function getSession(request: NextRequest) {
   const session = await decrypt(cookie) as SessionPayload
   if (!session?.id) return null
 
-  return { isAuth: true, userId: session.id, role: session.role }
+  return { isAuth: true, userId: session.id, role: session.role, email: session.email }
 }
 
 export async function deleteSession() {
