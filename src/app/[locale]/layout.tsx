@@ -17,6 +17,7 @@ import TranslationsProvider from "./TranslationsProvider";
 import { Footer } from "@/common/Footer/Footer";
 import { HeaderMenu } from "@/common/Header/HeaderMenu";
 import icon from "../favicon.ico";
+import StoreProvider from "./StoreProvider";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -47,16 +48,18 @@ export default async function RootLayout({ children, params }: { children: React
 
   return (
     <html lang={locale} dir={dir(locale)}>
-      <body className={manrope.variable}>
-        <MantineProvider defaultColorScheme="dark">
-        <Notifications />
-          <TranslationsProvider locale={locale} namespaces={namespaces} resources={resources}>
-            <HeaderMenu />
-            <main style={{height: '100%', width: '100%'}}>{children}</main>
-            <Footer />
-          </TranslationsProvider>
-        </MantineProvider>
-      </body>
+      <StoreProvider>
+        <body className={manrope.variable}>
+          <MantineProvider defaultColorScheme="dark">
+            <Notifications />
+            <TranslationsProvider locale={locale} namespaces={namespaces} resources={resources}>
+              <HeaderMenu />
+              <main style={{height: '100%', width: '100%'}}>{children}</main>
+              <Footer />
+            </TranslationsProvider>
+          </MantineProvider>
+        </body>
+      </StoreProvider>
     </html>
   );
 }

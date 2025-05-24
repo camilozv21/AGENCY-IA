@@ -101,8 +101,8 @@ export function Signup() {
             fullWidth
             mt="xl"
             size="md"
-            color="#F3C96B"
-            style={{ color: "#1E1E2D" }}
+            color="var(--yellow-contia)"
+            style={{ color: "var(--text-brown)" }}
             loading={isLoading}
           >
             Registrarse

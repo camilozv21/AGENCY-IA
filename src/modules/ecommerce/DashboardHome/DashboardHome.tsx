@@ -31,7 +31,7 @@ export default function DashboardHome() {
           <Button
             className={classes.button}
             component="a"
-            color='#F3C96B'
+            color='var(--yellow-contia)'
             href="/dashboard/tool/text-to-image"
           >
             Provar Ahora

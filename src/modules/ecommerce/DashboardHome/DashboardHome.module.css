@@ -62,7 +62,7 @@
   font-size: 14px;
   padding: 0.625rem 1rem;
   border-radius: 0.75rem;
-  color: #1E1E2D;
+  color: var(--text-brown);
   text-decoration: none;
   transition: background-color 0.2s ease;
 }

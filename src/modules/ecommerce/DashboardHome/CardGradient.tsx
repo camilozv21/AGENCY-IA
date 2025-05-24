@@ -33,7 +33,7 @@ export function CardGradient({ imageUrl, title, description, buttonText }: { ima
         </Group>
 
         <Group justify='flex-end'>
-          <Button onClick={() => handleButtonClick()} rightSection={<IconArrowRight />} color="#F3C96B" mt="sm" radius="md" style={{ color: '#1E1E2D'}}>
+          <Button onClick={() => handleButtonClick()} rightSection={<IconArrowRight />} color="var(--yellow-contia)" mt="sm" radius="md" style={{ color: 'var(--text-brown)'}}>
             {buttonText}
           </Button>
         </Group>

@@ -35,9 +35,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Credenciales inválidas' }, { status: 401 });
     }
 
-    const session = await createSession({ id: user._id.toString(), role: user.role });
+    const session = await createSession({ id: user._id.toString(), role: user.role, email: user.email });
 
-    const response = new NextResponse(JSON.stringify({ message: "Login exitoso", session, tokenInfo: { tokensQuantity: user.tokensQuantity, tokensExpDate: user.tokensExpDate } }), {
+    const response = new NextResponse(JSON.stringify({ message: "Login exitoso", session, tokenInfo: { tokensQuantity: user.tokensQuantity, tokensExpDate: user.tokensExpDate }, email: user.email }), {
       status: 200,
       headers: {
         "Content-Type": "application/json",
