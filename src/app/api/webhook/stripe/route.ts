@@ -35,6 +35,7 @@ export async function POST(req: Request) {
                 // First payment is successful and a subscription is created (if mode was set to "subscription" in ButtonCheckout)
                 // ✅ Grant access to the product
                 let user;
+                let password = Math.random().toString(36).slice(-8);
                 const session = await stripe.checkout.sessions.retrieve(
                     (data.object as Stripe.Checkout.Session).id,
                     {
@@ -55,6 +56,7 @@ export async function POST(req: Request) {
                         user = await User.create({
                             email: customer.email,
                             name: customer.name,
+                            password: password,
                             customerId
                         });
 
@@ -69,8 +71,8 @@ export async function POST(req: Request) {
                 user.priceId = priceId;
                 user.hasAccess = true;
                 await user.save();
-
-                // Extra: >>>>> send email to dashboard <<<<
+                console.log(password);
+                // Extra: >>>>> send email to dashboard <<<<<
 
                 break;
             }
