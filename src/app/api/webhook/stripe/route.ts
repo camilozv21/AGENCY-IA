@@ -3,6 +3,7 @@ import { headers } from 'next/headers';
 import Stripe from 'stripe';
 import User from '@/models/User';
 import dbConnect from '@/lib/dbConnect';
+import bcrypt from 'bcrypt';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '');
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || '';
@@ -35,7 +36,8 @@ export async function POST(req: Request) {
                 // First payment is successful and a subscription is created (if mode was set to "subscription" in ButtonCheckout)
                 // ✅ Grant access to the product
                 let user;
-                let password = Math.random().toString(36).slice(-8);
+                let hashedPassword = await bcrypt.hash(Math.random().toString(36).slice(-8), 10);
+                let password = hashedPassword
                 const session = await stripe.checkout.sessions.retrieve(
                     (data.object as Stripe.Checkout.Session).id,
                     {
