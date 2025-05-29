@@ -88,6 +88,20 @@
   box-shadow: 0 0 5px 0px var(--mantine-color-violet-8);
 }
 
+.buttonGoBack {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  border-radius: 20%;
+  background: var(--mantine-color-red-9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+  /* box-shadow: 0 0 5px 0px var(--mantine-color-red-6); */
+}
+
 .flexContainer {
   height: 100dvh;
 }

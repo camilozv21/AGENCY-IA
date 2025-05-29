@@ -8,7 +8,7 @@ import SkeletonImage from './SkeletonImage';
 import { IconDownload, IconPhoto, IconSparkles } from '@tabler/icons-react';
 import { notifications } from '@mantine/notifications';
 import { generateImagesFromFormCanva } from '@/services/aws/generateImageFromFormCanva';
-import { camera, iluminations, sizes, styles } from '@/utils/aspectsRatio';
+import { camera, iluminations, sizes, styles, typesTask } from '@/utils/aspectsRatio';
 import SidebarFilters from './SidebarFilters';
 import Image from 'next/image';
 import { generateImagesFromFormImageCanva } from '@/services/aws/generateImageFromFormImageCanva';
@@ -26,7 +26,7 @@ export default function Generate() {
   const [selectedIlumination, setSelectedIlumination] = useState<typeof iluminations[0]>();
   const [selectedCamera, setSelectedCamera] = useState<typeof camera[0]>();
   const [quantityImages, setQuantityImages] = useState(3);
-  const [selectedTypeTask, setSelectedTypeTask] = useState('');
+  const [selectedTypeTask, setSelectedTypeTask] = useState<typeof typesTask[0]>(typesTask[0]);
   const [menuOpened, setMenuOpened] = useState(false);
   const [menuOpenedStyle, setMenuOpenedStyle] = useState(false);
   const [menuOpenedIlumination, setMenuOpenedIlumination] = useState(false);
@@ -92,7 +92,7 @@ export default function Generate() {
     const imageBase64 = uploadedImage || '';
 
     setLoading(true);
-    const response = await generateImagesFromFormImageCanva({prompt, imageBase64, settings});
+    const response = await generateImagesFromFormImageCanva({prompt, imageBase64, settings, typeTask: selectedTypeTask?.type});
 
     if (!response.success) {
       notifications.show({

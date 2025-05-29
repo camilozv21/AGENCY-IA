@@ -1,6 +1,6 @@
 import { Menu, Text, Divider, Grid, Flex, ActionIcon, CloseButton, MenuTarget, NavLink, MenuDropdown, ScrollAreaAutosize, GridCol, Group, useMantineTheme, Select } from "@mantine/core";
 import { useRef } from "react";
-import { sizes, styles, iluminations, camera } from "@/utils/aspectsRatio";
+import { sizes, styles, iluminations, camera, typesTask } from "@/utils/aspectsRatio";
 import { IconChevronRight, IconCloudUpload, IconDownload, IconPalette, IconSunLowFilled, IconX } from "@tabler/icons-react";
 import Image from "next/image";
 import classes from "./Generate.module.css";
@@ -29,8 +29,8 @@ export interface ImageSettingsProps {
   setQuantityImages: React.Dispatch<React.SetStateAction<number>>;
   uploadedImage: string | null;
   setUploadedImage: React.Dispatch<React.SetStateAction<string | null>>;
-  setSelectedTypeTask: React.Dispatch<React.SetStateAction<string>>;
-  selectedTypeTask: string;
+  setSelectedTypeTask: React.Dispatch<React.SetStateAction<typeof typesTask[0]>>;
+  selectedTypeTask: typeof typesTask[0];
   menuOpenedTypeTask: boolean;
   setMenuOpenedTypeTask: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -79,7 +79,7 @@ export default function ImageSettings({
     <>
       <Text color='#C7C7C7'>Tipo de Generacion</Text>
       <Menu
-        width={320}
+        width={200}
         offset={isMobile ? 10 : 25}
         shadow="md"
         position={isMobile ? "bottom" : "right-start"}
@@ -98,11 +98,10 @@ export default function ImageSettings({
         opened={menuOpenedTypeTask}
       >
         <MenuTarget>
-          <NavLink
+          <NavLink mb={15}
             label={
               <Flex align="center" gap="sm">
-                <selectedAspectRatio.icon size={16} />
-                {selectedAspectRatio.ratio.replace(/-/g, ' ')}
+                {selectedTypeTask ? selectedTypeTask.label : 'Outpainting'}
               </Flex>
             }
             color="gray"
@@ -116,7 +115,7 @@ export default function ImageSettings({
           <ScrollAreaAutosize mah={'500px'} maw={400} scrollbars='y' mx="auto" offsetScrollbars scrollbarSize={4}>
           <Flex justify="space-between" align="center" px={10} py={5}>
             <Text size="sm" fw={700}>
-              Aspect Ratio
+              Tipo de Generacion
             </Text>
             <CloseButton
               onClick={() => setMenuOpened(false)}
@@ -125,23 +124,16 @@ export default function ImageSettings({
             />
           </Flex>
           <Divider />
-          <Grid my={10}>
-            {sizes.map((ratio, index) => (
-              <GridCol
-                span={3}
-                key={index}
-                onClick={() => setSelectedAspectRatio(ratio)}
-                style={{ cursor: "pointer" }}
-              >
-                <Flex direction="column" align="center">
-                  <ActionIcon variant={selectedAspectRatio === ratio ? 'outline' : 'light'} aria-label='Aspect Ratio' color='gray' size={60}>
-                    <ratio.icon size={24} />
-                  </ActionIcon>
-                  <Text size="xs">{ratio.ratio.replace(/-/g, ' ')}</Text>
-                </Flex>
-              </GridCol>
+          <Flex my={10} direction="column" align="flex-start">
+            {typesTask.map((task, index) => (
+              <Flex style={{ cursor: "pointer" }} direction="column" align="flex-start" key={index} p={'xs'} onClick={() => setSelectedTypeTask(task)}>
+                {/* <ActionIcon variant={selectedTypeTask === task.label ? 'outline' : 'light'} aria-label='Aspect Ratio' color='gray' size={60}>
+                  <task.icon size={24} />
+                </ActionIcon> */}
+                <Text>{task.label.replace(/-/g, ' ')}</Text>
+              </Flex>
             ))}
-          </Grid>
+          </Flex>
           </ScrollAreaAutosize>
         </MenuDropdown>
       </Menu>
