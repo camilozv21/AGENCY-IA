@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
         secretAccessKey: process.env.SECRET_ACCESS_KEY_AWS!,
       },
     });
-    console.log(payload)
+
     const command = new InvokeModelCommand({
       modelId: "amazon.nova-canvas-v1:0",
       contentType: "application/json",

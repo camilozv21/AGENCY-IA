@@ -2,8 +2,9 @@ import { Divider, Drawer, UnstyledButton } from "@mantine/core";
 import classes from "./Generate.module.css";
 import ImageSettings, { ImageSettingsProps } from "./ImageSettings";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
-import { IconAdjustmentsHorizontal } from "@tabler/icons-react";
+import { IconAdjustmentsHorizontal, IconLogout2 } from "@tabler/icons-react";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function SidebarFilters({
   selectedAspectRatio,
@@ -34,6 +35,7 @@ export default function SidebarFilters({
   const isMobile = useMediaQuery('(max-width: 768px)');
   const isBigScreen = useMediaQuery('(min-width: 1402px)');
   const [opened, { open, close }] = useDisclosure(!isMobile);
+  const router = useRouter();
 
   useEffect(() => {
     if (isMobile) {
@@ -94,6 +96,10 @@ export default function SidebarFilters({
       </Drawer>
       <UnstyledButton variant="default" onClick={open} className={classes.buttonAdjustments}>
         <IconAdjustmentsHorizontal stroke={2} />
+      </UnstyledButton>
+
+      <UnstyledButton variant="default" onClick={router.back} className={classes.buttonGoBack}>
+        <IconLogout2 stroke={2} />
       </UnstyledButton>
     </>
   );
