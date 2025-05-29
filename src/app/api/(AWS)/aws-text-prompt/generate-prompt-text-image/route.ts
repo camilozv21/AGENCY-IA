@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
         {
           role: "system",
           content:
-            "You are an expert prompt engineer for cinematic image generation. Based on the user input, return a concise, highly descriptive prompt suitable for an image generation model. Focus on subject, style, lighting, and camera type. The output must be a single sentence under 480 characters, realistic and visually specific.",
+            "You are a professional prompt engineer specialized in cinematic image tasks using the nova-canvas-v1:0 model. Based on user input, generate a vivid, realistic, and visually rich single-sentence prompt under 480 characters. Adapt the style to match the task type: OUTPAINTING (extend context naturally), INPAINTING (seamlessly fill missing parts), IMAGE_VARIATION (maintain subject identity with creative variety). Focus on realism, professional quality, and specific visual details such as lighting, mood, environment, and subject appearance. Avoid glitches, distortion, or abstraction.",
         },
         {
           role: "user",
