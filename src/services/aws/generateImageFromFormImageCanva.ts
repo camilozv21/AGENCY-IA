@@ -7,10 +7,10 @@ import { CreateImageFromFormImageCanva } from "@/types/createImageFromFormImageC
 
 
 
-export async function generateImagesFromFormImageCanva({ prompt,imageBase64,settings }: { prompt: string ,imageBase64: string , settings: Settings}): Promise<{ success: boolean; data?: CreateImageFromFormImageCanva; error?: string }> {
+export async function generateImagesFromFormImageCanva({ prompt,imageBase64,settings,typeTask }: { prompt: string ,imageBase64: string , settings: Settings , typeTask:string  }): Promise<{ success: boolean; data?: CreateImageFromFormImageCanva; error?: string }> {
     const cookie = (await cookies()).get('session')?.value
     try {
-          const response = await httpService.post<CreateImageFromFormImageCanva>("/aws-image-image-canva/generate-image-from-form-image-canva", {prompt,imageBase64,settings},{credentials:"include",headers:{"cookie":`session=${cookie}`}});
+          const response = await httpService.post<CreateImageFromFormImageCanva>("/aws-image-image-canva/generate-image-from-form-image-canva", {prompt,imageBase64,settings,typeTask},{credentials:"include",headers:{"cookie":`session=${cookie}`}});
           if (response.success === false) {
             return { success: false, error: response.error || "No se pudo generar la imagen" };
           }
