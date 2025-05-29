@@ -63,6 +63,7 @@ export default function DashboardHome() {
               title={item.title}
               description={item.description}
               buttonText={item.buttonText}
+              disabled={item.disabled}
             />
           ))}
         </Flex>

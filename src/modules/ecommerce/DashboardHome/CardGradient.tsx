@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { IconArrowRight } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
 
-export function CardGradient({ imageUrl, title, description, buttonText }: { imageUrl: string; title: string; description: string; buttonText: string }) {
+export function CardGradient({ imageUrl, title, description, buttonText, disabled }: { imageUrl: string; title: string; description: string; buttonText: string, disabled: boolean }) {
   const router = useRouter();
 
   const handleButtonClick = () => {
@@ -33,7 +33,7 @@ export function CardGradient({ imageUrl, title, description, buttonText }: { ima
         </Group>
 
         <Group justify='flex-end'>
-          <Button onClick={() => handleButtonClick()} rightSection={<IconArrowRight />} color="var(--yellow-contia)" mt="sm" radius="md" style={{ color: 'var(--text-brown)'}}>
+          <Button disabled={disabled} onClick={() => handleButtonClick()} rightSection={<IconArrowRight />} color="var(--yellow-contia)" mt="sm" radius="md" style={{ color: 'var(--text-brown)'}}>
             {buttonText}
           </Button>
         </Group>

@@ -36,6 +36,7 @@ import Image from 'next/image';
 import { LanguagePicker } from './LanguagePicker';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useAppSelector } from '@/lib/hooks';
 
 const mockdata = [
   {
@@ -75,6 +76,7 @@ export function HeaderMenu() {
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
   const theme = useMantineTheme();
   const pathname = usePathname();
+  const user = useAppSelector((state) => state.user.data);
 
   const links = mockdata.map((item) => (
     <UnstyledButton className={classes.subLink} key={item.title}>
@@ -197,6 +199,11 @@ export function HeaderMenu() {
                   </Menu.Item>
                   <Menu.Item component="a" href="/auth/signup">
                     Registrate
+                  </Menu.Item>
+                  <Menu.Item component="a" target='_blank' 
+                    href={"https://billing.stripe.com/p/login/test_3cI5kDaku3y7gFbbYggEg00" + '?prefilled_email=' + user?.email}
+                  >
+                    Portal de usuario
                   </Menu.Item>
                 </Menu.Dropdown>
               </Menu>
