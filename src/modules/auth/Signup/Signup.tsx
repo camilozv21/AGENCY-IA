@@ -2,6 +2,8 @@
 
 import {
   Button,
+  Flex,
+  Group,
   // Checkbox,
   Paper,
   PasswordInput,
@@ -15,6 +17,8 @@ import { notifications } from "@mantine/notifications";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useState } from "react";
+import { GoogleButton } from "./GoogleButton";
+import { GoogleActions } from "./googleAction";
 
 interface FormValues { email: string; password: string }
 
@@ -78,6 +82,14 @@ export function Signup() {
         <Text className={classes.title} ta="center" mt="md" mb={50}>
           ¡Bienvenido! <br /> Crea tu cuenta
         </Text>
+
+        <Flex justify="center" mb="md">
+          <form action={GoogleActions} style={{ width: "100%" }}>
+            <GoogleButton fullWidth size="md" type="submit">
+              Registrare con Google
+            </GoogleButton>
+          </form>
+        </Flex>
 
         <form onSubmit={form.onSubmit(handleSubmit)}>
           <TextInput

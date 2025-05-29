@@ -2,6 +2,7 @@
 
 import {
   Button,
+  Flex,
   // Checkbox,
   Paper,
   PasswordInput,
@@ -17,6 +18,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { userInfoFailure, userInfoStart, userInfoSuccess } from "@/lib/features/user/user";
 import { useAppDispatch } from "@/lib/hooks";
+import { GoogleActions } from "../Signup/googleAction";
+import { GoogleButton } from "../Signup/GoogleButton";
 
 interface FormValues { email: string; password: string }
 
@@ -93,6 +96,14 @@ const handleSubmit = async (values: FormValues) => {
         <Text className={classes.title} ta="center" mt="md" mb={50}>
           ¡Bienvenido de vuelta!
         </Text>
+
+        <Flex justify="center" mb="md">
+          <form action={GoogleActions} style={{ width: "100%" }}>
+            <GoogleButton fullWidth size="md" type="submit">
+              Inicia sesión con Google
+            </GoogleButton>
+          </form>
+        </Flex>
 
         <form onSubmit={form.onSubmit(handleSubmit)}>
           <TextInput

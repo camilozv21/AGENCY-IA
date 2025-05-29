@@ -12,6 +12,7 @@ import {
 } from '@tabler/icons-react';
 import {
   Anchor,
+  Avatar,
   Box,
   Burger,
   Button,
@@ -71,12 +72,12 @@ const mockdata = [
   },
 ];
 
-export function HeaderMenu() {
+export function HeaderMenu({ user }: { user?: { email: string, name: string, image: string } }) {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
   const theme = useMantineTheme();
   const pathname = usePathname();
-  const user = useAppSelector((state) => state.user.data);
+  // const user = useAppSelector((state) => state.user.data);
 
   const links = mockdata.map((item) => (
     <UnstyledButton className={classes.subLink} key={item.title}>
@@ -188,7 +189,13 @@ export function HeaderMenu() {
                 <Menu.Target>
                   <UnstyledButton className={classes.control}>
                     <Flex gap="xs" align="center">
-                      <IconUser stroke={2} />
+                      {user ? <Image
+                        src={user.image || 'https://df50lbm4qcrt6.cloudfront.net/logonobg.png'}
+                        alt="User Avatar"
+                        width={32}
+                        height={32}
+                        style={{ borderRadius: '50%' }}
+                      /> : <IconUser stroke={2} />}
                       <IconChevronDown size={16} stroke={1.5} className={classes.icon} />
                     </Flex>
                   </UnstyledButton>

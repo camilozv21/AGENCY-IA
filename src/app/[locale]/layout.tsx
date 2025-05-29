@@ -18,6 +18,7 @@ import { Footer } from "@/common/Footer/Footer";
 import { HeaderMenu } from "@/common/Header/HeaderMenu";
 import icon from "../favicon.ico";
 import StoreProvider from "./StoreProvider";
+import { auth } from "@/auth";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -46,6 +47,9 @@ export default async function RootLayout({ children, params }: { children: React
 
   const { resources } = await initTranslations(locale, namespaces);
 
+  const session = await auth();
+  const user = session?.user;
+
   return (
     <html lang={locale} dir={dir(locale)}>
       <StoreProvider>
@@ -53,7 +57,7 @@ export default async function RootLayout({ children, params }: { children: React
           <MantineProvider defaultColorScheme="dark">
             <Notifications />
             <TranslationsProvider locale={locale} namespaces={namespaces} resources={resources}>
-              <HeaderMenu />
+              <HeaderMenu user={user ? { email: user.email ?? '', name: user.name ?? '', image: user.image ?? '' } : undefined} />
               <main style={{height: '100%', width: '100%'}}>{children}</main>
               <Footer />
             </TranslationsProvider>
