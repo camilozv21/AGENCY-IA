@@ -89,8 +89,8 @@ export const camera = [
 ];
 
 export const typesTask = [
-  { type: "INPAINTING", description: "Inpainting es una operación de edición que se puede utilizar para añadir, eliminar o reemplazar elementos dentro de una imagen. Inpainting requiere una indicación en lenguaje natural para definir qué partes de la imagen se deben modificar.", label: "Inpainting" },
   { type: "OUTPAINTING", description: "Outpainting se utiliza para reemplazar el fondo de una imagen. Para obtener los mejores resultados, los prompts de outpainting deben describir cómo te gustaría que se viera toda la imagen, incluyendo las partes que no serán modificadas.", label: "Outpainting" },
+  { type: "INPAINTING", description: "Inpainting es una operación de edición que se puede utilizar para añadir, eliminar o reemplazar elementos dentro de una imagen. Inpainting requiere una indicación en lenguaje natural para definir qué partes de la imagen se deben modificar.", label: "Inpainting" },
   { type: "IMAGE_VARIATION", description: "Proporciona una imagen de entrada con un prompt de texto para influir en la imagen generada. Esto puede utilizarse para influir en el estilo visual de la imagen generada, para generar variaciones de una misma imagen, y para otros efectos creativos y de control.", label: "Variación de Imagen" },
   { type: "BACKGROUND_REMOVAL", description: "Elimina automáticamente el fondo de cualquier imagen, reemplazándolo por píxeles transparentes. Esto puede ser útil cuando deseas combinar la imagen con otros elementos en una aplicación de edición, presentación o sitio web.", label: "Eliminación de Fondo" },
 ]

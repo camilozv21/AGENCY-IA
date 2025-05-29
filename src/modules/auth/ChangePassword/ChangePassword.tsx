@@ -48,8 +48,8 @@ export function ChangePassword() {
         } else {
           setErrorMessage('Error al validar el token.');
         }
-      } catch (error) {
-        setErrorMessage('Error en la conexión.');
+      } catch (error: unknown) {
+        setErrorMessage(`Error en la conexión: ${error instanceof Error ? error.message : 'Error desconocido'}`);
       }
       setLoading(false);
     }
@@ -76,8 +76,8 @@ export function ChangePassword() {
         const data = await res.json();
         setErrorMessage(data.error || 'Error al cambiar la contraseña.');
       }
-    } catch (error) {
-      setErrorMessage('Error en la conexión.');
+    } catch (error: unknown) {
+      setErrorMessage(`Error en la conexión: ${error instanceof Error ? error.message : 'Error desconocido'}`);
     }
   };
 
