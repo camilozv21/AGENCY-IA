@@ -4,17 +4,22 @@ export const data = [
     title: 'Crear Post',
     description: 'Generacion de imagenes, edicion y mucho mas.',
     buttonText: 'Crear Post',
+    disabled: false
   },
   {
     imageUrl: 'https://df50lbm4qcrt6.cloudfront.net/dashboard/card_reloj.png',
     title: 'Crear Reel/video',
     description: 'Generacion de videos y mucho mas.',
-    buttonText: 'Crear video',
+    // buttonText: 'Crear video',
+    buttonText: 'Proximamente',
+    disabled: true
   },
   {
     imageUrl: 'https://df50lbm4qcrt6.cloudfront.net/dashboard/card_ideas.png',
     title: 'Generador de Ideas',
     description: 'Generacion de ideas y mucho mas.',
-    buttonText: 'Crear Ideas',
+    // buttonText: 'Crear Ideas',
+    buttonText: 'Proximamente',
+    disabled: true
   }
 ]
