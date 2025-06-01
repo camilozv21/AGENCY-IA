@@ -1,68 +1,77 @@
-"use server"
 
+import { auth } from "@/auth"; // Este viene de NextAuth v5 setup
 import { validateTokens } from "@/helpers/validateTokens";
-import { getSession } from "@/lib/session";
-import { generateImagesFromPromptCanva } from "@/services/aws/generateImageFromPromptCanva"
-import { generetePromptTextImage } from "@/services/aws/generetePromptTextImage"
-import { NextRequest } from "next/server";
+import { generateImagesFromPromptCanva } from "@/services/aws/generateImageFromPromptCanva";
+import { generetePromptTextImage } from "@/services/aws/generetePromptTextImage";
+import { NextAuthRequest } from "next-auth";
+import { NextRequest, NextResponse } from "next/server";
 
-interface RequestBody{
-    prompt:string;
-    settings:Settings;
+interface RequestBody {
+  prompt: string;
+  settings: Settings;
 }
+
 export interface Settings {
-        style: string;
-        aspectRatio: string;
-        lighting: string;
-        camera: string;
-        numberOfImages: number;
+  style: string;
+  aspectRatio: string;
+  lighting: string;
+  camera: string;
+  numberOfImages: number;
 }
 
-export async function POST(request: NextRequest) {
-const session = await getSession(request);
-if (!session) {
-    return new Response('Unauthorized', { status: 401 })
-}
+export const POST = auth(async (request: NextAuthRequest) => {
+  const session = request.auth;
 
-const isTokenValid = await validateTokens(session.userId, 100);
-if (!isTokenValid) {
-    return new Response('Not enough tokens', { status: 403 })
-}
+  if (!session?.user) {
+    return new NextResponse("Unauthorized", { status: 401 });
+  }
 
-try {
+//   const isTokenValid = await validateTokens(session.user.email || "", 100);
+//   if (!isTokenValid) {
+//     return new NextResponse("Not enough tokens", { status: 403 });
+//   }
+
+  try {
     const body: RequestBody = await request.json();
     const { prompt, settings } = body;
 
-    if (!prompt) {
-    return Response.json({ error: '"Prompt" Field is required' }, { status: 400 });
+    if (!prompt || typeof prompt !== "string") {
+      return NextResponse.json(
+        { error: '"Prompt" field is required and must be a string' },
+        { status: 400 }
+      );
     }
 
-    if (typeof prompt !== 'string') {
-    return Response.json({ error: '"Prompt" Field must be a string' }, { status: 400 });
-    }
     const promptSettings = {
-        prompt,        
-        settings:{
-            lighting:settings.lighting,
-            camera:settings.camera,
-            
-        }
-    }
+      prompt,
+      settings: {
+        lighting: settings.lighting,
+        camera: settings.camera,
+      },
+    };
 
-    const formTextImageFromPrompt = await generetePromptTextImage({ promptSettings });
+    const formTextImageFromPrompt = await generetePromptTextImage({
+      promptSettings,
+    });
+
     const imageSettings = {
-        prompt: formTextImageFromPrompt.data?.result || "",      
-        settings:{
-            style:settings.style,
-            aspectRatio:settings.aspectRatio || "1:1",
-            numberOfImages:settings.numberOfImages || 3
-        }
-    }
-    const generateImageFromPromptCanva = await generateImagesFromPromptCanva({ imageSettings });
+      prompt: formTextImageFromPrompt.data?.result || "",
+      settings: {
+        style: settings.style,
+        aspectRatio: settings.aspectRatio || "1:1",
+        numberOfImages: settings.numberOfImages || 3,
+      },
+    };
 
-    return Response.json(generateImageFromPromptCanva, { status: 200 });
+    const generateImageFromPromptCanva = await generateImagesFromPromptCanva({
+      imageSettings,
+    });
 
-} catch (error: unknown) {
-    return Response.json({ error: 'Error interno', details: (error as Error).message }, { status: 500 });
-}
-}
+    return NextResponse.json(generateImageFromPromptCanva, { status: 200 });
+  } catch (error: unknown) {
+    return NextResponse.json(
+      { error: "Error interno", details: (error as Error).message },
+      { status: 500 }
+    );
+  }
+});

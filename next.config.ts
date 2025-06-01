@@ -22,7 +22,14 @@ const nextConfig: NextConfig = {
         hostname: "d23wy7ffkttxiu.cloudfront.net",
         port: "",
         pathname: "/**",
-      }
+      },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        port: "",
+        pathname: "/**",
+      },
+      
     ],
     minimumCacheTTL: 60 * 60 * 24,
   },

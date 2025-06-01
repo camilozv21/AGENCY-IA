@@ -1,15 +1,11 @@
-"use server";
-
-import { cookies } from "next/headers";
 import { AWSImageGeneratedTitan } from "@/types/generateImagesFromPromptTitan.type";
 import { httpService } from "../common/http.service";
 import { ImageSettings } from "@/app/api/(AWS)/aws-text-image-titan/generate-image-from-prompt-titan/route";
 
-
 export async function generateImagesFromPromptTitan({ imageSettings }: { imageSettings: ImageSettings}): Promise<{ success: boolean; data?: AWSImageGeneratedTitan; error?: string }> {
-    const cookie = (await cookies()).get('session')?.value
+    // const cookie = (await cookies()).get('authjs.session-token')?.value
     try {
-          const response = await httpService.post<AWSImageGeneratedTitan>("/aws-text-image-titan/generate-image-from-prompt-titan", { ...imageSettings },{credentials:"include",headers:{"cookie":`session=${cookie}`}});
+          const response = await httpService.post<AWSImageGeneratedTitan>("/aws-text-image-titan/generate-image-from-prompt-titan", { ...imageSettings },{credentials:"include"});
           return { success: true, data: response };
       } catch (error: unknown) {
           console.error("Error during image creation:", (error as Error).message);
