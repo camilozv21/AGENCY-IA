@@ -1,10 +1,10 @@
-"use server"
-
+import { auth } from "@/auth";
 import { validateTokens } from "@/helpers/validateTokens";
 import { getSession } from "@/lib/session";
 import {generateImagesFromImagesCanvas} from "@/services/aws/generateImageFromImageCanva"
 import { generetePromptTextImage } from "@/services/aws/generetePromptTextImage"
-import { NextRequest } from "next/server";
+import { NextAuthRequest } from "next-auth";
+import { NextRequest, NextResponse } from "next/server";
 
 interface RequestBody{
     prompt:string;
@@ -21,16 +21,17 @@ export interface Settings {
     numberOfImages: number;
 }
 
-export async function POST(request: NextRequest){
-    const session = await getSession(request);
-    if (!session) {
-        return new Response('Unauthorized', { status: 401 })
-    }
+export const POST = auth(async (request: NextAuthRequest) => {
+  const session = request.auth;
+
+  if (!session?.user) {
+    return new NextResponse("Unauthorized", { status: 401 });
+  }
     
-    const isTokenValid = await validateTokens(session.userId, 100);
-    if (!isTokenValid) {
-        return new Response('Not enough tokens', { status: 403 })
-    }
+    // const isTokenValid = await validateTokens(session.userId, 100);
+    // if (!isTokenValid) {
+    //     return new Response('Not enough tokens', { status: 403 })
+    // }
     try{
       
         const body: RequestBody = await request.json();
@@ -73,5 +74,5 @@ export async function POST(request: NextRequest){
     } catch (error: unknown) {
         return Response.json({ error: 'Error interno', details: (error as Error).message, success: false, }, { status: 500 });
     }
-}
+});
 

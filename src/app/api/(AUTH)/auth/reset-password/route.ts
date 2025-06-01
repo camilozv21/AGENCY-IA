@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect';
 import User from '@/models/User';
 import crypto from 'crypto';
-import bcrypt from 'bcrypt';
+import { saltAndHashPassword } from '@/helpers/authUtils';
 
 export async function POST(req: Request) {
   try {
@@ -26,9 +26,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Token inválido o expirado' }, { status: 400 });
     }
 
-    // Hashear la nueva contraseña con bcrypt
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await saltAndHashPassword(password);
 
     // Actualizar la contraseña y borrar el token de reseteo
     user.password = hashedPassword;

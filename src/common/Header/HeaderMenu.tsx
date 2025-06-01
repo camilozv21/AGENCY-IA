@@ -12,7 +12,6 @@ import {
 } from '@tabler/icons-react';
 import {
   Anchor,
-  Avatar,
   Box,
   Burger,
   Button,
@@ -37,7 +36,6 @@ import Image from 'next/image';
 import { LanguagePicker } from './LanguagePicker';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useAppSelector } from '@/lib/hooks';
 
 const mockdata = [
   {
@@ -190,7 +188,7 @@ export function HeaderMenu({ user }: { user?: { email: string, name: string, ima
                   <UnstyledButton className={classes.control}>
                     <Flex gap="xs" align="center">
                       {user ? <Image
-                        src={user.image || 'https://df50lbm4qcrt6.cloudfront.net/logonobg.png'}
+                        src={user.image || 'https://df50lbm4qcrt6.cloudfront.net/contia_logo_circle.png'}
                         alt="User Avatar"
                         width={32}
                         height={32}

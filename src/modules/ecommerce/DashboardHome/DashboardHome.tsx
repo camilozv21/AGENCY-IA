@@ -1,14 +1,43 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Text, Title, Flex } from '@mantine/core';
 import classes from './DashboardHome.module.css';
 import { useMediaQuery } from '@mantine/hooks';
 import { CardGradient } from './CardGradient';
 import { data } from '@/utils/cardsDashboard';
 
-export default function DashboardHome() {
+export default function DashboardHome({ user }: { user?: { email: string, name: string, image: string } }) {
   const isMobile = useMediaQuery('(max-width: 768px)');
+
+    useEffect(() => {
+    async function verifyUser() {
+      if (user?.email) {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/user?email=${encodeURIComponent(user.email)}`,
+          { method: 'GET', cache: 'no-store' }
+        );
+
+        const getRes = await res.json();
+
+        if (!getRes || !getRes.email) {
+          await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/user`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              email: user.email,
+              name: user.name,
+              image: user.image,
+            }),
+          });
+        }
+      }
+    }
+    verifyUser();
+  }, []);
+
   return (
     <>
       <Flex direction="column" justify="center" align="center" className={classes.container}>
