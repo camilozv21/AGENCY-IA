@@ -1,6 +1,4 @@
 import OpenAI from "openai";
-import { NextRequest, NextResponse } from "next/server";
-import { getSession } from "@/lib/session";
 import { NextAuthRequest } from "next-auth";
 import { auth } from "@/auth";
 // Inicialización del cliente de OpenAI

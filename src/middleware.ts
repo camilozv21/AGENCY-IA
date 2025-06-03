@@ -1,7 +1,6 @@
 import { i18nRouter } from 'next-i18n-router';
 import { i18nConfig } from './i18nConfig';
 import { NextRequest, NextResponse } from 'next/server';
-import { decrypt } from './lib/session';
 
 export default async function middleware(req: NextRequest) {
   // const path = req.nextUrl.pathname;

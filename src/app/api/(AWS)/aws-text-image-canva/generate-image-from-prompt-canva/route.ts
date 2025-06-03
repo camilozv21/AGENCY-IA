@@ -1,8 +1,6 @@
 import { BedrockRuntimeClient, InvokeModelCommand } from "@aws-sdk/client-bedrock-runtime";
 import { applyStyleToPrompt } from "@/utils/applyStyleToPrompt";
 import { getDimensions } from "@/utils/getDimensions";
-import { NextRequest, NextResponse } from "next/server";
-import { getSession } from "@/lib/session";
 import { auth } from "@/auth";
 import { NextAuthRequest } from "next-auth";
 export interface ImageSetting {
