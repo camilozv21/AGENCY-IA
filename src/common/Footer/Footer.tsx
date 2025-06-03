@@ -1,7 +1,7 @@
 'use client'
 
 import { IconBrandInstagram, IconBrandTwitter, IconBrandYoutube } from '@tabler/icons-react';
-import { ActionIcon, Anchor, Container, Group, Text } from '@mantine/core';
+import { ActionIcon, Container, Group, Text } from '@mantine/core';
 import classes from './Footer.module.css';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
