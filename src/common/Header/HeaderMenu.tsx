@@ -36,6 +36,7 @@ import Image from 'next/image';
 import { LanguagePicker } from './LanguagePicker';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { GoogleActions } from '@/modules/auth/Signup/googleAction';
 
 const mockdata = [
   {
@@ -199,17 +200,36 @@ export function HeaderMenu({ user }: { user?: { email: string, name: string, ima
                   </UnstyledButton>
                 </Menu.Target>
                 <Menu.Dropdown>
-                  <Menu.Item component="a" href="/auth/login">
-                    Log in
-                  </Menu.Item>
-                  <Menu.Item component="a" href="/auth/signup">
-                    Registrate
-                  </Menu.Item>
-                  <Menu.Item component="a" target='_blank' 
-                    href={"https://billing.stripe.com/p/login/test_3cI5kDaku3y7gFbbYggEg00" + '?prefilled_email=' + user?.email}
-                  >
-                    Portal de usuario
-                  </Menu.Item>
+                  {!user && (
+                    <>
+                      <Menu.Item component="a" href="/auth/login">
+                        Log in
+                      </Menu.Item>
+                      <Menu.Item component="a" href="/auth/signup">
+                        Registrate
+                      </Menu.Item>
+                    </>
+                  )}
+                  {user && (
+                    <>
+                      <Menu.Item component="a" target='_blank' 
+                        href={
+                          process.env.NODE_ENV === 'development' ?
+                          "https://billing.stripe.com/p/login/test_3cI5kDaku3y7gFbbYggEg00" + '?prefilled_email=' + user?.email
+                          : "https://billing.stripe.com/p/login/3cI5kDaku3y7gFbbYggEg00" + '?prefilled_email=' + user?.email
+                        }
+                      >
+                        Portal de usuario
+                      </Menu.Item>
+                      <Menu.Item component='div'>
+                        <form action={GoogleActions}>
+                          <UnstyledButton type="submit">
+                            Cerrar sesión
+                          </UnstyledButton>
+                        </form>
+                      </Menu.Item>
+                    </>
+                  )}
                 </Menu.Dropdown>
               </Menu>
             </Group>
