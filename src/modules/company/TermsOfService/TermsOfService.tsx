@@ -37,7 +37,7 @@ export default function TermsOfService() {
       <Title order={2} mt="md">3. Payments and Billing</Title>
       <List spacing="xs" type="unordered" withPadding mt="sm">
         <List.Item>All payments are securely processed via Stripe.</List.Item>
-        <List.Item>Subscriptions are billed monthly unless canceled.</List.Item>
+        <List.Item>Subscriptions are billed monthly or yearly unless canceled.</List.Item>
         <List.Item>You agree to pay all applicable fees and taxes associated with your plan.</List.Item>
         <List.Item>
           You may cancel your subscription at any time via your dashboard; however, no refunds are issued for partial billing periods.
@@ -53,7 +53,7 @@ export default function TermsOfService() {
 
       <Title order={2} mt="md">5. Acceptable Use of AI Services</Title>
       <Text mt="sm">
-        By using ContiA’s AI tools (including models from OpenAI, AWS Bedrock, and others), you agree not to use them for:
+        By using ContiA’s AI tools (including models from OpenAI and others), you agree not to use them for:
       </Text>
       <List spacing="xs" type="unordered" withPadding mt="xs">
         <List.Item>Generating or promoting violence, hate speech, sexual content, or misinformation.</List.Item>
@@ -86,13 +86,13 @@ export default function TermsOfService() {
 
       <Title order={2} mt="md">10. Governing Law</Title>
       <Text mt="sm">
-        These terms are governed by the laws of the State of [tu estado, e.g., Delaware or Wyoming], United States, without regard to conflict of law principles.
+        These terms are governed by the laws of the State of Delaware, United States, without regard to conflict of law principles.
       </Text>
 
       <Title order={2} mt="md">11. Contact</Title>
       <Text mt="sm">
         For questions about these Terms of Service, contact us at:
-        <br />📧 Email: support@contia.io
+        <br />📧 Email: contia@contia.io
         <br />🌐 Website: https://www.contia.io
       </Text>
     </Container>
