@@ -1,11 +1,10 @@
-"use server";
-
 import { BedrockRuntimeClient, InvokeModelCommand } from "@aws-sdk/client-bedrock-runtime";
 import { applyStyleToPrompt } from "@/utils/applyStyleToPrompt";
 import { getDimensions } from "@/utils/getDimensions";
-import { getSession } from "@/lib/session";
-import { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { applyselectPayload } from "@/helpers/selectPayload";
+import { auth } from "@/auth";
+import { NextAuthRequest } from "next-auth";
 export interface ImageSetting {
   prompt: string;
   imageBase64: string;
@@ -18,11 +17,13 @@ export interface ImageSetting {
 }
 
 
-export async function POST(request: NextRequest) {
-  const session = await getSession(request);
-  if (!session) {
-      return new Response('Unauthorized', { status: 401 })
+export const POST = auth(async (request: NextAuthRequest) => {
+  const session = request.auth;
+
+  if (!session?.user) {
+    return new NextResponse("Unauthorized", { status: 401 });
   }
+
   try{
     const body: ImageSetting = await request.json();
     const { prompt,imageBase64 , settings, typeTask } = body;
@@ -92,4 +93,4 @@ export async function POST(request: NextRequest) {
       return new Response(JSON.stringify({ error: 'Error interno', details: (error as Error).message, success: false, }), { status: 500, headers: { "Content-Type": "application/json" } });
   }
  
-}
+});

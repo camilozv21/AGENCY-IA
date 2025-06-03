@@ -1,16 +1,11 @@
-"use server";
-
-import { cookies } from "next/headers";
 import { httpService } from "../common/http.service";
 import {Settings} from "@/app/api/(AWS)/aws-image-image-canva/generate-image-from-form-image-canva/route";
 import { CreateImageFromFormImageCanva } from "@/types/createImageFromFormImageCanva.type";
 
-
-
 export async function generateImagesFromFormImageCanva({ prompt,imageBase64,settings,typeTask }: { prompt: string ,imageBase64: string , settings: Settings , typeTask:string  }): Promise<{ success: boolean; data?: CreateImageFromFormImageCanva; error?: string }> {
-    const cookie = (await cookies()).get('session')?.value
+    // const cookie = (await cookies()).get('authjs.session-token')?.value
     try {
-          const response = await httpService.post<CreateImageFromFormImageCanva>("/aws-image-image-canva/generate-image-from-form-image-canva", {prompt,imageBase64,settings,typeTask},{credentials:"include",headers:{"cookie":`session=${cookie}`}});
+          const response = await httpService.post<CreateImageFromFormImageCanva>("/aws-image-image-canva/generate-image-from-form-image-canva", {prompt,imageBase64,settings,typeTask},{credentials:"include"});
           if (response.success === false) {
             return { success: false, error: response.error || "No se pudo generar la imagen" };
           }

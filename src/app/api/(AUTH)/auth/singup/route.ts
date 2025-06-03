@@ -1,8 +1,8 @@
 import User from '@/models/User';
 import dbConnect from '@/lib/dbConnect';
-import bcrypt from 'bcrypt';
 import { z } from 'zod';
 import { tempDomains } from '@/utils/tempDomains'; 
+import { saltAndHashPassword } from '@/helpers/authUtils';
 
 export async function POST(request: Request) {
   await dbConnect();
@@ -53,7 +53,7 @@ export async function POST(request: Request) {
     return new Response(JSON.stringify({ error: "El usuario ya existe" }), { status: 409 });
   }
 
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = await saltAndHashPassword(password);
 
   const newUser = new User({
     email,
