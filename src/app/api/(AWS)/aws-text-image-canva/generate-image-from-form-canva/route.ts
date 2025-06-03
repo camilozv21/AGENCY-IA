@@ -4,7 +4,7 @@ import { validateTokens } from "@/helpers/validateTokens";
 import { generateImagesFromPromptCanva } from "@/services/aws/generateImageFromPromptCanva";
 import { generetePromptTextImage } from "@/services/aws/generetePromptTextImage";
 import { NextAuthRequest } from "next-auth";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 interface RequestBody {
   prompt: string;
@@ -34,6 +34,12 @@ export const POST = auth(async (request: NextAuthRequest) => {
   try {
     const body: RequestBody = await request.json();
     const { prompt, settings } = body;
+
+    const isValidTokens = await validateTokens(session.user.email || "", settings.numberOfImages*100);
+
+    if (!isValidTokens) {
+      return new NextResponse("Not enough tokens", { status: 403 });
+    }
 
     if (!prompt || typeof prompt !== "string") {
       return NextResponse.json(

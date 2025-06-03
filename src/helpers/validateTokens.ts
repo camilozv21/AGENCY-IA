@@ -9,9 +9,9 @@ export const validateTokens = async (email: string, tokens: number) => {
     return false;
   }
 
-  if (user.tokensExpDate < new Date()) {
-    return false;
-  }
+  // if (user.tokensExpDate < new Date()) {
+  //   return false;
+  // }
 
   if (user.tokensQuantity <= tokens) {
     return false;
