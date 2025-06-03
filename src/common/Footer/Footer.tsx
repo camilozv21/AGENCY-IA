@@ -1,10 +1,11 @@
 'use client'
 
 import { IconBrandInstagram, IconBrandTwitter, IconBrandYoutube } from '@tabler/icons-react';
-import { ActionIcon, Container, Group, Text } from '@mantine/core';
+import { ActionIcon, Anchor, Container, Group, Text } from '@mantine/core';
 import classes from './Footer.module.css';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 
 const data = [
   {
@@ -86,10 +87,20 @@ export function Footer() {
       </Container>
       <Container className={classes.afterFooter}>
         <Text c="dimmed" size="sm">
-          © 2020 mantine.dev. All rights reserved.
+          © 2025 ContiA. All rights reserved.
         </Text>
 
         <Group gap={0} className={classes.social} justify="flex-end" wrap="nowrap">
+          <Text size="sm" mr={20}>
+            <Link href="/privacy-policy" passHref>
+              Privacy Policy
+            </Link>
+          </Text>
+          <Text size="sm" mr={20}>
+            <Link href="/terms-of-service" passHref>
+              Terms of Service
+            </Link>
+          </Text>
           <ActionIcon size="lg" color="gray" variant="subtle">
             <IconBrandTwitter size={18} stroke={1.5} />
           </ActionIcon>
