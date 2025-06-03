@@ -1,8 +1,6 @@
-"use server";
-
 import OpenAI from "openai";
-import { NextRequest } from "next/server";
-import { getSession } from "@/lib/session";
+import { NextAuthRequest } from "next-auth";
+import { auth } from "@/auth";
 // Inicialización del cliente de OpenAI
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_KEY,
@@ -18,11 +16,13 @@ export interface PromptSettings {
 }
 
 // Handler para POST
-export async function POST(request: NextRequest) {
-  const session = await getSession(request);
-  if (!session) {
-      return new Response('Unauthorized', { status: 401 })
-  }
+export const POST = auth(async (request: NextAuthRequest) => {
+//   const session = request.auth;
+// console.log(session);
+//   if (!session?.user) {
+//     return new NextResponse("Unauthorized", { status: 401 });
+//   }
+
   try{
     const body: PromptSettings = await request.json();
     const { prompt, settings } = body;
@@ -87,4 +87,4 @@ export async function POST(request: NextRequest) {
     return Response.json({ error: 'Error interno', details: (error as Error).message }, { status: 500 });
   }
   
-}
+});

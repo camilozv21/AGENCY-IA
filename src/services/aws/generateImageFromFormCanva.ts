@@ -1,15 +1,11 @@
-"use server";
-
-import { cookies } from "next/headers";
 import { httpService } from "../common/http.service";
 import {Settings} from "@/app/api/(AWS)/aws-text-image-canva/generate-image-from-form-canva/route";
 import { GenerateImageFromFormCanva } from "@/types/generateImageFromFormCanva.type";
 
-
 export async function generateImagesFromFormCanva({ prompt,settings }: { prompt: string , settings: Settings}): Promise<{ success: boolean; data?: GenerateImageFromFormCanva; error?: string }> {
-    const cookie = (await cookies()).get('session')?.value
+    // const cookie = (await cookies()).get('authjs.session-token')?.value
     try {
-          const response = await httpService.post<GenerateImageFromFormCanva>("/aws-text-image-canva/generate-image-from-form-canva", {prompt,settings},{credentials:"include",headers:{"cookie":`session=${cookie}`}});
+          const response = await httpService.post<GenerateImageFromFormCanva>("/aws-text-image-canva/generate-image-from-form-canva", {prompt,settings},{credentials:"include"});
           return { success: true, data: response };
       } catch (error: unknown) {
           console.error("Error during image creation:", (error as Error).message);

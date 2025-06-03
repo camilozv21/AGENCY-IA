@@ -5,7 +5,7 @@ import { httpService } from "../common/http.service";
 import { CreateImageFromForm } from "@/types/createImageFromForm.type";
 
 export async function createImageFromForm({ prompt }: { prompt: string }): Promise<{ success: boolean; data?: CreateImageFromForm; error?: string }> {
-  const cookie = (await cookies()).get('session')?.value
+  const cookie = (await cookies()).get('authjs.session-token')?.value
   try {
         const response = await httpService.post<CreateImageFromForm>("/openai-text-image/create-image-from-form", { prompt }, { credentials: "include", headers: { "cookie": `session=${cookie}` } });
         return { success: true, data: response };
