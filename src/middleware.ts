@@ -1,38 +1,22 @@
 import { i18nRouter } from 'next-i18n-router';
 import { i18nConfig } from './i18nConfig';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
+import { auth } from './auth';
+import { NextAuthRequest } from 'next-auth';
 
-export default async function middleware(req: NextRequest) {
-  // const path = req.nextUrl.pathname;
+export default auth(async (req: NextAuthRequest) => {
+  const session = req.auth;
+  const { pathname } = req.nextUrl;
+  // Quitar un posible prefijo de dos letras seguido de '/' (e.g., /en, /es)
+  const normalizedPath = pathname.replace(/^\/[a-z]{2}(?=\/|$)/, '');
 
-  // const currentLocaleD = req.cookies.get('NEXT_LOCALE')?.value || 'es';
-  // const localePrefix = currentLocaleD === 'es' ? '' : `/${currentLocaleD}`;
-
-  // const protectedRoutes = [`${localePrefix}/dashboard/tool/text-to-image`];
-  // const protectedRoutes = [`${localePrefix}/test`];
-  // const publicRoutes = [
-  //   `${localePrefix}/auth/login`,
-  //   `${localePrefix}/auth/signup`,
-  //   `${localePrefix}/`,
-  // ];
-
-  // const isProtectedRoute = protectedRoutes.includes(path);
-  // const isPublicRoute = publicRoutes.includes(path);
-
-  // Desencriptar sesión SOLO si existe cookie
-  // let session = null;
-  // const cookie = req.cookies.get('session')?.value;
-  // if (cookie) {
-  //   session = await decrypt(cookie);
-  // }
-
-  // if (isProtectedRoute && !session?.id) {
-  //   return NextResponse.redirect(new URL(`${localePrefix}/auth/login`, req.nextUrl));
-  // }
-
-  // if (isPublicRoute && session?.id && !path.startsWith(`${localePrefix}/dashboard/tool/text-to-image`)) {
-  //   return NextResponse.next();
-  // }
+  // Si hay sesión activa, evitar el acceso a /auth/login y /auth/signup
+  if (
+    session &&
+    (normalizedPath === '/auth/login' || normalizedPath === '/auth/signup')
+  ) {
+    return NextResponse.redirect(new URL('/', req.url));
+  }
 
   const i18nResponse = i18nRouter(req, i18nConfig);
   if (i18nResponse) {
@@ -40,7 +24,7 @@ export default async function middleware(req: NextRequest) {
   }
 
   return NextResponse.next();
-}
+});
 
 // Routes Middleware should not run on
 export const config = {
