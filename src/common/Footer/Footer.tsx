@@ -91,12 +91,12 @@ export function Footer() {
         </Text>
 
         <Group gap={0} className={classes.social} justify="flex-end" wrap="nowrap">
-          <Text size="sm" mr={20}>
+          <Text size="sm" mr={20} fw={700}>
             <Link href="/privacy-policy" passHref>
               Privacy Policy
             </Link>
           </Text>
-          <Text size="sm" mr={20}>
+          <Text size="sm" mr={20} fw={700}>
             <Link href="/terms-of-service" passHref>
               Terms of Service
             </Link>

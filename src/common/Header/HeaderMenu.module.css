@@ -2,7 +2,7 @@
   height: 60px;
   padding-left: var(--mantine-spacing-md);
   padding-right: var(--mantine-spacing-md);
-  border-bottom: 1px solid var(--mantine-color-dark-4); /* Tema oscuro */
+  /* border-bottom: 1px solid var(--mantine-color-dark-4); */
 }
 
 .indicatorContainer {

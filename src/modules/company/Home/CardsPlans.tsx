@@ -1,3 +1,5 @@
+"use client";
+
 import { Button, Card, Flex, Group, Text, ThemeIcon, Tabs } from '@mantine/core';
 import classes from './CardsPlans.module.css';
 import { plansData } from '@/utils/plans';

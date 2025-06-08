@@ -78,7 +78,7 @@ function CardCustom({ image, avatar }: CardProps) {
 
 export function ImagesCarousel() {
   const theme = useMantineTheme();
-  const autoScroll = useRef(AutoScroll({ speed: 1, stopOnInteraction: false, stopOnMouseEnter: false, stopOnFocusIn: false }));
+  const autoScroll = useRef(AutoScroll({ speed: 1, direction: 'backward', stopOnInteraction: false, stopOnMouseEnter: false, stopOnFocusIn: false }));
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
   const slides = data.map((item) => (
     <Carousel.Slide key={item.image}>
@@ -130,9 +130,8 @@ export function ImagesCarousel() {
         draggable={false}
         slideSize={{ base: '0%', sm: '0%' }}
         slideGap={{ base: 'xs', sm: 'sm' }}
-        // align="start"
-        // slidesToScroll={mobile ? 2 : 2}
-        // loop
+        initialSlide={data.length - 1}
+        emblaOptions={{ loop: true }}
         height={700}
         plugins={[autoScroll.current]}
       >
