@@ -1,5 +1,5 @@
 .card {
-  background-color: var(--mantine-color-body);
+  background-color: #0F0F0F;
   max-width: 400px;
   transition: all 0.3s ease;
 }

@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /undefined
+
+Sitemap: https://www.contia.io/sitemap.xml
