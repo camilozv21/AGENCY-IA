@@ -238,7 +238,7 @@ export function HeaderMenu({ user }: { user?: { email: string, name: string, ima
           <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" />
         </Group>
       </header>
-
+      <Divider />
       <Drawer
         opened={drawerOpened}
         onClose={closeDrawer}
