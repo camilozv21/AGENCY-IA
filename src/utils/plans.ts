@@ -4,9 +4,9 @@ export const plansData = [
   {
     name: 'BASICO',
     tokens: 4501,
-    title: 'Para pequeños empresarios en busca de nuevas oportunidades.',
+    title: 'Impulso inicial para emprendedores que quieren destacar.',
     description:
-      'Ideal para quienes están empezando a construir su presencia online y necesitan un empujón con contenido profesional, sin complicarse con estrategias avanzadas. Perfecto para emprendedores individuales, negocios locales o freelancers.',
+      'Perfecto para quienes están dando sus primeros pasos online. Este plan te permite crear contenido visual de alto impacto, sin complicaciones técnicas. Ideal para freelancers, pequeños comercios o profesionales independientes que quieren mejorar su imagen digital con resultados rápidos y visibles.',
     price: '$49.00',
     features: [
       {text: 'Posibilidad de generar 70 imagenes (100% personalizadas)', icon: IconBrandMeta},
@@ -29,9 +29,9 @@ export const plansData = [
   {
     name: 'EMPRESARIAL',
     tokens: 12001,
-    title: 'Para negocios en expansión que quieren destacar en redes.',
+    title: 'Crecimiento constante para marcas en expansión.',
     description:
-      'Diseñado para marcas que ya tienen algo de presencia digital pero desean escalar su visibilidad con contenido más frecuente, creativo y con opciones de promoción como anuncios básicos. Perfecto para tiendas físicas, e-commerce o servicios locales en crecimiento.',
+      'Diseñado para negocios que ya tienen presencia online y quieren llevarla al siguiente nivel. Incluye mayor volumen de contenido, videos adaptados a tu marca y un asistente con IA que te ayuda a generar ideas creativas en segundos. Ideal para tiendas físicas, e-commerce y negocios en etapa de crecimiento.',
     price: '$99.00',
     features: [
       {text: 'Posibilidad de generar 175 imagenes (100% personalizadas)', icon: IconBrandMeta},
@@ -55,9 +55,9 @@ export const plansData = [
   {
     name: 'PREMIUM',
     tokens: 20001,
-    title: 'Para marcas que quieren dominar su nicho y atraer clientes de forma constante.',
+    title: 'Dominio total de tu nicho con contenido automatizado y de alto rendimiento.',
     description:
-      'Pensado para empresas consolidadas o ambiciosas, este paquete incluye todo lo necesario para posicionar tu marca como líder: contenido avanzado, campañas de Google Ads, reportes de resultados y automatización total.',
+      'El paquete definitivo para empresas consolidadas que desean posicionarse como líderes de su sector. Obtén contenido profesional a escala, campañas optimizadas, y un flujo de ideas constante gracias a la inteligencia artificial. Automatiza tu estrategia de contenido con herramientas de nivel empresarial.',
     price: '$199.00',
     features: [
       {text: 'Posibilidad de generar 288 imagenes (100% personalizadas)', icon: IconBrandMeta},
@@ -82,9 +82,9 @@ export const plansData = [
   {
     name: 'BASICO',
     tokens: 54012,
-    title: 'Para pequeños empresarios en busca de nuevas oportunidades.',
+    title: 'Impulso inicial para emprendedores que quieren destacar.',
     description:
-      'Ideal para quienes están empezando a construir su presencia online y necesitan un empujón con contenido profesional, sin complicarse con estrategias avanzadas. Perfecto para emprendedores individuales, negocios locales o freelancers.',
+      'Perfecto para quienes están dando sus primeros pasos online. Este plan te permite crear contenido visual de alto impacto, sin complicaciones técnicas. Ideal para freelancers, pequeños comercios o profesionales independientes que quieren mejorar su imagen digital con resultados rápidos y visibles.',
     price: '$40.83',
     features: [
       {text: 'Posibilidad de generar 840 imagenes (100% personalizadas)', icon: IconBrandMeta},
@@ -107,9 +107,9 @@ export const plansData = [
   {
     name: 'EMPRESARIAL',
     tokens: 144012,
-    title: 'Para negocios en expansión que quieren destacar en redes.',
+    title: 'Crecimiento constante para marcas en expansión.',
     description:
-      'Diseñado para marcas que ya tienen algo de presencia digital pero desean escalar su visibilidad con contenido más frecuente, creativo y con opciones de promoción como anuncios básicos. Perfecto para tiendas físicas, e-commerce o servicios locales en crecimiento.',
+      'Diseñado para negocios que ya tienen presencia online y quieren llevarla al siguiente nivel. Incluye mayor volumen de contenido, videos adaptados a tu marca y un asistente con IA que te ayuda a generar ideas creativas en segundos. Ideal para tiendas físicas, e-commerce y negocios en etapa de crecimiento.',
     price: '$82.50',
     features: [
       {text: 'Posibilidad de generar 2100 imagenes (100% personalizadas)', icon: IconBrandMeta},
@@ -133,9 +133,9 @@ export const plansData = [
   {
     name: 'PREMIUM',
     tokens: 240012,
-    title: 'Para marcas que quieren dominar su nicho y atraer clientes de forma constante.',
+    title: 'Dominio total de tu nicho con contenido automatizado y de alto rendimiento.',
     description:
-      'Pensado para empresas consolidadas o ambiciosas, este paquete incluye todo lo necesario para posicionar tu marca como líder: contenido avanzado, campañas de Google Ads, reportes de resultados y automatización total.',
+      'El paquete definitivo para empresas consolidadas que desean posicionarse como líderes de su sector. Obtén contenido profesional a escala, campañas optimizadas, y un flujo de ideas constante gracias a la inteligencia artificial. Automatiza tu estrategia de contenido con herramientas de nivel empresarial.',
     price: '$165.83',
     features: [
       {text: 'Posibilidad de generar 3456 imagenes (100% personalizadas)', icon: IconBrandMeta},
