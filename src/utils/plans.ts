@@ -1,4 +1,4 @@
-import { IconAdFilled, IconAutomation, IconBrandInstagram, IconBrandMeta, IconBrandTiktok, IconRobot } from '@tabler/icons-react';
+import { IconBrandInstagram, IconBrandMeta, IconBrandTiktok, IconRobot } from '@tabler/icons-react';
 
 export const plansData = [
   {
