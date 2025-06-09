@@ -58,7 +58,7 @@ export const plansData = [
     title: 'Para marcas que quieren dominar su nicho y atraer clientes de forma constante.',
     description:
       'Pensado para empresas consolidadas o ambiciosas, este paquete incluye todo lo necesario para posicionar tu marca como líder: contenido avanzado, campañas de Google Ads, reportes de resultados y automatización total.',
-    price: '$149.00',
+    price: '$199.00',
     features: [
       {text: 'Posibilidad de generar 288 imagenes (100% personalizadas)', icon: IconBrandMeta},
       {text: 'Posibilidad de generar 14 videos de 5 segundos (Veo 3) tipo reel o TikTok, adaptado a tu marca', icon: IconBrandTiktok},
@@ -136,7 +136,7 @@ export const plansData = [
     title: 'Para marcas que quieren dominar su nicho y atraer clientes de forma constante.',
     description:
       'Pensado para empresas consolidadas o ambiciosas, este paquete incluye todo lo necesario para posicionar tu marca como líder: contenido avanzado, campañas de Google Ads, reportes de resultados y automatización total.',
-    price: '$124.16',
+    price: '$165.83',
     features: [
       {text: 'Posibilidad de generar 3456 imagenes (100% personalizadas)', icon: IconBrandMeta},
       {text: 'Posibilidad de generar 168 videos de 5 segundos (Veo 3) tipo reel o TikTok, adaptado a tu marca', icon: IconBrandTiktok},
