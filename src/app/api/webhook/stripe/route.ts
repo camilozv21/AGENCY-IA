@@ -74,19 +74,19 @@ export async function POST(req: Request) {
                         break;
 
                     case 'price_1RRww4GPNJsUq7ASIMbHJkBg': // Enterprise Plan monthly
-                        user.tokensQuantity += 100000;
+                        user.tokensQuantity += 12001;
                         break;
 
                     case 'price_1RRxCAGPNJsUq7ASCAyBA6Lr': // Enterprise Plan yearly
-                        user.tokensQuantity += 1200000;
+                        user.tokensQuantity += 144012;
                         break;
 
                     case 'price_1RRwwqGPNJsUq7ASOFdZ3arj': // Premium Plan monthly
-                        user.tokensQuantity += 200000;
+                        user.tokensQuantity += 20001;
                         break;
 
                     case 'price_1RRxCfGPNJsUq7ASwonRF3zg': // Premium Plan yearly
-                        user.tokensQuantity += 2400000;
+                        user.tokensQuantity += 240012;
                         break;
 
                     default:
