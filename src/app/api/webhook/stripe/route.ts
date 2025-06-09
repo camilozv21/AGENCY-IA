@@ -66,33 +66,27 @@ export async function POST(req: Request) {
 
                 switch (priceId) {
                     case 'price_1RRwuPGPNJsUq7ASUIeO6HwE': // Basic Plan monthly
-                        user.tokensQuantity = 5000;
-                        user.tokensExpDate = new Date(Date.now() + 2592000000);
+                        user.tokensQuantity += 4501;
                         break;
                     
                     case 'price_1RRxBCGPNJsUq7AScLclkeJ1': // Basic Plan yearly
-                        user.tokensQuantity = 60000;
-                        user.tokensExpDate = new Date(Date.now() + 31536000000);
+                        user.tokensQuantity += 54012;
                         break;
 
                     case 'price_1RRww4GPNJsUq7ASIMbHJkBg': // Enterprise Plan monthly
-                        user.tokensQuantity = 100000;
-                        user.tokensExpDate = new Date(Date.now() + 2592000000);
+                        user.tokensQuantity += 100000;
                         break;
 
                     case 'price_1RRxCAGPNJsUq7ASCAyBA6Lr': // Enterprise Plan yearly
-                        user.tokensQuantity = 1200000;
-                        user.tokensExpDate = new Date(Date.now() + 31536000000);
+                        user.tokensQuantity += 1200000;
                         break;
 
                     case 'price_1RRwwqGPNJsUq7ASOFdZ3arj': // Premium Plan monthly
-                        user.tokensQuantity = 200000;
-                        user.tokensExpDate = new Date(Date.now() + 2592000000);
+                        user.tokensQuantity += 200000;
                         break;
 
                     case 'price_1RRxCfGPNJsUq7ASwonRF3zg': // Premium Plan yearly
-                        user.tokensQuantity = 2400000;
-                        user.tokensExpDate = new Date(Date.now() + 31536000000);
+                        user.tokensQuantity += 2400000;
                         break;
 
                     default:
