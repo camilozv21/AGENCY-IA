@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Card, Flex, Group, Text, ThemeIcon, Tabs } from '@mantine/core';
+import { Button, Card, Flex, Group, Text, ThemeIcon, Tabs, Badge } from '@mantine/core';
 import classes from './CardsPlans.module.css';
 import { plansData } from '@/utils/plans';
 import { useAppSelector } from '@/lib/hooks';
@@ -72,6 +72,7 @@ export function CardsPlans() {
                 </Group>
 
                 <Card.Section className={classes.section} mt="md">
+                  <Badge variant="outline" color="var(--yellow-contia)" mb={10} size="lg">{plan.tokens} Tokens</Badge>
                   <Group gap={8} mb={-8} align="start">
                     <ul style={{ listStyle: 'none', padding: 0 }}>
                       {plan.features.map((feature, index) => (
@@ -160,6 +161,7 @@ export function CardsPlans() {
                 </Group>
 
                 <Card.Section className={classes.section} mt="md">
+                   <Badge variant="outline" color="var(--yellow-contia)" mb={10} size="lg">{plan.tokens} Tokens</Badge>
                   <Group gap={8} mb={-8} align="start">
                     <ul style={{ listStyle: 'none', padding: 0 }}>
                       {plan.features.map((feature, index) => (
