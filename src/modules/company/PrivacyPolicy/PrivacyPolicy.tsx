@@ -37,6 +37,8 @@ export default function PrivacyPolicy() {
           <List type="unordered" spacing="xs" withPadding>
             <List.Item>
               When signing in via Google OAuth, we receive your name, email, and profile picture (if available), strictly for authentication and account setup purposes.
+              <br />
+              We do not share your Google account information with third parties, except as required for authentication. Your Google data is stored securely and only for as long as your account is active. You can request deletion of your data or revoke access at any time by contacting us or through your Google account settings.
             </List.Item>
           </List>
         </List.Item>
