@@ -2,7 +2,6 @@ import { auth } from "@/auth";
 import { NextAuthRequest } from "next-auth";
 import { NextResponse } from "next/server";
 import { JWT } from "google-auth-library";  // Importar la librería Google Auth
-import { boolean } from "zod";
 
 const PROJECT_ID = "contia-461315";
 const LOCATION_ID = "us-central1";
@@ -22,6 +21,12 @@ export interface Parameters {
     addWatermark: boolean;
 }
 export const POST = auth(async (request: NextAuthRequest) => {
+  const session = request.auth;
+
+  if (!session?.user) {
+    return new NextResponse("Unauthorized", { status: 401 });
+  }
+
    const body: VideoSettings = await request.json();
    const { prompt,parameters } = body;
 
