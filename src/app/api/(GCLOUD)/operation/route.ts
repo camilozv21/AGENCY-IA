@@ -35,7 +35,7 @@ export const POST = auth(async (request: NextAuthRequest) => {
       method: "POST",
       data: requestPayload,
     });
-
+    
     // Retornar el estado o el contenido (videos en base64)
     return NextResponse.json(response.data, { status: 200 });
 
