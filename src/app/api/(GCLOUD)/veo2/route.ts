@@ -8,12 +8,9 @@ const LOCATION_ID = "us-central1";
 const API_ENDPOINT = "us-central1-aiplatform.googleapis.com";
 const MODEL_ID = "veo-2.0-generate-001";
 
-// Función que maneja el endpoint POST
 export const POST = auth(async (request: NextAuthRequest) => {
-  // Obtenemos el body de la solicitud
   const { prompt } = await request.json();
 
-  // Validar el prompt
   if (!prompt) {
     return NextResponse.json(
       { error: "Prompt is required" },
@@ -22,7 +19,6 @@ export const POST = auth(async (request: NextAuthRequest) => {
   }
 
   try {
-    // Cargar las credenciales desde las variables de entorno
     const keys = JSON.parse(process.env.CREDS || "{}");
     const client = new JWT({
       email: keys.client_email,
@@ -30,7 +26,6 @@ export const POST = auth(async (request: NextAuthRequest) => {
       scopes: ['https://www.googleapis.com/auth/cloud-platform'],
     });
 
-    // Solicitar la predicción al modelo de Google AI Platform
     const requestPayload = {
       endpoint: `projects/${PROJECT_ID}/locations/${LOCATION_ID}/publishers/google/models/${MODEL_ID}`,
       instances: [
@@ -45,26 +40,21 @@ export const POST = auth(async (request: NextAuthRequest) => {
         personGeneration: "allow_adult",
         enablePromptRewriting: true,
         addWatermark: true,
-        // includeRaiReason: true,
       },
     };
 
-    // Realizamos la llamada a la API para generar el video
     const url = `https://${API_ENDPOINT}/v1/projects/${PROJECT_ID}/locations/${LOCATION_ID}/publishers/google/models/${MODEL_ID}:predictLongRunning`;
 
     const response = await client.request<{
-      data: {
-        name: string;
-      };
+      name: string;
     }>({
       url,
       method: "POST",
       data: requestPayload,
     });
-console.log(response);
+
     const operationId = response.data.name;
     
-    // Retornamos el ID de la operación
     return NextResponse.json({
       operationId,
       message: "Video generation in progress. Use the operation ID to fetch the result.",
