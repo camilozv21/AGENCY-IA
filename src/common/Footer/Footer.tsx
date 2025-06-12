@@ -92,16 +92,16 @@ export function Footer() {
         </Text>
 
         <Group gap={0} className={classes.social} justify="flex-end" wrap="nowrap">
-          <Text size="sm" mr={20} fw={700}>
+          {/* <Text size="sm" mr={20} fw={700}> */}
             <a href="/privacy-policy" target="_blank" className={classes.link}>
               Privacy Policy
             </a>
-          </Text>
-          <Text size="sm" mr={20} fw={700}>
+          {/* </Text> */}
+          {/* <Text size="sm" mr={20} fw={700}> */}
             <a href="/terms-of-service" target="_blank" className={classes.link}>
               Terms of Service
             </a>
-          </Text>
+          {/* </Text> */}
           <ActionIcon size="lg" color="gray" variant="subtle">
             <IconBrandTwitter size={18} stroke={1.5} />
           </ActionIcon>
