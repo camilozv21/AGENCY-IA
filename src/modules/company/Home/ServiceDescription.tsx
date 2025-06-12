@@ -7,16 +7,6 @@ import Link from 'next/link';
 export default function ServiceDescription() {
   return (
     <>
-    <Text size="lg" mr={20} fw={700}>
-            <Link href="/privacy-policy" target='_blank' passHref>
-              Privacy Policy
-            </Link>
-          </Text>
-          <Text size="lg" mr={20} fw={700}>
-            <Link href="/terms-of-service" target='_blank' passHref>
-              Terms of Service
-            </Link>
-          </Text>
       <Flex direction='column' justify="center" align="center" className={classes.flexContainer}>
         <div style={{ maxWidth: '500px', textAlign: 'center' }}>
           <Title order={2} className={classes.subtitle}>Nuestro conjunto de herramientas de IA</Title>
