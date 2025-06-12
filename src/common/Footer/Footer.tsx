@@ -4,7 +4,7 @@ import { IconBrandInstagram, IconBrandTwitter, IconBrandYoutube } from '@tabler/
 import { ActionIcon, Container, Group, Text } from '@mantine/core';
 import classes from './Footer.module.css';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+// import { usePathname } from 'next/navigation';
 // import Link from 'next/link';
 
 const data = [
@@ -38,7 +38,7 @@ const data = [
 ];
 
 export function Footer() {
-  const pathname = usePathname();
+  // const pathname = usePathname();
   const groups = data.map((group) => {
     const links = group.links.map((link, index) => (
       <Text<'a'>

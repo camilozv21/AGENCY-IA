@@ -2,7 +2,6 @@ import { Card, CardSection, Flex, Group, Text, Title } from '@mantine/core';
 import classes from './ServiceDescription.module.css';
 import Image from 'next/image';
 import { cardsHome } from '@/utils/cardsHome';
-import Link from 'next/link';
 
 export default function ServiceDescription() {
   return (
