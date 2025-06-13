@@ -68,7 +68,7 @@ export async function GET(request: Request) {
     if (!user) {
       return new Response(
         JSON.stringify({ message: "Usuario no encontrado" }),
-        { status: 404 }
+        { status: 200 }
       );
     }
 
