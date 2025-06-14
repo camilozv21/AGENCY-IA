@@ -72,7 +72,7 @@ export async function GET(request: Request) {
       );
     }
 
-    return new Response(JSON.stringify(user), { status: 200 });
+    return new Response(JSON.stringify({ email: user.email }), { status: 200 });
   } catch (error) {
       console.error("Error al obtener usuario:", error);
       return new Response(
