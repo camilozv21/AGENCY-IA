@@ -6,11 +6,11 @@ import Image from 'next/image';
 import { IconArrowRight } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
 
-export function CardGradient({ imageUrl, title, description, buttonText, disabled }: { imageUrl: string; title: string; description: string; buttonText: string, disabled: boolean }) {
+export function CardGradient({ imageUrl, title, description, buttonText, disabled, link }: { imageUrl: string; title: string; description: string; buttonText: string, disabled: boolean, link: string }) {
   const router = useRouter();
 
   const handleButtonClick = () => {
-    router.push('/dashboard/tool/text-to-image');
+    router.push(link);
   };
   return (
       <Card shadow="sm" radius="lg" p={10} withBorder className={classes.card}>
