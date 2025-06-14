@@ -24,9 +24,7 @@ export  const POST = auth(async (request: NextAuthRequest) => {
 
 
   try {
-    const keys = JSON.parse(process.env.CREDS || "{}");
-    
-    
+   
     const client = new BedrockRuntimeClient({
       region: 'us-east-1',
       credentials: {
