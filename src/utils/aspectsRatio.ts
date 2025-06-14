@@ -31,6 +31,11 @@ export const sizes = [
     { ratio: "16:9-lg", icon: IconCrop169 },
 ];
 
+export const sizesVideo = [
+  { ratio: "9:16", icon: IconCropPortrait },
+  { ratio: "16:9", icon: IconCrop169 },
+];
+
 export const styles = [
   { name: "No style", image: "ban.png" },
   { name: "realistic", image: "realistic.png" },

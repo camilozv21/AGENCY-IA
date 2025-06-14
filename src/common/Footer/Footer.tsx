@@ -4,8 +4,8 @@ import { IconBrandInstagram, IconBrandTwitter, IconBrandYoutube } from '@tabler/
 import { ActionIcon, Container, Group, Text } from '@mantine/core';
 import classes from './Footer.module.css';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
-import Link from 'next/link';
+// import { usePathname } from 'next/navigation';
+// import Link from 'next/link';
 
 const data = [
   {
@@ -38,7 +38,7 @@ const data = [
 ];
 
 export function Footer() {
-  const pathname = usePathname();
+  // const pathname = usePathname();
   const groups = data.map((group) => {
     const links = group.links.map((link, index) => (
       <Text<'a'>
@@ -60,7 +60,8 @@ export function Footer() {
     );
   });
 
-  if (pathname.includes('dashboard/tool/text-to-image')) return null;
+  // if (pathname.includes('dashboard/tool/text-to-image')) return null;
+  // if (pathname.includes('dashboard/tool/text-to-video')) return null;
 
   return (
     <footer className={classes.footer}>
@@ -91,16 +92,16 @@ export function Footer() {
         </Text>
 
         <Group gap={0} className={classes.social} justify="flex-end" wrap="nowrap">
-          <Text size="sm" mr={20} fw={700}>
-            <Link href="/privacy-policy" target='_blank' passHref>
+          {/* <Text size="sm" mr={20} fw={700}> */}
+            <a href="/privacy-policy" target="_blank" className={classes.link}>
               Privacy Policy
-            </Link>
-          </Text>
-          <Text size="sm" mr={20} fw={700}>
-            <Link href="/terms-of-service" target='_blank' passHref>
+            </a>
+          {/* </Text> */}
+          {/* <Text size="sm" mr={20} fw={700}> */}
+            <a href="/terms-of-service" target="_blank" className={classes.link}>
               Terms of Service
-            </Link>
-          </Text>
+            </a>
+          {/* </Text> */}
           <ActionIcon size="lg" color="gray" variant="subtle">
             <IconBrandTwitter size={18} stroke={1.5} />
           </ActionIcon>

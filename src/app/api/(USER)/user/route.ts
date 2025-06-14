@@ -68,11 +68,11 @@ export async function GET(request: Request) {
     if (!user) {
       return new Response(
         JSON.stringify({ message: "Usuario no encontrado" }),
-        { status: 404 }
+        { status: 200 }
       );
     }
 
-    return new Response(JSON.stringify(user), { status: 200 });
+    return new Response(JSON.stringify({ email: user.email }), { status: 200 });
   } catch (error) {
       console.error("Error al obtener usuario:", error);
       return new Response(

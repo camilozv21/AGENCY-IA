@@ -92,6 +92,7 @@ export default function DashboardHome({ user }: { user?: { email: string, name: 
               title={item.title}
               description={item.description}
               buttonText={item.buttonText}
+              link={item.link}
               disabled={item.disabled}
             />
           ))}
