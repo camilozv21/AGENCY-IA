@@ -97,6 +97,7 @@ export function HeaderMenu({ user }: { user?: { email: string, name: string, ima
   ));
 
   if (pathname.includes('dashboard/tool/text-to-image')) return null;
+  if (pathname.includes('dashboard/tool/text-to-video')) return null;
 
   return (
     <Box style={{ zIndex: 100, position: 'relative' }}>
