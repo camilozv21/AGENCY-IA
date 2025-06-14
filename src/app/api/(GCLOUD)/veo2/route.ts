@@ -2,7 +2,7 @@ import { auth } from "@/auth";
 import { NextAuthRequest } from "next-auth";
 import { NextResponse } from "next/server";
 import { JWT } from "google-auth-library";  // Importar la librería Google Auth
-import { boolean } from "zod";
+
 
 const PROJECT_ID = "contia-461315";
 const LOCATION_ID = "us-central1";
