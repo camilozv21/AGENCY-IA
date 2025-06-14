@@ -20,7 +20,7 @@ interface FormValues {
 export default function GenerateVideo() {
   const [selectedAspectRatio, setSelectedAspectRatio] = useState<typeof sizesVideo[0]>(sizesVideo[0]);
   const [menuAspectRatio, setMenuAspectRatio] = useState(false);
-  const [duration, setDuration] = useState(6);
+  // const [duration, setDuration] = useState(6);
   const [selectedModel, setSelectedModel] = useState('Nova Reel');
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const isMobile = useMediaQuery('(max-width: 768px)');
@@ -112,8 +112,8 @@ export default function GenerateVideo() {
         <SidebarParameters 
           selectedAspectRatio={selectedAspectRatio}
           setSelectedAspectRatio={setSelectedAspectRatio}
-          duration={duration}
-          setDuration={setDuration}
+          // duration={duration}
+          // setDuration={setDuration}
           selectedModel={selectedModel}
           setSelectedModel={setSelectedModel}
           menuAspectRatio={menuAspectRatio}
