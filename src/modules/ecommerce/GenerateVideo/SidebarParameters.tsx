@@ -13,8 +13,8 @@ export interface SidebarParametersProps {
   selectedAspectRatio: typeof sizesVideo[0];
   setSelectedAspectRatio: (aspectRatio: typeof sizesVideo[0]) => void;
   duration: number;
-  setDuration: (duration: number) => void;
-  selectedModel: string;
+  // setDuration: (duration: number) => void;
+  // selectedModel: string;
   setSelectedModel: (model: string) => void;
   menuAspectRatio: boolean;
   setMenuAspectRatio: (menuAspectRatio: boolean) => void;
@@ -25,8 +25,8 @@ export interface SidebarParametersProps {
 export default function SidebarParameters({
   selectedAspectRatio,
   setSelectedAspectRatio,
-  duration,
-  setDuration,
+  // duration,
+  // setDuration,
   selectedModel,
   setSelectedModel,
   menuAspectRatio,

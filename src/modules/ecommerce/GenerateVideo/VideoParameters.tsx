@@ -13,8 +13,8 @@ export default function VideoParameters(
   {
     selectedAspectRatio,
     setSelectedAspectRatio,
-    duration,
-    setDuration,
+    // duration,
+    // setDuration,
     selectedModel,
     setSelectedModel,
     menuAspectRatio,
