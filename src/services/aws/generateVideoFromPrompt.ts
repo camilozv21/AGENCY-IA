@@ -1,5 +1,6 @@
 import { httpService } from "../common/http.service";
 import {GenerateVideoTopromptAWS} from "@/types/generateVideoFromPrompt.type"
+
 export async function genereteVideoToPromptAWS({ prompt,duration,image }: { prompt: string , duration:string, image:string }): Promise<{ success: boolean; data?: GenerateVideoTopromptAWS; error?: string }> {
     // const cookie = (await cookies()).get('authjs.session-token')?.value
     try {
