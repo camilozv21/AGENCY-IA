@@ -1,10 +1,10 @@
 import { httpService } from "../common/http.service";
 import {GenerateVideoTopromptAWS} from "@/types/generateVideoFromPrompt.type"
 
-export async function genereteVideoToPromptAWS({ prompt,duration,image }: { prompt: string , duration:string, image:string }): Promise<{ success: boolean; data?: GenerateVideoTopromptAWS; error?: string }> {
+export async function genereteVideoToPromptAWS({ prompt,duration,image }: { prompt: string , duration: number, image:string }): Promise<{ success: boolean; data?: GenerateVideoTopromptAWS; error?: string }> {
     // const cookie = (await cookies()).get('authjs.session-token')?.value
     try {
-          const response = await httpService.post<GenerateVideoTopromptAWS>("aws-text-video/generate-video-from-prompt", {prompt,duration,image},{credentials:"include"});
+          const response = await httpService.post<GenerateVideoTopromptAWS>("/aws-text-video/generate-video-from-prompt", {prompt,duration,image},{credentials:"include"});
           if (response.success === false) {
             return { success: false, error: response.error || "No se pudo generar el Video" };
           }
