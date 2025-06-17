@@ -185,46 +185,72 @@ export function HeaderMenu({ user }: { user?: { email: string, name: string, ima
                 </Link>
               </Button> */}
               <LanguagePicker />
-              <Menu radius="md" width="auto" withinPortal={false}>
+              <Menu radius="md" width={220} withinPortal={false}>
                 <Menu.Target>
                   <UnstyledButton className={classes.control}>
                     <Flex gap="xs" align="center">
-                      {user ? <Image
-                        src={user.image || 'https://df50lbm4qcrt6.cloudfront.net/contia_logo_circle.png'}
-                        alt="User Avatar"
-                        width={32}
-                        height={32}
-                        style={{ borderRadius: '50%' }}
-                      /> : <IconUser stroke={2} />}
+                      {user ? (
+                        <Image
+                          src={user.image || 'https://df50lbm4qcrt6.cloudfront.net/contia_logo_circle.png'}
+                          alt="User Avatar"
+                          width={32}
+                          height={32}
+                          style={{ borderRadius: '50%' }}
+                        />
+                      ) : (
+                        <IconUser stroke={2} />
+                      )}
                       <IconChevronDown size={16} stroke={1.5} className={classes.icon} />
                     </Flex>
                   </UnstyledButton>
                 </Menu.Target>
                 <Menu.Dropdown>
+                  <Group align="center" gap="xs" mb="xs" style={{ padding: 8 }}>
+                    {user ? (
+                      <>
+                        <Image
+                          src={user.image || 'https://df50lbm4qcrt6.cloudfront.net/contia_logo_circle.png'}
+                          alt="User Avatar"
+                          width={32}
+                          height={32}
+                          style={{ borderRadius: '50%' }}
+                        />
+                        <Text fw={500} size="sm">{user.name}</Text>
+                      </>
+                    ) : (
+                      <>
+                        <IconUser stroke={2} />
+                        <Text fw={500} size="sm">Invitado</Text>
+                      </>
+                    )}
+                  </Group>
+                  <Divider my="xs" />
                   {!user && (
                     <>
-                      <Menu.Item component="a" href="/auth/login">
+                      <Menu.Item component={Link} href="/auth/login">
                         Log in
                       </Menu.Item>
-                      <Menu.Item component="a" href="/auth/signup">
+                      <Menu.Item component={Link} href="/auth/signup">
                         Registrate
                       </Menu.Item>
                     </>
                   )}
                   {user && (
                     <>
-                      <Menu.Item component="a" target='_blank' 
+                      <Menu.Item
+                        component="a"
+                        target="_blank"
                         href={
-                          process.env.NODE_ENV === 'development' ?
-                          "https://billing.stripe.com/p/login/test_3cI5kDaku3y7gFbbYggEg00" + '?prefilled_email=' + user?.email
-                          : "https://billing.stripe.com/p/login/3cI5kDaku3y7gFbbYggEg00" + '?prefilled_email=' + user?.email
+                          process.env.NODE_ENV === 'development'
+                            ? "https://billing.stripe.com/p/login/test_3cI5kDaku3y7gFbbYggEg00" + '?prefilled_email=' + user?.email
+                            : "https://billing.stripe.com/p/login/3cI5kDaku3y7gFbbYggEg00" + '?prefilled_email=' + user?.email
                         }
                       >
                         Portal de usuario
                       </Menu.Item>
-                      <Menu.Item component='div'>
+                      <Menu.Item component="div">
                         <form action={GoogleActions}>
-                          <UnstyledButton type="submit">
+                          <UnstyledButton type="submit" style={{ width: '100%', color: 'var(--mantine-color-red-7)' }}>
                             Cerrar sesión
                           </UnstyledButton>
                         </form>
@@ -251,11 +277,77 @@ export function HeaderMenu({ user }: { user?: { email: string, name: string, ima
       >
         <ScrollArea h="calc(100vh - 80px" mx="-md">
           <Divider my="sm" />
+          {/* User section for mobile */}
+          <Group justify="center" align="center" mb="md">
+            <Flex gap="xs" align="center">
+              {user ? (
+                <Image
+                  src={user.image || 'https://df50lbm4qcrt6.cloudfront.net/contia_logo_circle.png'}
+                  alt="User Avatar"
+                  width={32}
+                  height={32}
+                  style={{ borderRadius: '50%' }}
+                />
+              ) : (
+                <IconUser stroke={2} />
+              )}
+              <Text fw={500}>{user ? user.name : 'Invitado'}</Text>
+            </Flex>
+          </Group>
+          <Group justify="center" grow pb="xl" px="md" mb="md">
+            {!user && (
+              <>
+                <Button
+                  variant="default"
+                  component={Link}
+                  href="/auth/login"
+                  fullWidth
+                  onClick={closeDrawer}
+                >
+                  Log in
+                </Button>
+                <Button
+                  color='var(--yellow-contia)'
+                  style={{ color: 'var(--text-brown)'}}
+                  component={Link}
+                  href="/auth/signup"
+                  fullWidth
+                  onClick={closeDrawer}
+                >
+                  Registrate
+                </Button>
+              </>
+            )}
+            {user && (
+              <>
+                <Button
+                  variant="default"
+                  component="a"
+                  target="_blank"
+                  href={
+                    process.env.NODE_ENV === 'development'
+                      ? "https://billing.stripe.com/p/login/test_3cI5kDaku3y7gFbbYggEg00" + '?prefilled_email=' + user?.email
+                      : "https://billing.stripe.com/p/login/3cI5kDaku3y7gFbbYggEg00" + '?prefilled_email=' + user?.email
+                  }
+                  fullWidth
+                  onClick={closeDrawer}
+                >
+                  Portal de usuario
+                </Button>
+                <form action={GoogleActions} style={{ width: '100%' }} onSubmit={closeDrawer}>
+                  <Button type="submit" variant="outline" color="red" fullWidth>
+                    Cerrar sesión
+                  </Button>
+                </form>
+              </>
+            )}
+          </Group>
+          <Divider my="sm" />
 
-          <a href="#" className={classes.link}>
+          <a href="#" className={classes.link} onClick={closeDrawer}>
             Home
           </a>
-          <UnstyledButton className={classes.link} onClick={toggleLinks}>
+          <UnstyledButton className={classes.link} onClick={() => { toggleLinks(); }}>
             <Center inline>
               <Box component="span" mr={5}>
                 Features
@@ -263,23 +355,38 @@ export function HeaderMenu({ user }: { user?: { email: string, name: string, ima
               <IconChevronDown size={16} color={theme.colors.blue[6]} />
             </Center>
           </UnstyledButton>
-          <Collapse in={linksOpened}>{links}</Collapse>
-          <a href="#" className={classes.link}>
+          <Collapse in={linksOpened}>
+            {mockdata.map((item) => (
+              <UnstyledButton
+                className={classes.subLink}
+                key={item.title}
+                onClick={closeDrawer}
+              >
+                <Group wrap="nowrap" align="flex-start">
+                  <ThemeIcon size={34} variant="default" radius="md">
+                    <item.icon size={22} color={'var(--yellow-contia)'} />
+                  </ThemeIcon>
+                  <div>
+                    <Text size="sm" fw={500}>
+                      {item.title}
+                    </Text>
+                    <Text size="xs" c="dimmed">
+                      {item.description}
+                    </Text>
+                  </div>
+                </Group>
+              </UnstyledButton>
+            ))}
+          </Collapse>
+          <a href="#" className={classes.link} onClick={closeDrawer}>
             Learn
           </a>
-          <a href="#" className={classes.link}>
+          <a href="#" className={classes.link} onClick={closeDrawer}>
             Academy
           </a>
-
           <Divider my="sm" />
 
           <Group justify="center" grow pb="xl" px="md">
-            <Button variant="default" component='div'>
-              <Link href='/auth/login'>
-                Log in
-              </Link>
-            </Button>
-            <Button>Sign up</Button>
             <LanguagePicker />
           </Group>
         </ScrollArea>

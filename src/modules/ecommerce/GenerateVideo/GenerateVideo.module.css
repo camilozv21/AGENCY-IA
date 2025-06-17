@@ -2,6 +2,15 @@
   height: 100dvh;
 }
 
+.container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  flex: 1;
+  background: #0f0f0f;
+}
+
 .form {
   width: 100%;
   /* max-width: 700px; */
@@ -23,8 +32,24 @@
   border-radius: 10px;
 }
 
+.input {
+  display: block;
+  width: 100%;
+  max-width: 700px;
+  /* margin: 0 auto; */
+}
+
+.button {
+  width: 100%;
+}
+
 @media screen and (min-width: 768px) {
   .FlexContainer {
     margin-left: 332px;
+  }
+
+  .button {
+    width: auto;
+    height: 100%;
   }
 }
