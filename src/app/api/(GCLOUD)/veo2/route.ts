@@ -11,6 +11,7 @@ const MODEL_ID = "veo-2.0-generate-001";
 export interface VideoSettings {
   prompt: string;
   parameters: Parameters;
+  image: string;
 }
 
 export interface Parameters {
@@ -30,8 +31,8 @@ export const POST = auth(async (request: NextAuthRequest) => {
   }
 
   const body: VideoSettings = await request.json();
-  const { prompt, parameters } = body;
-
+  const { prompt, parameters, image } = body;
+  const cleanBase64 = image.replace(/^data:image\/\w+;base64,/, ""); 
   const isValidTokens = await validateTokens(session.user.email || "", parameters.sampleCount * 660);
 
   if (!isValidTokens) {
@@ -55,6 +56,10 @@ export const POST = auth(async (request: NextAuthRequest) => {
       instances: [
         {
           prompt: prompt,
+          image: {
+            bytesBase64Encoded: cleanBase64, 
+            mimeType: "image/jpeg"
+          }
         },
       ],
       parameters: {
