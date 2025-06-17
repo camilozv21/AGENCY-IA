@@ -3,13 +3,9 @@
 import { useState } from 'react';
 import { useMediaQuery } from '@mantine/hooks';
 import {
-  Icon2fa,
-  IconDatabaseImport,
-  IconFingerprint,
   IconHome,
-  IconKey,
+  IconMovie,
   IconPhoto,
-  IconSettings,
 } from '@tabler/icons-react';
 import { Stack, Tooltip, UnstyledButton } from '@mantine/core';
 import classes from './Sidebar.module.css';
@@ -19,11 +15,7 @@ import { usePathname } from 'next/navigation';
 const navData = [
   { link: '/dashboard', label: 'Home', icon: IconHome },
   { link: '/dashboard/tool/text-to-image', label: 'Crear Post', icon: IconPhoto },
-  { link: '/dashboard/', label: 'Security', icon: IconFingerprint },
-  { link: '/dashboard/', label: 'SSH Keys', icon: IconKey },
-  { link: '/dashboard/', label: 'Databases', icon: IconDatabaseImport },
-  { link: '/dashboard/', label: 'Authentication', icon: Icon2fa },
-  { link: '/dashboard/', label: 'Other Settings', icon: IconSettings },
+  { link: '/dashboard/tool/text-to-video', label: 'Crear Reel', icon: IconMovie },
 ];
 
 interface NavbarLinkProps {

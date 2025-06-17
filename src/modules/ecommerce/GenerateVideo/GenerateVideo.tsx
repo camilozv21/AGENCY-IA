@@ -204,7 +204,7 @@ export default function GenerateVideo() {
                   className={classes.input}
                   size="lg"
                   autosize
-                  placeholder="¿Qué quieres ver en la imagen?"
+                  placeholder="¿Qué quieres ver en el video?"
                   rightSectionWidth={42}
                   leftSection={<IconSparkles size={18} stroke={1.5} color="#FFFFFF" />}
                   rightSectionProps={{ style: { width: 'auto' } }}
@@ -218,7 +218,7 @@ export default function GenerateVideo() {
                   style={{ color: '#FFFFFF', maxWidth: '700px' }}
                   className={classes.button}
                 >
-                  Generar Imagen
+                  Generar Video
                 </Button>
               </Flex>
             </form>
