@@ -1,3 +1,4 @@
+import { auth } from '@/auth';
 import { CardsPlans } from '@/modules/company/Home/CardsPlans';
 import { FAQHomepage } from '@/modules/company/Home/FAQHomepage';
 import { ImagesCarousel } from '@/modules/company/Home/ImagesCarousel'
@@ -23,13 +24,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const session = await auth()
+  const user = session?.user;
+
   return (
     <>
       <ImagesCarousel />
       <div style={{ background: '#040507' }}>
         <ServiceDescription />
-        <CardsPlans />
+        <CardsPlans user={user ? { email: user.email ?? '', name: user.name ?? '', image: user.image ?? '' } : undefined} />
         <FAQHomepage />
       </div>
     </>

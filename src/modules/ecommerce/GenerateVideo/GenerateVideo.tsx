@@ -42,20 +42,32 @@ export default function GenerateVideo() {
 
   const handleCreateVideoReel = async (values: { prompt: string, duration: number, image?: string }) => {
     setLoading(true);
-    const response = await genereteVideoToPromptAWS({
-      prompt: values.prompt,
-      duration: 6,
-      image: uploadedImage || '',
-    });
 
-    setLoading(false);
-    if (response.success) {
-      setResponseVideoReel(response.fileName);
-    } else {
-      console.error('Error al generar el video:', response.error);
+    try {
+      const response = await genereteVideoToPromptAWS({
+        prompt: values.prompt,
+        duration: 6,
+        image: uploadedImage || '',
+      });
+
+      setLoading(false);
+      setResponseVideoReel(response?.data?.fileName);
+    } catch (error: unknown) {
+      setLoading(false);
+      console.error('Error al crear el video:', (error as Error).message);
+      let errorMessage = 'No se pudo generar el Video. Por favor verifica los datos o contacta soporte.';
+      if ((error as Error).message.includes('400')) {
+        errorMessage = 'Error de validación: revisa que los datos ingresados sean correctos.';
+      } else if ((error as Error).message.includes('401')) {
+        errorMessage = 'No autorizado: verifica tu sesión.';
+      } else if ((error as Error).message.includes('403')) {
+        errorMessage = 'No suficientes tokens.';
+      } else if ((error as Error).message.includes('500')) {
+        errorMessage = 'Error interno del servidor. Inténtalo más tarde.';
+      }
+      console.error(errorMessage);
+      
     }
-
-    console.log(response);
   }
 
   const handleCreateVideoVeo2 = async (values: { prompt: string, aspectRatio: string, image?: string }) => {
@@ -70,7 +82,8 @@ export default function GenerateVideo() {
           personGeneration: 'allow_adult',
           enablePromptRewriting: true,
           addWatermark: false,
-        }
+        },
+        image: uploadedImage || '',
       });
   
       const operationId = response.data?.operationId || '';
@@ -85,6 +98,8 @@ export default function GenerateVideo() {
         const responseVideo = await handleCheckVideoVeo2(operationId);
         if (responseVideo?.done && responseVideo?.response?.videos?.[0]?.bytesBase64Encoded) {
           setResponseVideo([responseVideo.response.videos[0].bytesBase64Encoded]);
+          setLoading(false);
+        } else if (responseVideo?.error) {
           setLoading(false);
         } else if (attempt < 10) {
           setTimeout(() => pollForVideo(attempt + 1), 30000); // Intenta cada 30 segundos, máximo 10 veces
@@ -170,7 +185,7 @@ export default function GenerateVideo() {
                 ) : (
                   <>
                     {/* Renderiza videos Veo 2 */}
-                    {responseVideo.length > 0 ? (
+                    {responseVideo.length > 0 && (
                       responseVideo.map((base64, index) => (
                         <div
                           key={index}
@@ -206,13 +221,6 @@ export default function GenerateVideo() {
                           </Button>
                         </div>
                       ))
-                    ) : (
-                      <IconMovie
-                        className={classes.placeHolder}
-                        size={'100%'}
-                        stroke={1}
-                        color="#575757"
-                      />
                     )}
               
                     {/* Renderiza video Nova Reel fuera del map */}
@@ -258,6 +266,14 @@ export default function GenerateVideo() {
                       </div>
                     )}
                   </>
+                )}
+                {responseVideo.length === 0 && !responseVideoReel && !loading && (
+                  <IconMovie
+                    className={classes.placeHolder}
+                    size={'100%'}
+                    stroke={1}
+                    color="#575757"
+                  />
                 )}
               </Flex>
         

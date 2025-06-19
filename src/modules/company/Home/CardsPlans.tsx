@@ -3,13 +3,11 @@
 import { Button, Card, Flex, Group, Text, ThemeIcon, Tabs, Badge } from '@mantine/core';
 import classes from './CardsPlans.module.css';
 import { plansData } from '@/utils/plans';
-import { useAppSelector } from '@/lib/hooks';
 
-export function CardsPlans() {
+export function CardsPlans({ user }: { user?: { email?: string, name?: string, image?: string } }) {
   const monthlyPlans = plansData.filter(plan => plan.duration === '/month');
   const annualPlans = plansData.filter(plan => plan.duration === '/year');
   // const [plan, setPlan] = useState<typeof monthlyPlans[0] | typeof annualPlans[0]>();
-  const user = useAppSelector((state) => state.user.data);
 
   return (
     <Tabs 
