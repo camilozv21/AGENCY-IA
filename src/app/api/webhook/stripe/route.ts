@@ -57,7 +57,22 @@ export async function POST(req: Request) {
                             customerId
                         });
 
+                        const token = crypto.randomBytes(32).toString('hex');
+                        const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
+                        user.passwordResetToken = tokenHash;
+                        user.passwordResetExpires = new Date(Date.now() + 10800000);
                         await user.save();
+
+                        // Extra: >>>>> send email to dashboard <<<<<
+                        await fetch(`${process.env.API_BASE_URL}/send-email`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                to: customer.email,
+                                subject: 'Establece tu nueva contraseña',
+                                message: `Por favor, utiliza el siguiente enlace para establecer tu nueva contraseña:\n\n${process.env.NEXT_PUBLIC_BASE_URL}/auth/changepassword?token=${token}`
+                            })
+                        });
                     }
                 } else {
                     console.error('No user found');
@@ -65,28 +80,28 @@ export async function POST(req: Request) {
                 }
 
                 switch (priceId) {
-                    case 'price_1RRwuPGPNJsUq7ASUIeO6HwE': // Basic Plan monthly
-                        user.tokensQuantity += 4501;
+                    case 'price_1RVbRrGPNJsUq7ASQXbL5kLj': // Basic Plan monthly
+                        user.tokensQuantity = 4501;
                         break;
                     
-                    case 'price_1RRxBCGPNJsUq7AScLclkeJ1': // Basic Plan yearly
-                        user.tokensQuantity += 54012;
+                    case 'price_1RVbWKGPNJsUq7ASwi0NWDTA': // Basic Plan yearly
+                        user.tokensQuantity = 54012;
                         break;
 
-                    case 'price_1RRww4GPNJsUq7ASIMbHJkBg': // Enterprise Plan monthly
-                        user.tokensQuantity += 12001;
+                    case 'price_1RVbScGPNJsUq7AST3bPpgm3': // Enterprise Plan monthly
+                        user.tokensQuantity = 12001;
                         break;
 
-                    case 'price_1RRxCAGPNJsUq7ASCAyBA6Lr': // Enterprise Plan yearly
-                        user.tokensQuantity += 144012;
+                    case 'price_1RVbX5GPNJsUq7ASb2Nt3hjo': // Enterprise Plan yearly
+                        user.tokensQuantity = 144012;
                         break;
 
-                    case 'price_1RRwwqGPNJsUq7ASOFdZ3arj': // Premium Plan monthly
-                        user.tokensQuantity += 20001;
+                    case 'price_1RXtL2GPNJsUq7ASYuKjuprm': // Premium Plan monthly
+                        user.tokensQuantity = 20001;
                         break;
 
-                    case 'price_1RRxCfGPNJsUq7ASwonRF3zg': // Premium Plan yearly
-                        user.tokensQuantity += 240012;
+                    case 'price_1RXtMOGPNJsUq7ASgzfra8pl': // Premium Plan yearly
+                        user.tokensQuantity = 240012;
                         break;
 
                     default:
@@ -97,24 +112,7 @@ export async function POST(req: Request) {
                 user.priceId = priceId;
                 user.hasAccess = true;
                 user.customerId = customerId;
-
-                const token = crypto.randomBytes(32).toString('hex');
-                const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
-                user.passwordResetToken = tokenHash;
-                user.passwordResetExpires = new Date(Date.now() + 10800000);
                 await user.save();
-
-                // Extra: >>>>> send email to dashboard <<<<<
-                await fetch(`${process.env.API_BASE_URL}/send-email`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        to: customer.email,
-                        subject: 'Establece tu nueva contraseña',
-                        message: `Por favor, utiliza el siguiente enlace para establecer tu nueva contraseña:\n\n${process.env.NEXT_PUBLIC_BASE_URL}/auth/changepassword?token=${token}`
-                    })
-                });
-
                 break;
             }
 

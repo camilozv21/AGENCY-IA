@@ -3,5 +3,5 @@ export interface GenerateVideoTopromptAWS {
     fileName:      string;
     message:       string;
     success:       boolean;
-    error? :       string;
+    error?:        string;
 }
