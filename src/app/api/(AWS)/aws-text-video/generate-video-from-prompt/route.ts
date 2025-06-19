@@ -49,37 +49,61 @@ export const POST = auth(async (request: NextAuthRequest) => {
       },
     });
 
-    const formatMatch = image.match(/^data:image\/(\w+);base64,/);
-    const format = formatMatch ? formatMatch[1] : "jpeg";
-
-    const command = new StartAsyncInvokeCommand({
-      modelId: "amazon.nova-reel-v1:1",
-      modelInput: {
-        taskType: "TEXT_VIDEO",
-        textToVideoParams: {
-          text: prompt,
-          images: [
-            {
-              format,
-              source: {
-                bytes: image.replace(/^data:image\/\w+;base64,/, ""),
+    let command;
+    if (image) {
+      const formatMatch = image.match(/^data:image\/(\w+);base64,/);
+      const format = formatMatch ? formatMatch[1] : "jpeg";
+  
+      command = new StartAsyncInvokeCommand({
+        modelId: "amazon.nova-reel-v1:1",
+        modelInput: {
+          taskType: "TEXT_VIDEO",
+          textToVideoParams: {
+            text: prompt,
+            images: [
+              {
+                format,
+                source: {
+                  bytes: image.replace(/^data:image\/\w+;base64,/, ""),
+                },
               },
-            },
-          ],
+            ],
+          },
+          videoGenerationConfig: {
+            durationSeconds: duration || 6,
+            fps: 24,
+            dimension: "1280x720",
+            seed: 42,
+          },
         },
-        videoGenerationConfig: {
-          durationSeconds: duration || 6,
-          fps: 24,
-          dimension: "1280x720",
-          seed: 42,
+        outputDataConfig: {
+          s3OutputDataConfig: {
+            s3Uri: process.env.BUCKET_S3_URI,
+          },
         },
-      },
-      outputDataConfig: {
-        s3OutputDataConfig: {
-          s3Uri: process.env.BUCKET_S3_URI,
+      });
+    } else {
+      command = new StartAsyncInvokeCommand({
+        modelId: "amazon.nova-reel-v1:1",
+        modelInput: {
+          taskType: "TEXT_VIDEO",
+          textToVideoParams: {
+            text: prompt
+          },
+          videoGenerationConfig: {
+            durationSeconds: duration || 6,
+            fps: 24,
+            dimension: "1280x720",
+            seed: 42,
+          },
         },
-      },
-    });
+        outputDataConfig: {
+          s3OutputDataConfig: {
+            s3Uri: process.env.BUCKET_S3_URI,
+          },
+        },
+      });
+    }
 
     const response = await client.send(command);
     const invocationArn = response.invocationArn || "";

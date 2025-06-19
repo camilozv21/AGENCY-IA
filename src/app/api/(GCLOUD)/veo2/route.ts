@@ -51,26 +51,48 @@ export const POST = auth(async (request: NextAuthRequest) => {
       scopes: ["https://www.googleapis.com/auth/cloud-platform"],
     });
 
-    const requestPayload = {
-      endpoint: `projects/${PROJECT_ID}/locations/${LOCATION_ID}/publishers/google/models/${MODEL_ID}`,
-      instances: [
-        {
-          prompt: prompt,
-          image: {
-            bytesBase64Encoded: cleanBase64, 
-            mimeType: "image/jpeg"
-          }
+    let requestPayload;
+
+    if (image) {
+      requestPayload = {
+        endpoint: `projects/${PROJECT_ID}/locations/${LOCATION_ID}/publishers/google/models/${MODEL_ID}`,
+        instances: [
+          {
+            prompt: prompt,
+            image: {
+              bytesBase64Encoded: cleanBase64, 
+              mimeType: "image/jpeg"
+            }
+          },
+        ],
+        parameters: {
+          aspectRatio: parameters.aspectRatio,
+          sampleCount: 1,
+          durationSeconds: 5,
+          personGeneration: "allow_adult",
+          enablePromptRewriting: true,
+          addWatermark: false,
         },
-      ],
-      parameters: {
-        aspectRatio: parameters.aspectRatio,
-        sampleCount: 1,
-        durationSeconds: 5,
-        personGeneration: "allow_adult",
-        enablePromptRewriting: true,
-        addWatermark: false,
-      },
-    };
+      };
+    } else {
+      requestPayload = {
+        endpoint: `projects/${PROJECT_ID}/locations/${LOCATION_ID}/publishers/google/models/${MODEL_ID}`,
+        instances: [
+          {
+            prompt: prompt,
+          },
+        ],
+        parameters: {
+          aspectRatio: parameters.aspectRatio,
+          sampleCount: 1,
+          durationSeconds: 5,
+          personGeneration: "allow_adult",
+          enablePromptRewriting: true,
+          addWatermark: false,
+        },
+      };
+    }
+
 
     const url = `https://${API_ENDPOINT}/v1/projects/${PROJECT_ID}/locations/${LOCATION_ID}/publishers/google/models/${MODEL_ID}:predictLongRunning`;
 
