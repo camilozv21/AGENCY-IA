@@ -163,7 +163,7 @@ export default function ImageSettings({
             label={
               <Flex align="center" gap="sm">
                 <selectedAspectRatio.icon size={16} />
-                {selectedAspectRatio.ratio.replace(/-/g, ' ')}
+                {selectedAspectRatio.ratio.replace(/-/g, ' ').replace('lg', '')}
               </Flex>
             }
             color="gray"
@@ -198,7 +198,7 @@ export default function ImageSettings({
                   <ActionIcon variant={selectedAspectRatio === ratio ? 'outline' : 'light'} aria-label='Aspect Ratio' color='gray' size={60}>
                     <ratio.icon size={24} />
                   </ActionIcon>
-                  <Text size="xs">{ratio.ratio.replace(/-/g, ' ')}</Text>
+                  <Text size="xs">{ratio.ratio.replace(/-/g, ' ').replace('lg', '')}</Text>
                 </Flex>
               </GridCol>
             ))}
