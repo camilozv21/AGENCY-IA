@@ -21,8 +21,6 @@
     "@reduxjs/toolkit": "^2.8.2",
     "@tabler/icons-react": "^3.31.0",
     "@types/bcrypt": "^5.0.2",
-    "@upstash/ratelimit": "^2.0.5",
-    "@upstash/redis": "^1.35.0",
     "axios": "^1.9.0",
     "bcrypt": "^5.1.1",
     "bcrypt-ts": "^6.0.0",
