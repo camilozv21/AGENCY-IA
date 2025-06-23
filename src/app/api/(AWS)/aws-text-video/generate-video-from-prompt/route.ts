@@ -112,14 +112,14 @@ export const POST = auth(async (request: NextAuthRequest) => {
     const fileName = `https://d23wy7ffkttxiu.cloudfront.net/${videoRequestId}/output.mp4`;
     
     let status = "InProgress";
-    let getAsyncResponse: any = null;
+    let getAsyncResponse;
     while (status === "InProgress") {
       await new Promise((resolve) => setTimeout(resolve, SLEEP_SECONDS * 1000));
       const getAsyncCommand = new GetAsyncInvokeCommand({
         invocationArn,
       });
       getAsyncResponse = await client.send(getAsyncCommand);
-      status = getAsyncResponse.status;
+      status = getAsyncResponse.status || "InProgress";
       // Puedes agregar logs aquí si lo deseas
     }
 
