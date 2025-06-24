@@ -4,7 +4,7 @@ import { PromptSettings } from "@/app/api/(GCLOUD)/imagen4.0/route";
 export async function generateImagen4({ promptSettings }: { promptSettings:PromptSettings }): Promise<{ success: boolean; data?: Createimagefromprompticloud; error?: string }> {
     // const cookie = (await cookies()).get('authjs.session-token')?.value
     try {
-          const response = await httpService.post<Createimagefromprompticloud>("/imagen4.0", {promptSettings},{credentials:"include"});
+          const response = await httpService.post<Createimagefromprompticloud>("/imagen4.0", {prompt: promptSettings.prompt, parameters: promptSettings.parameters},{credentials:"include"});
           if (response.success === false) {
             return { success: false, error: response.error || "No se pudo generar el Video" };
           }

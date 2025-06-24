@@ -33,6 +33,8 @@ export interface ImageSettingsProps {
   selectedTypeTask: typeof typesTask[0];
   menuOpenedTypeTask: boolean;
   setMenuOpenedTypeTask: React.Dispatch<React.SetStateAction<boolean>>;
+  selectedModel: string;
+  setSelectedModel: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export default function ImageSettings({
@@ -59,7 +61,9 @@ export default function ImageSettings({
   selectedTypeTask,
   setSelectedTypeTask,
   menuOpenedTypeTask,
-  setMenuOpenedTypeTask
+  setMenuOpenedTypeTask,
+  selectedModel,
+  setSelectedModel
 }: ImageSettingsProps) {
     const theme = useMantineTheme();
     const openRef = useRef<() => void>(null);
@@ -77,6 +81,17 @@ export default function ImageSettings({
 
   return (
     <>
+      <Text color='#C7C7C7' mt={10}>Seleccionar modelo</Text>
+        <Select
+          mb="md"
+          comboboxProps={{ withinPortal: true }}
+          data={['Nova Canva']}
+          defaultValue={'Nova Canva'}
+          placeholder="Selecciona un modelo"
+          onChange={(value) => setSelectedModel(value || 'Nova Canva')}
+          value={selectedModel.toString()}
+        />
+
       <Text color='#C7C7C7'>Tipo de Generacion</Text>
       <Menu
         width={200}

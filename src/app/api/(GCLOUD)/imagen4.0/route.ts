@@ -33,7 +33,7 @@ export const POST = auth(async (request: NextAuthRequest) => {
 
   const isValidTokens = await validateTokens(
     session.user.email || "",
-    parameters.sampleCount * 500 // Ajusta según costo por imagen
+    parameters.sampleCount * 27
   );
 
   if (!isValidTokens) {
