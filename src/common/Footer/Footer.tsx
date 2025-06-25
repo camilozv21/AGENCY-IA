@@ -5,39 +5,41 @@ import { ActionIcon, Container, Group, Text } from '@mantine/core';
 import classes from './Footer.module.css';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-
-const data = [
-  {
-    title: 'About',
-    links: [
-      { label: 'Features', link: '#' },
-      { label: 'Pricing', link: '#' },
-      { label: 'Support', link: '#' },
-      { label: 'Forums', link: '#' },
-    ],
-  },
-  {
-    title: 'Project',
-    links: [
-      { label: 'Contribute', link: '#' },
-      { label: 'Media assets', link: '#' },
-      { label: 'Changelog', link: '#' },
-      { label: 'Releases', link: '#' },
-    ],
-  },
-  {
-    title: 'Community',
-    links: [
-      { label: 'Join Discord', link: '#' },
-      { label: 'Follow on Twitter', link: '#' },
-      { label: 'Email newsletter', link: '#' },
-      { label: 'GitHub discussions', link: '#' },
-    ],
-  },
-];
+import { useTranslation } from 'react-i18next';
 
 export function Footer() {
   const pathname = usePathname();
+  const { i18n } = useTranslation();
+
+  const data = [
+    {
+      title: 'About',
+      links: [
+        { target: '_self', label: 'Features', link: `${i18n.language === 'es' ? '/about/features' : '/en/about/features'}` },
+        { target: '_self', label: 'Pricing', link: `${i18n.language === 'es' ? '/about/pricing' : '/en/about/pricing'}` },
+        { target: '_self', label: 'Support', link: `${i18n.language === 'es' ? '/about/support' : '/en/about/support'}` },
+        // { label: 'Forums', link: '#' },
+      ],
+    },
+    {
+      title: 'Project',
+      links: [
+        // { label: 'Contribute', link: `${i18n.language === 'es' ? '/project/contribute' : '/en/project/contribute'}` },
+        // { label: 'Media assets', link: '#' },
+        { target: '_self', label: 'Changelog', link: `${i18n.language === 'es' ? '/project/changelog' : '/en/project/changelog'}` },
+        // { label: 'Releases', link: '#' },
+      ],
+    },
+    {
+      title: 'Community',
+      links: [
+        { target: '_blank', label: 'Join Discord', link: 'https://discord.gg/mF3vV2zj' },
+        { target: '_blank', label: 'Follow on Instagram', link: 'https://www.instagram.com/contia.io/?hl=en' },
+        // { target: '_blank', label: 'GitHub discussions', link: 'https://github.com/your-repo/discussions' },
+      ],
+    },
+  ];
+
   const groups = data.map((group) => {
     const links = group.links.map((link, index) => (
       <Text<'a'>
@@ -45,7 +47,7 @@ export function Footer() {
         className={classes.link}
         component="a"
         href={link.link}
-        onClick={(event) => event.preventDefault()}
+        target={link.target || '_self'}
       >
         {link.label}
       </Text>
