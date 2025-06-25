@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
-		<loc>https://www.contia.io</loc>
+		<loc>
+			https://www.contia.io
+		</loc>
 		<changefreq>
 			daily
 		</changefreq>
@@ -13,7 +15,9 @@
 		</lastmod>
 	</url>
 	<url>
-		<loc>https://www.contia.io/privacy-policy</loc>
+		<loc>
+			https://www.contia.io/privacy-policy
+		</loc>
 		<changefreq>
 			daily
 		</changefreq>
@@ -25,7 +29,9 @@
 		</lastmod>
 	</url>
 	<url>
-		<loc>https://www.contia.io/terms-of-service</loc>
+		<loc>
+			https://www.contia.io/terms-of-service
+		</loc>
 		<changefreq>
 			daily
 		</changefreq>
@@ -37,7 +43,9 @@
 		</lastmod>
 	</url>
 	<url>
-		<loc>https://www.contia.io/dashboard</loc>
+		<loc>
+			https://www.contia.io/dashboard
+		</loc>
 		<changefreq>
 			daily
 		</changefreq>
@@ -49,7 +57,9 @@
 		</lastmod>
 	</url>
 	<url>
-		<loc>https://www.contia.io/dashboard/tool/text-to-image</loc>
+		<loc>
+			https://www.contia.io/dashboard/tool/text-to-image
+		</loc>
 		<changefreq>
 			daily
 		</changefreq>
@@ -61,7 +71,9 @@
 		</lastmod>
 	</url>
 	<url>
-		<loc>https://www.contia.io/en</loc>
+		<loc>
+			https://www.contia.io/dashboard/tool/text-to-video
+		</loc>
 		<changefreq>
 			daily
 		</changefreq>
@@ -73,7 +85,9 @@
 		</lastmod>
 	</url>
 	<url>
-		<loc>https://www.contia.io/en/privacy-policy</loc>
+		<loc>
+			https://www.contia.io/about/features
+		</loc>
 		<changefreq>
 			daily
 		</changefreq>
@@ -85,7 +99,9 @@
 		</lastmod>
 	</url>
 	<url>
-		<loc>https://www.contia.io/en/terms-of-service</loc>
+		<loc>
+			https://www.contia.io/about/pricing
+		</loc>
 		<changefreq>
 			daily
 		</changefreq>
@@ -97,7 +113,9 @@
 		</lastmod>
 	</url>
 	<url>
-		<loc>https://www.contia.io/en/dashboard</loc>
+		<loc>
+			https://www.contia.io/about/support
+		</loc>
 		<changefreq>
 			daily
 		</changefreq>
@@ -109,7 +127,149 @@
 		</lastmod>
 	</url>
 	<url>
-		<loc>https://www.contia.io/en/dashboard/tool/text-to-image</loc>
+		<loc>
+			https://www.contia.io/project/changelog
+		</loc>
+		<changefreq>
+			daily
+		</changefreq>
+		<priority>
+			0.7
+		</priority>
+		<lastmod>
+			2025-12-08T15:58:13.935Z
+		</lastmod>
+	</url>
+	<url>
+		<loc>
+			https://www.contia.io/en
+		</loc>
+		<changefreq>
+			daily
+		</changefreq>
+		<priority>
+			0.7
+		</priority>
+		<lastmod>
+			2025-12-08T15:58:13.935Z
+		</lastmod>
+	</url>
+	<url>
+		<loc>
+			https://www.contia.io/en/privacy-policy
+		</loc>
+		<changefreq>
+			daily
+		</changefreq>
+		<priority>
+			0.7
+		</priority>
+		<lastmod>
+			2025-12-08T15:58:13.935Z
+		</lastmod>
+	</url>
+	<url>
+		<loc>
+			https://www.contia.io/en/terms-of-service
+		</loc>
+		<changefreq>
+			daily
+		</changefreq>
+		<priority>
+			0.7
+		</priority>
+		<lastmod>
+			2025-12-08T15:58:13.935Z
+		</lastmod>
+	</url>
+	<url>
+		<loc>
+			https://www.contia.io/en/dashboard
+		</loc>
+		<changefreq>
+			daily
+		</changefreq>
+		<priority>
+			0.7
+		</priority>
+		<lastmod>
+			2025-12-08T15:58:13.935Z
+		</lastmod>
+	</url>
+	<url>
+		<loc>
+			https://www.contia.io/en/dashboard/tool/text-to-image
+		</loc>
+		<changefreq>
+			daily
+		</changefreq>
+		<priority>
+			0.7
+		</priority>
+		<lastmod>
+			2025-12-08T15:58:13.935Z
+		</lastmod>
+	</url>
+		<url>
+		<loc>
+			https://www.contia.io/en/dashboard/tool/text-to-video
+		</loc>
+		<changefreq>
+			daily
+		</changefreq>
+		<priority>
+			0.7
+		</priority>
+		<lastmod>
+			2025-12-08T15:58:13.935Z
+		</lastmod>
+	</url>
+	<url>
+		<loc>
+			https://www.contia.io/en/about/features
+		</loc>
+		<changefreq>
+			daily
+		</changefreq>
+		<priority>
+			0.7
+		</priority>
+		<lastmod>
+			2025-12-08T15:58:13.935Z
+		</lastmod>
+	</url>
+	<url>
+		<loc>
+			https://www.contia.io/en/about/pricing
+		</loc>
+		<changefreq>
+			daily
+		</changefreq>
+		<priority>
+			0.7
+		</priority>
+		<lastmod>
+			2025-12-08T15:58:13.935Z
+		</lastmod>
+	</url>
+	<url>
+		<loc>
+			https://www.contia.io/en/about/support
+		</loc>
+		<changefreq>
+			daily
+		</changefreq>
+		<priority>
+			0.7
+		</priority>
+		<lastmod>
+			2025-12-08T15:58:13.935Z
+		</lastmod>
+	</url>
+	<url>
+		<loc>
+			https://www.contia.io/en/project/changelog
+		</loc>
 		<changefreq>
 			daily
 		</changefreq>

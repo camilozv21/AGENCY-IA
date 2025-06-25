@@ -41,6 +41,7 @@ export default function ActivatePasswordAlert({ user }: { user?: { email: string
 
   return (
     <Alert
+      style={{ zIndex: 11 }}
       variant="filled"
       mx={10}
       mt={5}

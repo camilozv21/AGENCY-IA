@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: `ContiA Terms Of Service ${locale === 'es' ? '' : locale}`,
       description: `ContiA Terms Of Service. ${locale === 'es' ? '' : locale}`,
       alternates: {
-          canonical: `${process.env.NEXT_PUBLIC_SITE_URL}${(locale == 'es' ? '' : '/' + locale)}/terms-of-service`,
+          canonical: `${process.env.NEXT_PUBLIC_BASE_URL}${(locale == 'es' ? '' : '/' + locale)}/terms-of-service`,
       }
   }
 }
