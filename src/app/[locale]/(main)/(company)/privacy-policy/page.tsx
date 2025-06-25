@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: `ContiA Privacy Policy ${locale === 'es' ? '' : locale}`,
       description: `ContiA Privacy Policy. ${locale === 'es' ? '' : locale}`,
       alternates: {
-          canonical: `${process.env.NEXT_PUBLIC_SITE_URL}${(locale == 'es' ? '' : '/' + locale)}/privacy-policy`,
+          canonical: `${process.env.NEXT_PUBLIC_BASE_URL}${(locale == 'es' ? '' : '/' + locale)}/privacy-policy`,
       }
   }
 }

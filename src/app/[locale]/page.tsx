@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: `ContiA ${locale === 'es' ? '' : locale}`,
       description: `ContiA transforma la presencia digital de pequeñas empresas con contenido semanal personalizado generado por IA. Descubre posts, videos cortos y newsletters escalables para restaurantes, tiendas locales y freelancers. Aprovecha la última tecnología para automatizar y potenciar tu negocio. ${locale === 'es' ? '' : locale}`,
       alternates: {
-          canonical: `${process.env.NEXT_PUBLIC_SITE_URL}${(locale == 'es' ? '' : '/' + locale)}`,
+          canonical: `${process.env.NEXT_PUBLIC_BASE_URL}${(locale == 'es' ? '' : '/' + locale)}`,
       }
   }
 }
