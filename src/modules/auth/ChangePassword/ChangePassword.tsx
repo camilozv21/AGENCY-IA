@@ -131,7 +131,7 @@ export function ChangePassword() {
               <Box ml={5}>Volver al login</Box>
             </Center>
           </Anchor>
-          <Button color="yellow" className={classes.control} onClick={handleSubmit}>Reset password</Button>
+          <Button color="var(--yellow-contia)" className={classes.control} onClick={handleSubmit}>Reset password</Button>
         </Group>
       </Paper>
     </Container>

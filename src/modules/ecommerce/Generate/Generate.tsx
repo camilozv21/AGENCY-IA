@@ -13,6 +13,8 @@ import SidebarFilters from './SidebarFilters';
 import Image from 'next/image';
 import { generateImagesFromFormImageCanva } from '@/services/aws/generateImageFromFormImageCanva';
 import { useMediaQuery } from '@mantine/hooks';
+import { generateImagen4 } from '@/services/Gcloud/generateVideoToPromptImagen4';
+import { Result } from '@/types/createimagefromtextimagen4.type';
 
 interface FormValues {
   prompt: string;
@@ -20,6 +22,7 @@ interface FormValues {
 
 export default function Generate() {
   const [responseImages, setResponseImages] = useState<string[]>([]);
+  const [responseImages40, setResponseImages40] = useState<Result>({} as Result);
   const [loading, setLoading] = useState(false);
   const [selectedAspectRatio, setSelectedAspectRatio] = useState<typeof sizes[0]>(sizes[0]);
   const [selectedStyles, setSelectedStyles] = useState<typeof styles[0]>();
@@ -33,6 +36,7 @@ export default function Generate() {
   const [menuOpenedCamera, setMenuOpenedCamera] = useState(false);
   const [menuOpenedTypeTask, setMenuOpenedTypeTask] = useState(false);
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const [selectedModel, setSelectedModel] = useState<string>('Nova Canva');
   const isMobile = useMediaQuery('(max-width: 768px)');
 
   const form = useForm<FormValues>({
@@ -116,6 +120,44 @@ export default function Generate() {
     setLoading(false);
   };
 
+  const handleCreateImage40 = async (values: FormValues) => {
+    const { prompt } = values;
+
+    const parameters = {
+      aspectRatio: selectedAspectRatio?.ratio.replace('-lg', '') || "1:1-lg".replace('-lg', ''),
+      sampleCount: quantityImages || 3,
+      safetySetting: "block_only_high",
+      personGeneration: "allow_adult",
+      includeRaiReason: false,
+      includeSafetyAttributes: false,
+    };
+
+    setLoading(true);
+
+    const response = await generateImagen4({ promptSettings: { prompt, parameters } });
+
+    if (!response.success) {
+      notifications.show({
+        title: "Error",
+        message: response.error || "No se pudo generar las imágenes",
+        color: "red",
+      });
+      setResponseImages([]);
+      setLoading(false);
+      return;
+    }
+
+    setResponseImages40(response.data?.result || {} as Result);
+
+    notifications.show({
+      title: "Éxito",
+      message: "Imágenes generadas exitosamente",
+      color: "green",
+    });
+
+    setLoading(false);
+  }
+
   const handleDownload = (base64: string, index: number) => {
     const link = document.createElement('a');
     link.href = `data:image/png;base64,${base64}`;
@@ -152,12 +194,14 @@ export default function Generate() {
         selectedTypeTask={selectedTypeTask}
         menuOpenedTypeTask={menuOpenedTypeTask}
         setMenuOpenedTypeTask={setMenuOpenedTypeTask}
+        selectedModel={selectedModel}
+        setSelectedModel={setSelectedModel}
       />
       <Center px={15} pb={50} inline={false} className={classes.container}>
         <Flex direction="column" align="center" justify="center" h={'100%'} w={'100%'}>
           <form
             className={classes.form}
-            onSubmit={form.onSubmit((values) => uploadedImage ? handleCreateImageFromImage(values) : handleCreateImage(values))}
+            onSubmit={form.onSubmit((values) => selectedModel === 'Nova Canva' ? uploadedImage ? handleCreateImageFromImage(values) : handleCreateImage(values) : handleCreateImage40(values))}
           >
             <Flex
               direction={isMobile ? "column" : "row"}
@@ -166,68 +210,95 @@ export default function Generate() {
               gap={20}
               style={{ marginBottom: 30, flexWrap: 'wrap' }}
             >
-              {loading
-                ? // Render skeletons based on quantityImages
-                  Array.from({ length: quantityImages }).map((_, index) => (
-                    <div
-                      key={index}
-                      style={{
-                        width: isMobile ? '100%' : `calc(100% / ${quantityImages > 3 ? 3 : quantityImages} - 20px)`,
-                        aspectRatio: selectedAspectRatio?.ratio || '1 / 1',
-                        marginTop: '3rem'
-                      }}
-                    >
-                      <SkeletonImage />
-                    </div>
-                  ))
-                : // Render images if available
-                  responseImages.length > 0
-                  ? responseImages.map((base64, index) => (
-                      <div
-                        key={index}
-                        style={{
-                          width: isMobile ? '100%' : `calc(100% / ${quantityImages > 3 ? 3 : quantityImages} - 20px)`,
-                          aspectRatio: selectedAspectRatio?.ratio || '1 / 1',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'center',
-                          marginTop: '3rem'
-                        }}
-                      >
-                        <Image
-                          src={`data:image/png;base64,${base64}`}
-                          alt="Generated"
-                          layout="responsive"
-                          width={1}
-                          height={1}
-                          className={classes.image}
-                          style={{
-                            objectFit: 'cover',
-                            width: '100%',
-                            height: 'auto',
-                          }}
-                        />
-                        <Button
-                          leftSection={<IconDownload />}
-                          mt="sm"
-                          color="var(--yellow-contia)"
-                          style={{ color: 'var(--text-brown)' }}
-                          onClick={() => handleDownload(base64, index)}
-                        >
-                          Descarga
-                        </Button>
-                      </div>
-                    ))
-                  : // Render placeholder if no images and not loading
-                    <IconPhoto
-                      className={classes.placeHolder}
-                      size={'100%'}
-                      stroke={1}
-                      color="#575757"
+              {loading ? (
+                Array.from({ length: quantityImages }).map((_, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      width: isMobile ? '100%' : `calc(100% / ${quantityImages > 3 ? 3 : quantityImages} - 20px)`,
+                      aspectRatio: selectedAspectRatio?.ratio || '1 / 1',
+                      marginTop: '3rem',
+                    }}
+                  >
+                    <SkeletonImage />
+                  </div>
+                ))
+              ) : selectedModel === 'Nova Canva' && responseImages.length > 0 ? (
+                responseImages.map((base64, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      width: isMobile ? '100%' : `calc(100% / ${quantityImages > 3 ? 3 : quantityImages} - 20px)`,
+                      aspectRatio: selectedAspectRatio?.ratio || '1 / 1',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      marginTop: '3rem',
+                    }}
+                  >
+                    <Image
+                      src={`data:image/png;base64,${base64}`}
+                      alt="Generated"
+                      layout="responsive"
+                      width={1}
+                      height={1}
+                      className={classes.image}
+                      style={{ objectFit: 'cover', width: '100%', height: 'auto' }}
                     />
-              }
+                    <Button
+                      leftSection={<IconDownload />}
+                      mt="sm"
+                      color="var(--yellow-contia)"
+                      style={{ color: 'var(--text-brown)' }}
+                      onClick={() => handleDownload(base64, index)}
+                    >
+                      Descarga
+                    </Button>
+                  </div>
+                ))
+              ) : selectedModel === 'image 4.0' && responseImages40?.predictions?.length > 0 ? (
+                responseImages40.predictions.map((img, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      width: isMobile ? '100%' : `calc(100% / ${quantityImages > 3 ? 3 : quantityImages} - 20px)`,
+                      aspectRatio: selectedAspectRatio?.ratio || '1 / 1',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      marginTop: '3rem',
+                    }}
+                  >
+                    <Image
+                      src={`data:image/png;base64,${img.bytesBase64Encoded}`}
+                      alt="Generated"
+                      layout="responsive"
+                      width={1}
+                      height={1}
+                      className={classes.image}
+                      style={{ objectFit: 'cover', width: '100%', height: 'auto' }}
+                    />
+                    <Button
+                      leftSection={<IconDownload />}
+                      mt="sm"
+                      color="var(--yellow-contia)"
+                      style={{ color: 'var(--text-brown)' }}
+                      onClick={() => handleDownload(img.bytesBase64Encoded, index)}
+                    >
+                      Descarga
+                    </Button>
+                  </div>
+                ))
+              ) : (
+                <IconPhoto
+                  className={classes.placeHolder}
+                  size={'100%'}
+                  stroke={1}
+                  color="#575757"
+                />
+              )}
             </Flex>
-      
+
             <Flex
               direction={isMobile ? 'column' : 'row'}
               align="center"

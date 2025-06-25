@@ -19,6 +19,8 @@ import { HeaderMenu } from "@/common/Header/HeaderMenu";
 import icon from "../favicon.ico";
 import StoreProvider from "./StoreProvider";
 import { auth } from "@/auth";
+import SetupData from "@/common/SetupData/SetupData";
+import ActivatePasswordAlert from "@/common/ActivatePasswordAlert/ActivatePasswordAlert";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -56,8 +58,10 @@ export default async function RootLayout({ children, params }: { children: React
         <body className={manrope.variable}>
           <MantineProvider defaultColorScheme="dark">
             <Notifications />
+            <SetupData user={user ? { email: user.email ?? '', name: user.name ?? '', image: user.image ?? '' } : undefined} />
             <TranslationsProvider locale={locale} namespaces={namespaces} resources={resources}>
               <HeaderMenu user={user ? { email: user.email ?? '', name: user.name ?? '', image: user.image ?? '' } : undefined} />
+              <ActivatePasswordAlert user={user ? { email: user.email ?? '', name: user.name ?? '', image: user.image ?? '' } : undefined} />
               <main style={{height: '100%', width: '100%'}}>{children}</main>
               <Footer />
             </TranslationsProvider>

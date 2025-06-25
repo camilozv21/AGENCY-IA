@@ -3,14 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface User {
     isLoading: boolean;
-    isLoged: boolean;
     error: string | null;
     data: Login | null;
 }
 
 const initialState: User = {
     isLoading: false,
-    isLoged: false,
     error: null,
     data: null,
 };
@@ -28,23 +26,15 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.error = null;
         state.data = action.payload;
-        state.isLoged = true;
       },
       userInfoFailure: (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
         state.data = null;
-        state.isLoged = false;
-    },
-      userLogOut: (state) => {
-        state.isLoading = false;
-        state.error = null;
-        state.data = null;
-        state.isLoged = false;
     }
   }});
   
 
-export const { userInfoStart, userInfoSuccess, userInfoFailure, userLogOut } = userSlice.actions;
+export const { userInfoStart, userInfoSuccess, userInfoFailure } = userSlice.actions;
 
 export default userSlice.reducer;
