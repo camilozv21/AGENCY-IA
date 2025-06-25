@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
     await sendMail({
       to,
       subject,
-      html: `<p>${message}</p>`, // Puedes hacer una plantilla HTML más elaborada si quieres
+      html: message,
     });
 
     return NextResponse.json(
