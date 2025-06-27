@@ -2,12 +2,14 @@
 
 import { Container, Title, Text, SimpleGrid, Card, Group, ThemeIcon } from '@mantine/core';
 import { IconPhoto, IconVideo, IconBrain, IconSettingsAutomation, IconShieldCheck, IconTrendingUp } from '@tabler/icons-react';
+import { useTranslation } from 'react-i18next';
 
 export default function Features() {
+  const { t } = useTranslation('about');
   return (
     <Container size="lg" py="xl">
       <Title order={2} mb="sm" ta="center">
-        Características principales de ContiA
+        {t('about.title')}
       </Title>
       <Text c="dimmed" ta="center" mb="xl">
         Descubre todo lo que nuestra plataforma puede hacer para automatizar tu presencia online y posicionar tu marca.
