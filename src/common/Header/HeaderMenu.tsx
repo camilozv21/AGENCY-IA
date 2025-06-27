@@ -1,34 +1,21 @@
 'use client';
 
 import {
-  IconBook,
-  IconChartPie3,
   IconChevronDown,
-  IconCode,
-  IconCoin,
-  IconFingerprint,
-  IconNotification,
   IconUser,
 } from '@tabler/icons-react';
 import {
-  Anchor,
   Box,
   Burger,
   Button,
-  Center,
-  Collapse,
   Divider,
   Drawer,
   Flex,
   Group,
-  HoverCard,
   Menu,
   ScrollArea,
-  SimpleGrid,
   Text,
-  ThemeIcon,
   UnstyledButton,
-  useMantineTheme,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import classes from './HeaderMenu.module.css';
@@ -37,64 +24,66 @@ import { LanguagePicker } from './LanguagePicker';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { GoogleActions } from '@/modules/auth/Signup/googleAction';
+import { useTranslation } from 'react-i18next';
 
-const mockdata = [
-  {
-    icon: IconCode,
-    title: 'Open source',
-    description: 'This Pokémon’s cry is very loud and distracting',
-  },
-  {
-    icon: IconCoin,
-    title: 'Free for everyone',
-    description: 'The fluid of Smeargle’s tail secretions changes',
-  },
-  {
-    icon: IconBook,
-    title: 'Documentation',
-    description: 'Yanma is capable of seeing 360 degrees without',
-  },
-  {
-    icon: IconFingerprint,
-    title: 'Security',
-    description: 'The shell’s rounded shape and the grooves on its.',
-  },
-  {
-    icon: IconChartPie3,
-    title: 'Analytics',
-    description: 'This Pokémon uses its flying ability to quickly chase',
-  },
-  {
-    icon: IconNotification,
-    title: 'Notifications',
-    description: 'Combusken battles with the intensely hot flames it spews',
-  },
-];
+// const mockdata = [
+//   {
+//     icon: IconCode,
+//     title: 'Open source',
+//     description: 'This Pokémon’s cry is very loud and distracting',
+//   },
+//   {
+//     icon: IconCoin,
+//     title: 'Free for everyone',
+//     description: 'The fluid of Smeargle’s tail secretions changes',
+//   },
+//   {
+//     icon: IconBook,
+//     title: 'Documentation',
+//     description: 'Yanma is capable of seeing 360 degrees without',
+//   },
+//   {
+//     icon: IconFingerprint,
+//     title: 'Security',
+//     description: 'The shell’s rounded shape and the grooves on its.',
+//   },
+//   {
+//     icon: IconChartPie3,
+//     title: 'Analytics',
+//     description: 'This Pokémon uses its flying ability to quickly chase',
+//   },
+//   {
+//     icon: IconNotification,
+//     title: 'Notifications',
+//     description: 'Combusken battles with the intensely hot flames it spews',
+//   },
+// ];
 
 export function HeaderMenu({ user }: { user?: { email: string, name: string, image: string } }) {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
-  const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
-  const theme = useMantineTheme();
+  // const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
+  const { i18n, t } = useTranslation();
+  // const theme = useMantineTheme();
   const pathname = usePathname();
   // const user = useAppSelector((state) => state.user.data);
 
-  const links = mockdata.map((item) => (
-    <UnstyledButton className={classes.subLink} key={item.title}>
-      <Group wrap="nowrap" align="flex-start">
-        <ThemeIcon size={34} variant="default" radius="md">
-          <item.icon size={22} color={'var(--yellow-contia)'} />
-        </ThemeIcon>
-        <div>
-          <Text size="sm" fw={500}>
-            {item.title}
-          </Text>
-          <Text size="xs" c="dimmed">
-            {item.description}
-          </Text>
-        </div>
-      </Group>
-    </UnstyledButton>
-  ));
+  // const links = mockdata.map((item) => (
+  //   <UnstyledButton className={classes.subLink} key={item.title}>
+  //     <Group wrap="nowrap" align="flex-start">
+  //       <ThemeIcon size={34} variant="default" radius="md">
+  //         <item.icon size={22} color={'var(--yellow-contia)'} />
+  //       </ThemeIcon>
+  //       <div>
+  //         <Text size="sm" fw={500}>
+  //           {item.title}
+  //         </Text>
+  //         <Text size="xs" c="dimmed">
+  //           {item.description}
+  //         </Text>
+  //       </div>
+  //     </Group>
+  //   </UnstyledButton>
+  // ));
 
   if (pathname.includes('dashboard/tool/text-to-image')) return null;
   if (pathname.includes('dashboard/tool/text-to-video')) return null;
@@ -120,7 +109,7 @@ export function HeaderMenu({ user }: { user?: { email: string, name: string, ima
           </Link>
 
           <Group h="100%" gap={0} visibleFrom="sm">
-            <HoverCard width={600} position="bottom" radius="md" shadow="md" withinPortal>
+            {/* <HoverCard width={600} position="bottom" radius="md" shadow="md" withinPortal>
               <HoverCard.Target>
                 <Link href="#" className={classes.link}>
                   <Center inline>
@@ -160,12 +149,12 @@ export function HeaderMenu({ user }: { user?: { email: string, name: string, ima
                   </Group>
                 </div>
               </HoverCard.Dropdown>
-            </HoverCard>
-            <Link href="#" className={classes.link}>
+            </HoverCard> */}
+            {/* <Link href="#" className={classes.link}>
               Contactanos
-            </Link>
-            <Link href="#" className={classes.link}>
-              Soporte
+            </Link> */}
+            <Link href={`${i18n.language === 'es' ? '/about/support' : '/en/about/support'}`} className={classes.link}>
+              {t('header.soporte')}
             </Link>
 
             <Group visibleFrom="sm" gap={0}>
@@ -220,7 +209,7 @@ export function HeaderMenu({ user }: { user?: { email: string, name: string, ima
                     ) : (
                       <>
                         <IconUser stroke={2} />
-                        <Text fw={500} size="sm">Invitado</Text>
+                        <Text fw={500} size="sm">{t('header.invitado')}</Text>
                       </>
                     )}
                   </Group>
@@ -228,10 +217,10 @@ export function HeaderMenu({ user }: { user?: { email: string, name: string, ima
                   {!user && (
                     <>
                       <Menu.Item component={Link} href="/auth/login">
-                        Log in
+                        {t('header.iniciarsesion')}
                       </Menu.Item>
                       <Menu.Item component={Link} href="/auth/signup">
-                        Registrate
+                        {t('header.registrarse')}
                       </Menu.Item>
                     </>
                   )}
@@ -246,12 +235,12 @@ export function HeaderMenu({ user }: { user?: { email: string, name: string, ima
                             : "https://billing.stripe.com/p/login/3cI5kDaku3y7gFbbYggEg00" + '?prefilled_email=' + user?.email
                         }
                       >
-                        Portal de usuario
+                        {t('header.portalusuario')}
                       </Menu.Item>
                       <Menu.Item component="div">
                         <form action={GoogleActions}>
                           <UnstyledButton type="submit" style={{ width: '100%', color: 'var(--mantine-color-red-7)' }}>
-                            Cerrar sesión
+                            {t('header.cerrarsesion')}
                           </UnstyledButton>
                         </form>
                       </Menu.Item>
@@ -344,18 +333,18 @@ export function HeaderMenu({ user }: { user?: { email: string, name: string, ima
           </Group>
           <Divider my="sm" />
 
-          <a href="#" className={classes.link} onClick={closeDrawer}>
+          <Link href="#" className={classes.link} onClick={closeDrawer}>
             Home
-          </a>
-          <UnstyledButton className={classes.link} onClick={() => { toggleLinks(); }}>
+          </Link>
+          {/* <UnstyledButton className={classes.link} onClick={() => { toggleLinks(); }}>
             <Center inline>
               <Box component="span" mr={5}>
                 Features
               </Box>
               <IconChevronDown size={16} color={theme.colors.blue[6]} />
             </Center>
-          </UnstyledButton>
-          <Collapse in={linksOpened}>
+          </UnstyledButton> */}
+          {/* <Collapse in={linksOpened}>
             {mockdata.map((item) => (
               <UnstyledButton
                 className={classes.subLink}
@@ -377,13 +366,10 @@ export function HeaderMenu({ user }: { user?: { email: string, name: string, ima
                 </Group>
               </UnstyledButton>
             ))}
-          </Collapse>
-          <a href="#" className={classes.link} onClick={closeDrawer}>
-            Learn
-          </a>
-          <a href="#" className={classes.link} onClick={closeDrawer}>
-            Academy
-          </a>
+          </Collapse> */}
+          <Link href={`${i18n.language === 'es' ? '/about/support' : '/en/about/support'}`} className={classes.link}>
+            Soporte
+          </Link>
           <Divider my="sm" />
 
           <Group justify="center" grow pb="xl" px="md">
