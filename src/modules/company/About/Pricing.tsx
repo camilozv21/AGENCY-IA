@@ -3,13 +3,15 @@
 
 import { Title, Text, Container, Button, Flex, ThemeIcon, List } from '@mantine/core';
 import { IconCheck, IconArrowRight } from '@tabler/icons-react';
+import { useTranslation } from 'react-i18next';
 
 export default function PricingIntro() {
+  const { t } = useTranslation('about');
   return (
     <Container size="lg" py="xl">
-      <Title order={2} mb="md">Planes diseñados para tu crecimiento digital</Title>
+      <Title order={2} mb="md">{t('pricing.title')}</Title>
       <Text size="lg" mb="xl" c="dimmed">
-        En ContiA sabemos que cada negocio tiene necesidades distintas. Por eso, nuestros planes están diseñados para acompañarte desde tus primeros pasos hasta el dominio total de tu nicho, ofreciendo soluciones de contenido visual, video marketing y automatización impulsadas por inteligencia artificial.
+        {t('pricing.destitle')}
       </Text>
 
       <Flex direction="column" gap="xl">
