@@ -21,7 +21,7 @@ const data: Language[] = [
 
 export function LanguagePicker() {
   const [opened, setOpened] = useState(false);
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const currentLocale = i18n.language;
   const router = useRouter();
   const currentPathname = usePathname();
@@ -59,14 +59,14 @@ export function LanguagePicker() {
     handleChange(item.value);
   };
 
-  const items = data.map((item) => (
+  const items = data.map((item, idx) => (
     <Menu.Item
       leftSection={<Image src={item.image} alt={item.label} width={18} height={18} />}
       onClick={() => updateLanguage(item)}
       key={item.label}
       value={item.value}
     >
-      {item.label}
+      {t(`header.languagepicker.${idx}.label`)}
     </Menu.Item>
   ));
 
