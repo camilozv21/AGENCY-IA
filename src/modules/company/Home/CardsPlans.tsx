@@ -2,11 +2,13 @@
 
 import { Button, Card, Flex, Group, Text, ThemeIcon, Tabs, Badge } from '@mantine/core';
 import classes from './CardsPlans.module.css';
-import { plansData } from '@/utils/plans';
+import { plansDataMonthly, plansDataYearly } from '@/utils/plans';
+import { useTranslation } from 'react-i18next';
 
 export function CardsPlans({ user }: { user?: { email?: string, name?: string, image?: string } }) {
-  const monthlyPlans = plansData.filter(plan => plan.duration === '/month');
-  const annualPlans = plansData.filter(plan => plan.duration === '/year');
+  const monthlyPlans = plansDataMonthly;
+  const annualPlans = plansDataYearly;
+  const { t } = useTranslation('home');
   // const [plan, setPlan] = useState<typeof monthlyPlans[0] | typeof annualPlans[0]>();
 
   return (
@@ -23,8 +25,8 @@ export function CardsPlans({ user }: { user?: { email?: string, name?: string, i
       }}
     >
       <Tabs.List justify="center">
-        <Tabs.Tab value="monthly">Mensual</Tabs.Tab>
-        <Tabs.Tab value="annual">Anual</Tabs.Tab>
+        <Tabs.Tab value="monthly">{t('home.cards.mensual')}</Tabs.Tab>
+        <Tabs.Tab value="annual">{t('home.cards.anual')}</Tabs.Tab>
       </Tabs.List>
 
       <Tabs.Panel value="monthly" pt="xs">
@@ -41,10 +43,10 @@ export function CardsPlans({ user }: { user?: { email?: string, name?: string, i
           // mt={50}
           style={{ zIndex: '1000', position: 'relative' }}
         >
-          {monthlyPlans.map((plan) => (
+          {monthlyPlans.map((plan, idx) => (
             <div key={plan.name}>
               <Text size="xl" className={classes.featured} style={{ opacity: plan.featured ? 1 : 0 }}>
-                Featured Plan
+                {t('home.cards.featured')}
               </Text>
               <Card
                 withBorder
@@ -54,23 +56,23 @@ export function CardsPlans({ user }: { user?: { email?: string, name?: string, i
               >
                 <Card.Section className={classes.imageSection}>
                   <Text size="xl" className={classes.imageText}>
-                    {plan.name}
+                    {t(`home.cards.planmonthly.${idx}.name`)}
                   </Text>
                 </Card.Section>
 
                 <Group justify="space-between" mt="md">
                   <div>
                     <Text fw={500} fz="xl">
-                      {plan.title}
+                      {t(`home.cards.planmonthly.${idx}.title`)}
                     </Text>
                     <Text fz="sm" c="dimmed">
-                      {plan.description}
+                      {t(`home.cards.planmonthly.${idx}.description`)}
                     </Text>
                   </div>
                 </Group>
 
                 <Card.Section className={classes.section} mt="md">
-                  <Badge variant="outline" color="var(--yellow-contia)" mb={10} size="lg">{plan.tokens} Tokens</Badge>
+                  <Badge variant="outline" color="var(--yellow-contia)" mb={10} size="lg">{t(`home.cards.planmonthly.${idx}.tokens`)} Tokens</Badge>
                   <Group gap={8} mb={-8} align="start">
                     <ul style={{ listStyle: 'none', padding: 0 }}>
                       {plan.features.map((feature, index) => (
@@ -79,7 +81,7 @@ export function CardsPlans({ user }: { user?: { email?: string, name?: string, i
                             <ThemeIcon size={34} variant="default" radius="md">
                               <feature.icon size={22} color="var(--yellow-contia)" />
                             </ThemeIcon>
-                            <Text fz="sm">{feature.text}</Text>
+                            <Text fz="sm">{t(`home.cards.planmonthly.${idx}.features.${index}.text`)}</Text>
                           </Flex>
                         </li>
                       ))}
@@ -94,7 +96,7 @@ export function CardsPlans({ user }: { user?: { email?: string, name?: string, i
                         {plan.price}
                       </Text>
                       <Text fz="sm" c="dimmed" fw={500} style={{ lineHeight: 1 }} mt={3}>
-                        {plan.paymentFrequency}
+                        {t(`home.cards.planmonthly.${idx}.paymentFrequency`)}
                       </Text>
                     </div>
 
@@ -108,7 +110,7 @@ export function CardsPlans({ user }: { user?: { email?: string, name?: string, i
                       style={{ flex: 1, color: 'var(--text-brown)' }} 
                       color="var(--yellow-contia)"
                     >
-                      {plan.button}
+                      {t(`home.cards.planmonthly.${idx}.button`)}
                     </Button>
                   </Group>
                 </Card.Section>
@@ -130,10 +132,10 @@ export function CardsPlans({ user }: { user?: { email?: string, name?: string, i
           px="sm"
           style={{ zIndex: '1000', position: 'relative' }}
         >
-          {annualPlans.map((plan) => (
+          {annualPlans.map((plan, idx) => (
             <div key={plan.name}>
               <Text size="xl" className={classes.featured} style={{ opacity: plan.featured ? 1 : 0 }}>
-                Featured Plan
+                {t('home.cards.featured')}
               </Text>
               <Card
                 withBorder
@@ -143,17 +145,17 @@ export function CardsPlans({ user }: { user?: { email?: string, name?: string, i
               >
                 <Card.Section className={classes.imageSection}>
                   <Text size="xl" className={classes.imageText}>
-                    {plan.name}
+                    {t(`home.cards.planyearly.${idx}.name`)}
                   </Text>
                 </Card.Section>
 
                 <Group justify="space-between" mt="md">
                   <div>
                     <Text fw={500} fz="xl">
-                      {plan.title}
+                      {t(`home.cards.planyearly.${idx}.title`)}
                     </Text>
                     <Text fz="sm" c="dimmed">
-                      {plan.description}
+                      {t(`home.cards.planyearly.${idx}.description`)}
                     </Text>
                   </div>
                 </Group>
@@ -168,7 +170,7 @@ export function CardsPlans({ user }: { user?: { email?: string, name?: string, i
                             <ThemeIcon size={34} variant="default" radius="md">
                               <feature.icon size={22} color="var(--yellow-contia)" />
                             </ThemeIcon>
-                            <Text fz="sm">{feature.text}</Text>
+                            <Text fz="sm">{t(`home.cards.planyearly.${idx}.features.${index}.text`)}</Text>
                           </Flex>
                         </li>
                       ))}
@@ -183,7 +185,7 @@ export function CardsPlans({ user }: { user?: { email?: string, name?: string, i
                         {plan.price}
                       </Text>
                       <Text fz="sm" c="dimmed" fw={500} style={{ lineHeight: 1 }} mt={3}>
-                        {plan.paymentFrequency}
+                        {t(`home.cards.planyearly.${idx}.paymentFrequency`)}
                       </Text>
                     </div>
 
@@ -197,7 +199,7 @@ export function CardsPlans({ user }: { user?: { email?: string, name?: string, i
                       style={{ flex: 1, color: 'var(--text-brown)' }} 
                       color="var(--yellow-contia)"
                     >
-                      {plan.button}
+                      {t(`home.cards.planyearly.${idx}.button`)}
                     </Button>
                   </Group>
                 </Card.Section>
