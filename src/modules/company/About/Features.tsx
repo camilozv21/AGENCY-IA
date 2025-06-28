@@ -9,10 +9,10 @@ export default function Features() {
   return (
     <Container size="lg" py="xl">
       <Title order={2} mb="sm" ta="center">
-        {t('about.title')}
+        {t('features.title')}
       </Title>
       <Text c="dimmed" ta="center" mb="xl">
-        Descubre todo lo que nuestra plataforma puede hacer para automatizar tu presencia online y posicionar tu marca.
+        {t('features.descubre')}
       </Text>
 
       <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="lg">
@@ -22,9 +22,9 @@ export default function Features() {
               <IconPhoto />
             </ThemeIcon>
             <div>
-              <Text fw={600}>Imágenes personalizadas con IA</Text>
+              <Text fw={600}>{t('features.imgpersonalizadas')}</Text>
               <Text size="sm" c="dimmed">
-                Crea imágenes profesionales y adaptadas a tu marca usando modelos como Image 4.0 de Google y Nova Canva de AWS. Ideal para redes sociales, ecommerce o publicidad.
+                {t('features.descimgpersonalizadas')}
               </Text>
             </div>
           </Group>
@@ -36,9 +36,9 @@ export default function Features() {
               <IconVideo />
             </ThemeIcon>
             <div>
-              <Text fw={600}>Generación de videos para redes</Text>
+              <Text fw={600}>{t('features.vidre')}</Text>
               <Text size="sm" c="dimmed">
-                Genera reels, TikToks o shorts usando IA de última generación como Veo 2 de Google y Nova Reel de AWS. Atrae más clientes con videos impactantes.
+                {t('features.desvidre')}
               </Text>
             </div>
           </Group>
@@ -50,9 +50,9 @@ export default function Features() {
               <IconBrain />
             </ThemeIcon>
             <div>
-              <Text fw={600}>Asistente creativo con GPT-4 Turbo</Text>
+              <Text fw={600}>{t('features.asis')}</Text>
               <Text size="sm" c="dimmed">
-                Obtén ideas, textos y copies para tus campañas gracias a modelos de lenguaje avanzados. Ahorra tiempo y mejora la calidad de tu comunicación digital.
+               {t('features.desasis')}
               </Text>
             </div>
           </Group>
@@ -64,9 +64,9 @@ export default function Features() {
               <IconSettingsAutomation />
             </ThemeIcon>
             <div>
-              <Text fw={600}>Automatización de contenido</Text>
+              <Text fw={600}>{t('features.autcont')}</Text>
               <Text size="sm" c="dimmed">
-                Automatiza la creación y publicación de contenido. Aumenta tu productividad sin depender de agencias o community managers.
+                {t('features.desautcont')}
               </Text>
             </div>
           </Group>
@@ -78,9 +78,9 @@ export default function Features() {
               <IconTrendingUp />
             </ThemeIcon>
             <div>
-              <Text fw={600}>Planes escalables por tokens</Text>
+              <Text fw={600}>{t('features.plans')}</Text>
               <Text size="sm" c="dimmed">
-                Usa tus créditos como prefieras: imágenes, textos o videos. Cambia de estrategia cuando lo necesites sin pagar de más.
+                {t('features.desplans')}
               </Text>
             </div>
           </Group>
@@ -92,9 +92,9 @@ export default function Features() {
               <IconShieldCheck />
             </ThemeIcon>
             <div>
-              <Text fw={600}>Seguridad y privacidad garantizada</Text>
+              <Text fw={600}>{t('features.segpriv')}</Text>
               <Text size="sm" c="dimmed">
-                Protegemos tus datos con cifrado y filtros automáticos de contenido sensible. ContiA cumple con estándares de seguridad a nivel empresarial.
+                {t('features.dessegpriv')}
               </Text>
             </div>
           </Group>

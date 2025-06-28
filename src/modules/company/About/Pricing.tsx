@@ -3,19 +3,21 @@
 
 import { Title, Text, Container, Button, Flex, ThemeIcon, List } from '@mantine/core';
 import { IconCheck, IconArrowRight } from '@tabler/icons-react';
+import { useTranslation } from 'react-i18next';
 
 export default function PricingIntro() {
+  const { t } = useTranslation('about');
   return (
     <Container size="lg" py="xl">
-      <Title order={2} mb="md">Planes diseñados para tu crecimiento digital</Title>
+      <Title order={2} mb="md">{t('pricing.title')}</Title>
       <Text size="lg" mb="xl" c="dimmed">
-        En ContiA sabemos que cada negocio tiene necesidades distintas. Por eso, nuestros planes están diseñados para acompañarte desde tus primeros pasos hasta el dominio total de tu nicho, ofreciendo soluciones de contenido visual, video marketing y automatización impulsadas por inteligencia artificial.
+        {t('pricing.destitle')}
       </Text>
 
       <Flex direction="column" gap="xl">
         <PlanBlock
-          title="Plan Básico – $49.00 USD / mes"
-          description="Ideal para emprendedores, freelancers y pequeños negocios que desean empezar a destacar online sin complicaciones."
+          title= {t('pricing.basicplantitle')}
+          description={t('pricing.desbasicplantitle')}
           features={[
             'Hasta 70 imágenes personalizadas para redes sociales o publicidad.',
             '3 videos tipo reel (5s) con Google Veo 3.',
@@ -26,8 +28,8 @@ export default function PricingIntro() {
         />
 
         <PlanBlock
-          title="Plan Empresarial – $99.00 USD / mes"
-          description="Pensado para negocios en crecimiento que buscan aumentar su visibilidad con contenido frecuente, profesional y adaptado."
+          title={t('pricing.enterpriceplantitle')}
+          description={t('pricing.desenterpriceplantitle')}
           features={[
             'Hasta 175 imágenes personalizadas para redes sociales.',
             '7 videos tipo Veo 3 (5s) para campañas sociales.',
