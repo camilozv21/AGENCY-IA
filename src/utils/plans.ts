@@ -1,6 +1,6 @@
 import { IconBrandInstagram, IconBrandMeta, IconBrandTiktok, IconRobot } from '@tabler/icons-react';
 
-export const plansData = [
+export const plansDataMonthly = [
   {
     name: 'BASICO',
     tokens: 4501,
@@ -78,7 +78,10 @@ export const plansData = [
           : 'price_1RXtL2GPNJsUq7ASYuKjuprm',
     duration: '/month'
   },
-  // yearly plans
+]
+ 
+ // yearly plans
+export const plansDataYearly = [
   {
     name: 'BASICO',
     tokens: 54012,
@@ -155,5 +158,5 @@ export const plansData = [
           ? 'price_1RRxCfGPNJsUq7ASwonRF3zg'
           : 'price_1RXtMOGPNJsUq7ASgzfra8pl',
     duration: '/year'
-  },
+  }
 ]
