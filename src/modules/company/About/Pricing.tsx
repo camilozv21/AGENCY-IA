@@ -19,10 +19,10 @@ export default function PricingIntro() {
           title= {t('pricing.basicplantitle')}
           description={t('pricing.desbasicplantitle')}
           features={[
-            'Hasta 70 imágenes personalizadas para redes sociales o publicidad.',
-            '3 videos tipo reel (5s) con Google Veo 3.',
-            '4 videos tipo Nova Reel (6s) con tecnología de AWS.',
-            'Acceso a nuestros generadores visuales intuitivos.'
+            t(`pricing.featuresbasic.${0}`),
+            t(`pricing.featuresbasic.${1}`),
+            t(`pricing.featuresbasic.${2}`),
+            t(`pricing.featuresbasic.${3}`)
           ]}
           link="https://buy.stripe.com/28EcN58cm4Cbex3e6ogEg02"
         />
