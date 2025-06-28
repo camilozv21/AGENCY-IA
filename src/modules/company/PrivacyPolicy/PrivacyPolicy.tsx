@@ -2,111 +2,111 @@
 
 import React from 'react';
 import { Container, Title, Text, Divider, List } from '@mantine/core';
-
+import { useTranslation } from 'react-i18next';
 export default function PrivacyPolicy() {
+  const { t } = useTranslation('privacypolicy');
   return (
     <Container size="md" py="md">
-      <Title order={1}>🛡️ Privacy Policy</Title>
-      <Text mt="md">Last updated: June 3, 2025</Text>
+      <Title order={1}>🛡️ {t('privacy.title')} </Title>
+      <Text mt="md">{t('privacy.updatedate')}</Text>
       <Divider my="md" />
 
       <Text>
-        At ContiA, operated by J&M Industry, LLC, we are committed to protecting your personal information and your right to privacy.
-        This Privacy Policy explains how we collect, use, and safeguard your data when you visit our website or use our services.
+        {t('privacy.destitle')}
       </Text>
 
-      <Title order={2} mt="md">1. Information We Collect</Title>
+      <Title order={2} mt="md">{t('privacy.titlewecolle')}</Title>
       <List spacing="sm" type="unordered">
         <List.Item>
-          <Text><strong>a. Information You Provide to Us:</strong></Text>
+          <Text><strong>{t('privacy.listitem1')}</strong></Text>
           <List type="unordered" spacing="xs" withPadding>
-            <List.Item>Name, email address, and business details when registering or subscribing.</List.Item>
-            <List.Item>Payment details (processed securely via Stripe).</List.Item>
-            <List.Item>Prompts or content entered when using our AI generation services.</List.Item>
+            <List.Item>{t('privacy.listitem2')}</List.Item>
+            <List.Item>{t('privacy.listitem3')}</List.Item>
+            <List.Item>{t('privacy.listitem4')}</List.Item>
           </List>
         </List.Item>
         <List.Item>
-          <Text><strong>b. Information Collected Automatically:</strong></Text>
+          <Text><strong>{t('privacy.listitem5')}</strong></Text>
           <List type="unordered" spacing="xs" withPadding>
-            <List.Item>IP address, browser type, device information.</List.Item>
-            <List.Item>Usage data such as pages visited and time spent on the platform.</List.Item>
+            <List.Item>{t('privacy.listitem6')}</List.Item>
+            <List.Item>{t('privacy.listitem7')}</List.Item>
           </List>
         </List.Item>
         <List.Item>
-          <Text><strong>c. Third-Party Authentication:</strong></Text>
+          <Text><strong>{t('privacy.listitem8')}</strong></Text>
           <List type="unordered" spacing="xs" withPadding>
             <List.Item>
-              When signing in via Google OAuth, we receive your name, email, and profile picture (if available), strictly for authentication and account setup purposes.
-              <br />
-              We do not share your Google account information with third parties, except as required for authentication. Your Google data is stored securely and only for as long as your account is active. You can request deletion of your data or revoke access at any time by contacting us or through your Google account settings.
+              {t('privacy.listitem9')} 
+            </List.Item>
+            <List.Item>
+             {t('privacy.listitem10')}
             </List.Item>
           </List>
         </List.Item>
       </List>
 
-      <Title order={2} mt="md">2. Use of Your Information</Title>
+      <Title order={2} mt="md">{t('privacy.listitem11')}</Title>
       <List spacing="sm" type="unordered">
-        <List.Item>Provide and maintain our AI content generation services.</List.Item>
-        <List.Item>Process payments securely via Stripe.</List.Item>
-        <List.Item>Improve user experience and personalize content.</List.Item>
-        <List.Item>Communicate with you (support, updates, offers).</List.Item>
-        <List.Item>Prevent fraud, abuse, and ensure account security.</List.Item>
+        <List.Item>{t('privacy.listitem12')}</List.Item>
+        <List.Item>{t('privacy.listitem13')}</List.Item>
+        <List.Item>{t('privacy.listitem14')}</List.Item>
+        <List.Item>{t('privacy.listitem15')}</List.Item>
+        <List.Item>{t('privacy.listitem16')}</List.Item>
       </List>
 
-      <Title order={2} mt="md">3. Sharing Your Information</Title>
+      <Title order={2} mt="md">{t('privacy.listitem17')}</Title>
       <List spacing="sm" type="unordered">
         <List.Item>
-          <strong>Stripe</strong> – for payment processing (we do not store credit card numbers).
+          <strong>{t('privacy.listitem18')}</strong>{t('privacy.listitem19')} 
         </List.Item>
         <List.Item>
-          <strong>Google</strong> – for OAuth-based authentication.
+          <strong>{t('privacy.listitem20')}</strong>{t('privacy.listitem21')}
         </List.Item>
         <List.Item>
-          <strong>Service providers</strong> – for infrastructure, analytics, or customer support under strict data confidentiality agreements.
+          <strong>{t('privacy.listitem22')}</strong>{t('privacy.listitem23')}
         </List.Item>
         <List.Item>
-          <strong>Legal reasons</strong> – if required to comply with the law or enforce our Terms of Service.
+          <strong>{t('privacy.listitem24')}</strong>{t('privacy.listitem25')}   
         </List.Item>
       </List>
 
-      <Title order={2} mt="md">4. Data Security</Title>
+      <Title order={2} mt="md">{t('privacy.listitem26')}</Title>
       <Text mt="sm">
-        We follow industry best practices and security protocols to protect your information.
-        All sensitive data is encrypted in transit and at rest using secure technologies.
+        {t('privacy.listitem27')}
       </Text>
 
-      <Title order={2} mt="md">5. Your Rights and Choices</Title>
+      <Title order={2} mt="md">{t('privacy.listitem28')}</Title>
       <List spacing="sm" type="unordered">
-        <List.Item>Access or correct your personal information.</List.Item>
-        <List.Item>Delete your account and associated data.</List.Item>
-        <List.Item>Opt-out of non-essential communications.</List.Item>
-        <List.Item>To exercise these rights, contact us at: contia@contia.io</List.Item>
+        <List.Item>{t('privacy.listitem29')}</List.Item>
+        <List.Item>{t('privacy.listitem30')}</List.Item>
+        <List.Item>{t('privacy.listitem31')}</List.Item>
+        <List.Item>{t('privacy.listitem32')}</List.Item>
       </List>
 
-      <Title order={2} mt="md">6. Cookies and Tracking</Title>
+      <Title order={2} mt="md">{t('privacy.listitem33')}</Title>
       <List spacing="sm" type="unordered">
-        <List.Item>Keep you logged in.</List.Item>
-        <List.Item>Analyze usage behavior.</List.Item>
-        <List.Item>Improve our services.</List.Item>
-        <List.Item>You can control cookie preferences in your browser settings.</List.Item>
+        <List.Item>{t('privacy.listitem34')}</List.Item>
+        <List.Item>{t('privacy.listitem35')}</List.Item>
+        <List.Item>{t('privacy.listitem36')}</List.Item>
+        <List.Item>{t('privacy.listitem37')}</List.Item>
       </List>
 
-      <Title order={2} mt="md">7. International Data Transfers</Title>
+      <Title order={2} mt="md">{t('privacy.listitem38')}</Title>
       <Text mt="sm">
-        If you are accessing the site outside the United States, please be aware that your data may be transferred to, stored, and processed in the U.S., where our servers are located and operated.
+        {t('privacy.listitem39')}
       </Text>
 
-      <Title order={2} mt="md">8. Changes to This Policy</Title>
+      <Title order={2} mt="md">{t('privacy.listitem40')}</Title>
       <Text mt="sm">
-        We may update this Privacy Policy from time to time. We will notify you of significant changes by email or on the site.
+        {t('privacy.listitem41')}
       </Text>
 
-      <Title order={2} mt="md">9. Contact Us</Title>
+      <Title order={2} mt="md">{t('privacy.listitem42')}</Title>
       <Text mt="sm">
-        If you have any questions about this Privacy Policy or how we handle your data, please contact:
+       {t('privacy.listitem43')} 
         <br />J&M Industry, LLC
-        <br />📧 Email: contia@contia.io
-        <br />🌐 Website: https://www.contia.io
+        <br />📧 {t('privacy.listitem44')}
+        <br />🌐 {t('privacy.listitem45')} 
       </Text>
     </Container>
   );

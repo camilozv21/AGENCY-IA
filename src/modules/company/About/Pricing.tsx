@@ -30,36 +30,39 @@ export default function PricingIntro() {
         <PlanBlock
           title={t('pricing.enterpriceplantitle')}
           description={t('pricing.desenterpriceplantitle')}
-          features={[
-            'Hasta 175 imágenes personalizadas para redes sociales.',
-            '7 videos tipo Veo 3 (5s) para campañas sociales.',
-            '10 videos Nova Reel (6s) generados con AWS.',
-            'Asistente con IA para ideas, guiones y copies instantáneos.'
-          ]}
+          features={
+            [
+            t(`pricing.featuresenterprice.${0}`),
+            t(`pricing.featuresenterprice.${1}`),
+            t(`pricing.featuresenterprice.${2}`),
+            t(`pricing.featuresenterprice.${3}`)
+          ]
+          }
           link="https://buy.stripe.com/6oU7sL0JUc4D88F5zSgEg04"
         />
 
         <PlanBlock
-          title="Plan Premium – $199.00 USD / mes"
-          description="La solución definitiva para empresas que quieren liderar su nicho y automatizar su estrategia digital."
+          title={t('pricing.premiumplantitle')}
+          description={t('pricing.despremiumplantitle')}
           features={[
-            '288 imágenes personalizadas listas para campañas.',
-            '14 reels (5s) con Google Veo 3 y 19 videos Nova Reel (6s) en AWS.',
-            'Soporte de Google Image 4.0 para imágenes hiperrealistas.',
-            'Asistente creativo con IA para campañas y automatización de contenido.'
+            t(`pricing.featurespremium.${0}`),
+            t(`pricing.featurespremium.${1}`),
+            t(`pricing.featurespremium.${2}`),
+            t(`pricing.featurespremium.${3}`)
           ]}
           link="https://buy.stripe.com/5kQcN5eAKgkTcoV3rKgEg08"
         />
       </Flex>
 
       <Text mt="xl" ta="center" c="dimmed">
-        ¿Anual o mensual? Tú decides. Al contratar cualquier plan de forma anual, obtienes más del 15% de ahorro mensual promedio.
+        {t('pricing.backfeaturedes')} 
       </Text>
     </Container>
   );
 }
 
 function PlanBlock({ title, description, features, link }: { title: string; description: string; features: string[]; link: string }) {
+  const { t } = useTranslation('about');
   return (
     <div>
       <Title order={3} mb="xs">{title}</Title>
@@ -78,7 +81,7 @@ function PlanBlock({ title, description, features, link }: { title: string; desc
         color="var(--yellow-contia)"
         style={{ color: 'var(--text-brown)'}}
       >
-        Comenzar ahora
+        {t('pricing.button')} 
       </Button>
     </div>
   );
