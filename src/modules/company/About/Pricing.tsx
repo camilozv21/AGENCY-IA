@@ -16,8 +16,8 @@ export default function PricingIntro() {
 
       <Flex direction="column" gap="xl">
         <PlanBlock
-          title="Plan Básico – $49.00 USD / mes"
-          description="Ideal para emprendedores, freelancers y pequeños negocios que desean empezar a destacar online sin complicaciones."
+          title= {t('pricing.basicplantitle')}
+          description={t('pricing.desbasicplantitle')}
           features={[
             'Hasta 70 imágenes personalizadas para redes sociales o publicidad.',
             '3 videos tipo reel (5s) con Google Veo 3.',
@@ -28,8 +28,8 @@ export default function PricingIntro() {
         />
 
         <PlanBlock
-          title="Plan Empresarial – $99.00 USD / mes"
-          description="Pensado para negocios en crecimiento que buscan aumentar su visibilidad con contenido frecuente, profesional y adaptado."
+          title={t('pricing.enterpriceplantitle')}
+          description={t('pricing.desenterpriceplantitle')}
           features={[
             'Hasta 175 imágenes personalizadas para redes sociales.',
             '7 videos tipo Veo 3 (5s) para campañas sociales.',
