@@ -53,6 +53,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@faker-js/faker": "^9.8.0",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/mongo-sanitize": "^1.0.3",
     "@types/node": "^20",
