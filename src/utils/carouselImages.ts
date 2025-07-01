@@ -1,90 +1,180 @@
+import { faker } from '@faker-js/faker';
+
 export const data = [
   {
     image: 'https://df50lbm4qcrt6.cloudfront.net/home-carousel/carousel_image_0.png',
-    avatar: 'https://i.pravatar.cc/40?img=1'
+    avatar: 'https://i.pravatar.cc/40?img=1',
+    name: faker.person.firstName(),
+    bio: faker.lorem.sentence({ min: 9, max: 10 }),
+    number: faker.number.int({ min: 100, max: 1000 }),
+    commentsNumber: faker.number.int({ min: 2, max: 20 }),
   },
   {
     image: 'https://df50lbm4qcrt6.cloudfront.net/home-carousel/carousel_image_1.png',
-    avatar: 'https://i.pravatar.cc/40?img=2'
+    avatar: 'https://i.pravatar.cc/40?img=2',
+    name: faker.person.firstName(),
+    bio: faker.lorem.sentence({ min: 9, max: 10 }),
+    number: faker.number.int({ min: 100, max: 1000 }),
+    commentsNumber: faker.number.int({ min: 2, max: 20 }),
   },
   {
     image: 'https://df50lbm4qcrt6.cloudfront.net/home-carousel/carousel_image_2.png',
-    avatar: 'https://i.pravatar.cc/40?img=3'
+    avatar: 'https://i.pravatar.cc/40?img=3',
+    name: faker.person.firstName(),
+    bio: faker.lorem.sentence({ min: 9, max: 10 }),
+    number: faker.number.int({ min: 100, max: 1000 }),
+    commentsNumber: faker.number.int({ min: 2, max: 20 }),
   },
   {
     image: 'https://df50lbm4qcrt6.cloudfront.net/home-carousel/carousel_image_3.png',
-    avatar: 'https://i.pravatar.cc/40?img=4'
+    avatar: 'https://i.pravatar.cc/40?img=4',
+    name: faker.person.firstName(),
+    bio: faker.lorem.sentence({ min: 9, max: 10 }),
+    number: faker.number.int({ min: 100, max: 1000 }),
+    commentsNumber: faker.number.int({ min: 2, max: 20 }),
   },
   {
     image: 'https://df50lbm4qcrt6.cloudfront.net/home-carousel/carousel_image_4.png',
-    avatar: 'https://i.pravatar.cc/40?img=5'
+    avatar: 'https://i.pravatar.cc/40?img=5',
+    name: faker.person.firstName(),
+    bio: faker.lorem.sentence({ min: 9, max: 10 }),
+    number: faker.number.int({ min: 100, max: 1000 }),
+    commentsNumber: faker.number.int({ min: 2, max: 20 }),
   },
   {
     image: 'https://df50lbm4qcrt6.cloudfront.net/home-carousel/carousel_image_5.png',
-    avatar: 'https://i.pravatar.cc/40?img=6'
+    avatar: 'https://i.pravatar.cc/40?img=6',
+    name: faker.person.firstName(),
+    bio: faker.lorem.sentence({ min: 9, max: 10 }),
+    number: faker.number.int({ min: 100, max: 1000 }),
+    commentsNumber: faker.number.int({ min: 2, max: 20 }),
   },
   {
     image: 'https://df50lbm4qcrt6.cloudfront.net/home-carousel/carousel_image_6.png',
-    avatar: 'https://i.pravatar.cc/40?img=7'
+    avatar: 'https://i.pravatar.cc/40?img=7',
+    name: faker.person.firstName(),
+    bio: faker.lorem.sentence({ min: 9, max: 10 }),
+    number: faker.number.int({ min: 100, max: 1000 }),
+    commentsNumber: faker.number.int({ min: 2, max: 20 }),
   },
   {
     image: 'https://df50lbm4qcrt6.cloudfront.net/home-carousel/carousel_image_7.png',
-    avatar: 'https://i.pravatar.cc/40?img=8'
+    avatar: 'https://i.pravatar.cc/40?img=8',
+    name: faker.person.firstName(),
+    bio: faker.lorem.sentence({ min: 9, max: 10 }),
+    number: faker.number.int({ min: 100, max: 1000 }),
+    commentsNumber: faker.number.int({ min: 2, max: 20 }),
   },
   {
     image: 'https://df50lbm4qcrt6.cloudfront.net/home-carousel/carousel_image_8.png',
-    avatar: 'https://i.pravatar.cc/40?img=9'
+    avatar: 'https://i.pravatar.cc/40?img=9',
+    name: faker.person.firstName(),
+    bio: faker.lorem.sentence({ min: 9, max: 10 }),
+    number: faker.number.int({ min: 100, max: 1000 }),
+    commentsNumber: faker.number.int({ min: 2, max: 20 }),
   },
   {
     image: 'https://df50lbm4qcrt6.cloudfront.net/home-carousel/carousel_image_9.png',
-    avatar: 'https://i.pravatar.cc/40?img=10'
+    avatar: 'https://i.pravatar.cc/40?img=10',
+    name: faker.person.firstName(),
+    bio: faker.lorem.sentence({ min: 9, max: 10 }),
+    number: faker.number.int({ min: 100, max: 1000 }),
+    commentsNumber: faker.number.int({ min: 2, max: 20 }),
   },
   {
     image: 'https://df50lbm4qcrt6.cloudfront.net/home-carousel/carousel_image_10.png',
-    avatar: 'https://i.pravatar.cc/40?img=11'
+    avatar: 'https://i.pravatar.cc/40?img=11',
+    name: faker.person.firstName(),
+    bio: faker.lorem.sentence({ min: 9, max: 10 }),
+    number: faker.number.int({ min: 100, max: 1000 }),
+    commentsNumber: faker.number.int({ min: 2, max: 20 }),
   },
   {
     image: 'https://df50lbm4qcrt6.cloudfront.net/home-carousel/carousel_image_11.png',
-    avatar: 'https://i.pravatar.cc/40?img=12'
+    avatar: 'https://i.pravatar.cc/40?img=12',
+    name: faker.person.firstName(),
+    bio: faker.lorem.sentence({ min: 9, max: 10 }),
+    number: faker.number.int({ min: 100, max: 1000 }),
+    commentsNumber: faker.number.int({ min: 2, max: 20 }),
   },
   {
     image: 'https://df50lbm4qcrt6.cloudfront.net/home-carousel/carousel_image_12.png',
-    avatar: 'https://i.pravatar.cc/40?img=13'
+    avatar: 'https://i.pravatar.cc/40?img=13',
+    name: faker.person.firstName(),
+    bio: faker.lorem.sentence({ min: 9, max: 10 }),
+    number: faker.number.int({ min: 100, max: 1000 }),
+    commentsNumber: faker.number.int({ min: 2, max: 20 }),
   },
   {
     image: 'https://df50lbm4qcrt6.cloudfront.net/home-carousel/carousel_image_13.png',
-    avatar: 'https://i.pravatar.cc/40?img=14'
+    avatar: 'https://i.pravatar.cc/40?img=14',
+    name: faker.person.firstName(),
+    bio: faker.lorem.sentence({ min: 9, max: 10 }),
+    number: faker.number.int({ min: 100, max: 1000 }),
+    commentsNumber: faker.number.int({ min: 2, max: 20 }),
   },
   {
     image: 'https://df50lbm4qcrt6.cloudfront.net/home-carousel/carousel_image_14.png',
-    avatar: 'https://i.pravatar.cc/40?img=15'
+    avatar: 'https://i.pravatar.cc/40?img=15',
+    name: faker.person.firstName(),
+    bio: faker.lorem.sentence({ min: 9, max: 10 }),
+    number: faker.number.int({ min: 100, max: 1000 }),
+    commentsNumber: faker.number.int({ min: 2, max: 20 }),
   },
   {
     image: 'https://df50lbm4qcrt6.cloudfront.net/home-carousel/carousel_image_15.png',
-    avatar: 'https://i.pravatar.cc/40?img=16'
+    avatar: 'https://i.pravatar.cc/40?img=16',
+    name: faker.person.firstName(),
+    bio: faker.lorem.sentence({ min: 9, max: 10 }),
+    number: faker.number.int({ min: 100, max: 1000 }),
+    commentsNumber: faker.number.int({ min: 2, max: 20 }),
   },
   {
     image: 'https://df50lbm4qcrt6.cloudfront.net/home-carousel/carousel_image_16.png',
-    avatar: 'https://i.pravatar.cc/40?img=17'
+    avatar: 'https://i.pravatar.cc/40?img=17',
+    name: faker.person.firstName(),
+    bio: faker.lorem.sentence({ min: 9, max: 10 }),
+    number: faker.number.int({ min: 100, max: 1000 }),
+    commentsNumber: faker.number.int({ min: 2, max: 20 }),
   },
   {
     image: 'https://df50lbm4qcrt6.cloudfront.net/home-carousel/carousel_image_17.png',
-    avatar: 'https://i.pravatar.cc/40?img=18'
+    avatar: 'https://i.pravatar.cc/40?img=18',
+    name: faker.person.firstName(),
+    bio: faker.lorem.sentence({ min: 9, max: 10 }),
+    number: faker.number.int({ min: 100, max: 1000 }),
+    commentsNumber: faker.number.int({ min: 2, max: 20 }),
   },
   {
     image: 'https://df50lbm4qcrt6.cloudfront.net/home-carousel/carousel_image_18.png',
-    avatar: 'https://i.pravatar.cc/40?img=19'
+    avatar: 'https://i.pravatar.cc/40?img=19',
+    name: faker.person.firstName(),
+    bio: faker.lorem.sentence({ min: 9, max: 10 }),
+    number: faker.number.int({ min: 100, max: 1000 }),
+    commentsNumber: faker.number.int({ min: 2, max: 20 }),
   },
   {
     image: 'https://df50lbm4qcrt6.cloudfront.net/home-carousel/carousel_image_19.png',
-    avatar: 'https://i.pravatar.cc/40?img=20'
+    avatar: 'https://i.pravatar.cc/40?img=20',
+    name: faker.person.firstName(),
+    bio: faker.lorem.sentence({ min: 9, max: 10 }),
+    number: faker.number.int({ min: 100, max: 1000 }),
+    commentsNumber: faker.number.int({ min: 2, max: 20 }),
   },
   {
     image: 'https://df50lbm4qcrt6.cloudfront.net/home-carousel/carousel_image_20.png',
-    avatar: 'https://i.pravatar.cc/40?img=21'
+    avatar: 'https://i.pravatar.cc/40?img=21',
+    name: faker.person.firstName(),
+    bio: faker.lorem.sentence({ min: 9, max: 10 }),
+    number: faker.number.int({ min: 100, max: 1000 }),
+    commentsNumber: faker.number.int({ min: 2, max: 20 }),
   },
   {
     image: 'https://df50lbm4qcrt6.cloudfront.net/home-carousel/carousel_image_21.png',
-    avatar: 'https://i.pravatar.cc/40?img=22'
+    avatar: 'https://i.pravatar.cc/40?img=22',
+    name: faker.person.firstName(),
+    bio: faker.lorem.sentence({ min: 9, max: 10 }),
+    number: faker.number.int({ min: 100, max: 1000 }),
+    commentsNumber: faker.number.int({ min: 2, max: 20 }),
   },
 ];

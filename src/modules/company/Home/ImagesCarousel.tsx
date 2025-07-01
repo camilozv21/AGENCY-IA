@@ -10,13 +10,19 @@ import Image from 'next/image';
 import { IconBookmark, IconBrandTelegram, IconHeart, IconMessageCircle } from '@tabler/icons-react';
 import { data } from '@/utils/carouselImages';
 import ShinyButton from './ShinyButton';
+import { useTranslation } from 'react-i18next';
 
 interface CardProps {
   image: string;
   avatar: string;
+  name: string;
+  bio: string;
+  number: number;
+  commentsNumber: number;
 }
 
-function CardCustom({ image, avatar }: CardProps) {
+function CardCustom({ image, avatar, name, bio, number, commentsNumber }: CardProps) {
+  const { t } = useTranslation('home');
   return (
     <Paper
       shadow="none"
@@ -28,9 +34,9 @@ function CardCustom({ image, avatar }: CardProps) {
         <Group justify="space-between" align="center" mb={10}>
           <Group>
             <Avatar radius="xl" src={avatar} />
-            <Text fw={500}>crazyvideos</Text>
+            <Text fw={500}>{name}</Text>
           </Group>
-          <Text size="xs" c="dimmed">8 h</Text>
+          <Text size="xs" c="dimmed">{commentsNumber} h</Text>
         </Group>
 
         {/* Imagen principal */}
@@ -64,12 +70,12 @@ function CardCustom({ image, avatar }: CardProps) {
 
         {/* Detalles de la publicación */}
         <Stack gap={2} mt="xs">
-          <Text size="sm" fw={500}>1003 Me gusta</Text>
+          <Text size="sm" fw={500}>{number} {t('home.carousel.likes')}</Text>
           <Text size="sm">
-            <Text span fw={500}>crazyvideos </Text>
-            The movie vs subtitles 😂
+            <Text span fw={500}>{name} </Text>
+            {bio}
           </Text>
-          <Text size="xs" c="dimmed">Ver los 4 comentarios</Text>
+          <Text size="xs" c="dimmed">{t('home.carousel.comments', { count: commentsNumber })}</Text>
         </Stack>
       </Card>
     </Paper>
@@ -80,6 +86,7 @@ export function ImagesCarousel() {
   const theme = useMantineTheme();
   const autoScroll = useRef(AutoScroll({ speed: 1, direction: 'backward', stopOnInteraction: false, stopOnMouseEnter: false, stopOnFocusIn: false }));
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
+  const { t } = useTranslation('home');
   const slides = data.map((item) => (
     <Carousel.Slide key={item.image}>
       <CardCustom {...item} />
@@ -112,11 +119,11 @@ export function ImagesCarousel() {
       <div className={classes.dark}></div>
       <div className={classes.containerHome}>
         <Title order={1} className={classes.mainTitle}>
-          {mobile ? 'Generación de Contenido IA' : 'Generacion de Contenido IA Para Redes Sociales'}
+          {mobile ? t('home.carousel.titlemobile') : t('home.carousel.title')}
         </Title>
         <Text className={classes.subtext} mx={10}>
-          {mobile ? 'Crea contenido con IA y transforma tus ideas en publicaciones impactantes con ContiA. Mejora tu presencia en redes sociales.'
-           : 'Crea contenido con inteligencia artificial y transforma tus ideas en impactantes publicaciones con el generador de ContiA. Potencia tu presencia en redes sociales de forma fácil y profesional.'}
+          {mobile ? t('home.carousel.subtextmobile')
+           : t('home.carousel.subtext')}
         </Text>
         <ShinyButton />
       </div>
