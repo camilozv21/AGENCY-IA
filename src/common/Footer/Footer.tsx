@@ -6,41 +6,14 @@ import classes from './Footer.module.css';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
+import { getFooterData } from '@/utils/footer';
 
 export function Footer() {
   const pathname = usePathname();
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation('common');
+  const data = getFooterData(i18n.language);
 
-  const data = [
-    {
-      title: 'About',
-      links: [
-        { target: '_self', label: 'Features', link: `${i18n.language === 'es' ? '/about/features' : '/en/about/features'}` },
-        { target: '_self', label: 'Pricing', link: `${i18n.language === 'es' ? '/about/pricing' : '/en/about/pricing'}` },
-        { target: '_self', label: 'Support', link: `${i18n.language === 'es' ? '/about/support' : '/en/about/support'}` },
-        // { label: 'Forums', link: '#' },
-      ],
-    },
-    {
-      title: 'Project',
-      links: [
-        // { label: 'Contribute', link: `${i18n.language === 'es' ? '/project/contribute' : '/en/project/contribute'}` },
-        // { label: 'Media assets', link: '#' },
-        { target: '_self', label: 'Changelog', link: `${i18n.language === 'es' ? '/project/changelog' : '/en/project/changelog'}` },
-        // { label: 'Releases', link: '#' },
-      ],
-    },
-    {
-      title: 'Community',
-      links: [
-        { target: '_blank', label: 'Join Discord', link: 'https://discord.gg/mF3vV2zj' },
-        { target: '_blank', label: 'Follow on Instagram', link: 'https://www.instagram.com/contia.io/?hl=en' },
-        // { target: '_blank', label: 'GitHub discussions', link: 'https://github.com/your-repo/discussions' },
-      ],
-    },
-  ];
-
-  const groups = data.map((group) => {
+  const groups = data.map((group, idx) => {
     const links = group.links.map((link, index) => (
       <Text<'a'>
         key={index}
@@ -49,13 +22,13 @@ export function Footer() {
         href={link.link}
         target={link.target || '_self'}
       >
-        {link.label}
+        {t(`footer.navigation.${idx}.links.${index}.label`)}
       </Text>
     ));
 
     return (
       <div className={classes.wrapper} key={group.title}>
-        <Text className={classes.title}>{group.title}</Text>
+        <Text className={classes.title}>{t(`footer.navigation.${idx}.title`)}</Text>
         {links}
       </div>
     );
@@ -82,25 +55,25 @@ export function Footer() {
             />
           </picture>
           <Text size="xs" c="dimmed" className={classes.description}>
-            Build fully functional accessible web applications faster than ever
+            {t('footer.description')}
           </Text>
         </div>
         <div className={classes.groups}>{groups}</div>
       </Container>
       <Container className={classes.afterFooter}>
         <Text c="dimmed" size="sm">
-          © 2025 ContiA. All rights reserved.
+          © 2025 ContiA. {t('footer.derechos')}
         </Text>
 
         <Group gap={0} className={classes.social} justify="flex-end" wrap="nowrap">
           {/* <Text size="sm" mr={20} fw={700}> */}
             <a href="/privacy-policy" target="_blank" className={classes.link}>
-              Privacy Policy
+              {t('footer.privacy')}
             </a>
           {/* </Text> */}
           {/* <Text size="sm" mr={20} fw={700}> */}
             <a href="/terms-of-service" target="_blank" className={classes.link}>
-              Terms of Service
+              {t('footer.terms')}
             </a>
           {/* </Text> */}
           <ActionIcon size="lg" color="gray" variant="subtle">

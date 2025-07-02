@@ -11,6 +11,7 @@ import { Stack, Tooltip, UnstyledButton } from '@mantine/core';
 import classes from './Sidebar.module.css';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 
 const navData = [
   { link: '/dashboard', label: 'Home', icon: IconHome },
@@ -39,6 +40,7 @@ export function Sidebar() {
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [active, setActive] = useState(0);
   const pathname = usePathname();
+  const { t } = useTranslation('common');
 
   if (pathname.includes('/dashboard/tool/text-to-image')) return null;
   if (pathname.includes('/dashboard/tool/text-to-video')) return null;
@@ -50,7 +52,7 @@ export function Sidebar() {
         <Link key={item.label} href={item.link}>
           <NavbarLink
             icon={item.icon}
-            label={item.label}
+            label={t(`sidebar.navdata.${index}.label`)}
             active={index === active}
             onClick={() => setActive(index)}
           />
@@ -68,7 +70,7 @@ export function Sidebar() {
         onClick={() => setActive(index)}
       >
         <item.icon className={classes.linkIcon} stroke={1.5} />
-        <span>{item.label}</span>
+        <span>{t(`sidebar.navdata.${index}.label`)}</span>
       </Link>
     );
   });

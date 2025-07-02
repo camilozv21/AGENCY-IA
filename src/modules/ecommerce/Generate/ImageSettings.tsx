@@ -7,6 +7,7 @@ import classes from "./Generate.module.css";
 import classesDrop from './DropzoneButton.module.css';
 import { Dropzone, MIME_TYPES } from "@mantine/dropzone";
 import { useMediaQuery } from "@mantine/hooks";
+import { useTranslation } from "react-i18next";
 
 export interface ImageSettingsProps {
   selectedAspectRatio: typeof sizes[0];
@@ -68,6 +69,7 @@ export default function ImageSettings({
     const theme = useMantineTheme();
     const openRef = useRef<() => void>(null);
     const isMobile = useMediaQuery('(max-width: 768px)');
+    const { t } = useTranslation('dashboard');
 
     const handleDrop = (files: File[]) => {
       if (files.length > 0) {
@@ -81,7 +83,7 @@ export default function ImageSettings({
 
   return (
     <>
-      <Text color='#C7C7C7' mt={10}>Seleccionar modelo</Text>
+      <Text color='#C7C7C7' mt={10}>{t('dashboard.tool.image.seleccionar')}</Text>
         <Select
           mb="md"
           comboboxProps={{ withinPortal: true }}
@@ -92,7 +94,7 @@ export default function ImageSettings({
           value={selectedModel.toString()}
         />
 
-      <Text color='#C7C7C7'>Tipo de Generacion</Text>
+      <Text color='#C7C7C7'>{t('dashboard.tool.image.generacion')}</Text>
       <Menu
         width={200}
         offset={isMobile ? 10 : 25}
@@ -130,7 +132,7 @@ export default function ImageSettings({
           <ScrollAreaAutosize mah={'500px'} maw={400} scrollbars='y' mx="auto" offsetScrollbars scrollbarSize={4}>
           <Flex justify="space-between" align="center" px={10} py={5}>
             <Text size="sm" fw={700}>
-              Tipo de Generacion
+              {t('dashboard.tool.image.generacion')}
             </Text>
             <CloseButton
               onClick={() => setMenuOpened(false)}
@@ -145,7 +147,7 @@ export default function ImageSettings({
                 {/* <ActionIcon variant={selectedTypeTask === task.label ? 'outline' : 'light'} aria-label='Aspect Ratio' color='gray' size={60}>
                   <task.icon size={24} />
                 </ActionIcon> */}
-                <Text>{task.label.replace(/-/g, ' ')}</Text>
+                <Text>{t(`dashboard.tool.image.typestask.${index}.label`.replace(/-/g, ' '))}</Text>
               </Flex>
             ))}
           </Flex>
@@ -153,7 +155,7 @@ export default function ImageSettings({
         </MenuDropdown>
       </Menu>
 
-      <Text color='#C7C7C7'>Aspect Ratio</Text>
+      <Text color='#C7C7C7'>{t('dashboard.tool.image.aspectratio')}</Text>
       <Menu
         width={320}
         offset={isMobile ? 10 : 25}
@@ -192,7 +194,7 @@ export default function ImageSettings({
           <ScrollAreaAutosize mah={'500px'} maw={400} scrollbars='y' mx="auto" offsetScrollbars scrollbarSize={4}>
           <Flex justify="space-between" align="center" px={10} py={5}>
             <Text size="sm" fw={700}>
-              Aspect Ratio
+              {t('dashboard.tool.image.aspectratio')}
             </Text>
             <CloseButton
               onClick={() => setMenuOpened(false)}
@@ -224,10 +226,10 @@ export default function ImageSettings({
 
       <Divider my={10} />
       <Text fz={20} my={10}>
-        Efectos
+        {t('dashboard.tool.image.efectos')}
       </Text>
 
-      <Text color='#C7C7C7'>Estilo</Text>
+      <Text color='#C7C7C7'>{t('dashboard.tool.image.estilo')}</Text>
       <Menu
         width={320}
         offset={isMobile ? 10 : 25}
@@ -262,7 +264,7 @@ export default function ImageSettings({
                 ) : (
                   <IconPalette size={24} />
                 )}
-                <Text className={classes.styleName}>Style</Text>
+                <Text className={classes.styleName}>{t('dashboard.tool.image.estilo')}</Text>
               </Flex>
             }
             color="gray"
@@ -283,7 +285,7 @@ export default function ImageSettings({
         <ScrollAreaAutosize mah={'500px'} maw={400} mx="auto" offsetScrollbars scrollbarSize={4}>
           <Flex justify="space-between" align="center" px={10} py={5}>
             <Text size="sm" fw={700}>
-              Estilo
+              {t('dashboard.tool.image.estilo')}
             </Text>
             <CloseButton
               onClick={() => setMenuOpenedStyle(false)}
@@ -304,7 +306,7 @@ export default function ImageSettings({
                   <ActionIcon variant={selectedStyles === style ? 'outline' : 'light'} aria-label='Estilo' color='gray' size={60}>
                     <Image src={`https://df50lbm4qcrt6.cloudfront.net/dashboard/styles/${style.image}`} alt={style.name} width={60} height={60} />
                   </ActionIcon>
-                  <Text size="xs" ta={'center'} className={classes.styleName}>{style.name.replace(/-/g, ' ')}</Text>
+                  <Text size="xs" ta={'center'} className={classes.styleName}>{t(`dashboard.tool.image.styles.${index}.name`.replace(/-/g, ' '))}</Text>
                 </Flex>
               </GridCol>
             ))}
@@ -315,7 +317,7 @@ export default function ImageSettings({
       
       <br />
       
-      <Text color='#C7C7C7'>Iluminacion</Text>
+      <Text color='#C7C7C7'>{t('dashboard.tool.image.iluminacion')}</Text>
       <Menu
         width={320}
         offset={isMobile ? 10 : 25}
@@ -350,7 +352,7 @@ export default function ImageSettings({
                 ) : (
                   <IconSunLowFilled size={24} />
                 )}
-                <Text className={classes.styleName}>Ilumination</Text>
+                <Text className={classes.styleName}>{t('dashboard.tool.image.iluminacion')}</Text>
               </Flex>
             }
             color="gray"
@@ -371,7 +373,7 @@ export default function ImageSettings({
         <ScrollAreaAutosize mah={'500px'} maw={400} mx="auto" offsetScrollbars scrollbarSize={4}>
           <Flex justify="space-between" align="center" px={10} py={5}>
             <Text size="sm" fw={700}>
-              Iluminacion
+              {t('dashboard.tool.image.iluminacion')}
             </Text>
             <CloseButton
               onClick={() => setMenuOpenedIlumination(false)}
@@ -392,7 +394,7 @@ export default function ImageSettings({
                   <ActionIcon variant={selectedIlumination === style ? 'outline' : 'light'} aria-label='Estilo' color='gray' size={60}>
                     <Image src={`https://df50lbm4qcrt6.cloudfront.net/dashboard/ilumination/${style.image}`} alt={style.type} width={60} height={60} />
                   </ActionIcon>
-                  <Text size="xs" ta={'center'} className={classes.styleName}>{style.type.replace(/-/g, ' ')}</Text>
+                  <Text size="xs" ta={'center'} className={classes.styleName}>{t(`dashboard.tool.image.iluminations.${index}.type`.replace(/-/g, ' '))}</Text>
                 </Flex>
               </GridCol>
             ))}
@@ -403,7 +405,7 @@ export default function ImageSettings({
       
       <br />
       
-      <Text color='#C7C7C7'>Camera</Text>
+      <Text color='#C7C7C7'>{t('dashboard.tool.image.camara')}</Text>
       <Menu
         width={320}
         offset={isMobile ? 10 : 25}
@@ -438,7 +440,7 @@ export default function ImageSettings({
                 ) : (
                   <IconSunLowFilled size={24} />
                 )}
-                <Text className={classes.styleName}>Camera</Text>
+                <Text className={classes.styleName}>{t('dashboard.tool.image.camara')}</Text>
               </Flex>
             }
             color="gray"
@@ -459,7 +461,7 @@ export default function ImageSettings({
         <ScrollAreaAutosize mah={'500px'} maw={400} mx="auto" offsetScrollbars scrollbarSize={4}>
           <Flex justify="space-between" align="center" px={10} py={5}>
             <Text size="sm" fw={700}>
-              Camera
+              {t('dashboard.tool.image.camara')}
             </Text>
             <CloseButton
               onClick={() => setMenuOpenedCamera(false)}
@@ -480,7 +482,7 @@ export default function ImageSettings({
                   <ActionIcon variant={selectedCamera === style ? 'outline' : 'light'} aria-label='Estilo' color='gray' size={60}>
                     <Image src={`https://df50lbm4qcrt6.cloudfront.net/dashboard/camera/${style.image}`} alt={style.type} width={60} height={60} />
                   </ActionIcon>
-                  <Text size="xs" ta={'center'} className={classes.styleName}>{style.type.replace(/-/g, ' ')}</Text>
+                  <Text size="xs" ta={'center'} className={classes.styleName}>{t(`dashboard.tool.image.camera.${index}.type`.replace(/-/g, ' '))}</Text>
                 </Flex>
               </GridCol>
             ))}
@@ -490,7 +492,7 @@ export default function ImageSettings({
       </Menu>
 
       <div className={classesDrop.wrapper}>
-        <Text color='#C7C7C7' my={10}>Sube tu propia imagen</Text>
+        <Text color='#C7C7C7' my={10}>{t('dashboard.tool.image.subeimagen')}</Text>
         <Dropzone
           openRef={openRef}
           onDrop={handleDrop}
@@ -535,15 +537,15 @@ export default function ImageSettings({
               </Group>
   
               <Text ta="center" fw={700} fz="lg" mt="xl">
-                <Dropzone.Accept>Drop files here</Dropzone.Accept>
-                <Dropzone.Reject>File not supported</Dropzone.Reject>
-                <Dropzone.Idle>Drag your images here</Dropzone.Idle>
+                <Dropzone.Accept>{t('dashboard.tool.image.sueltaarchivos')}</Dropzone.Accept>
+                <Dropzone.Reject>{t('dashboard.tool.image.filenosupported')}</Dropzone.Reject>
+                <Dropzone.Idle>{t('dashboard.tool.image.dragimages')}</Dropzone.Idle>
               </Text>
   
               <Text className={classesDrop.description}>
-                Or <br />
+                {t('dashboard.tool.image.or')} <br />
                 <Text component="span" fw={700} fz="md" color={theme.colors.violet[6]} inherit>
-                  click to upload
+                  {t('dashboard.tool.image.click')}
                 </Text>
               </Text>
             </div>
@@ -551,7 +553,7 @@ export default function ImageSettings({
         </Dropzone>
       </div>
       
-      <Text color='#C7C7C7' my={10}>Numero de imagenes</Text>
+      <Text color='#C7C7C7' my={10}>{t('dashboard.tool.image.numeroimagenes')}</Text>
       <Select
         my="md"
         comboboxProps={{ withinPortal: true }}
