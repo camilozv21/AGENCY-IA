@@ -46,7 +46,7 @@ export default async function RootLayout({ children, params }: { children: React
     notFound();
   }
   
-  const namespaces = ["common", "about", "privacypolicy", "home"];
+  const namespaces = ["common", "about", "privacypolicy", "home", "dashboard"];
 
   const { resources } = await initTranslations(locale, namespaces);
 

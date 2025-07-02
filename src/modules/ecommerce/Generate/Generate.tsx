@@ -15,6 +15,7 @@ import { generateImagesFromFormImageCanva } from '@/services/aws/generateImageFr
 import { useMediaQuery } from '@mantine/hooks';
 import { generateImagen4 } from '@/services/Gcloud/generateVideoToPromptImagen4';
 import { Result } from '@/types/createimagefromtextimagen4.type';
+import { useTranslation } from 'react-i18next';
 
 interface FormValues {
   prompt: string;
@@ -38,6 +39,7 @@ export default function Generate() {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [selectedModel, setSelectedModel] = useState<string>('Nova Canva');
   const isMobile = useMediaQuery('(max-width: 768px)');
+  const { t } = useTranslation('dashboard');
 
   const form = useForm<FormValues>({
     mode: 'uncontrolled',
@@ -45,7 +47,7 @@ export default function Generate() {
     initialValues: { prompt: '' },
     validate: {
       prompt: (value) =>
-        !value ? 'Campo obligatorio' : value.length > 512 ? 'Máximo de caracteres 512' : null,
+        !value ? t('dashboard.tool.image.obligatorio') : value.length > 512 ? t('dashboard.tool.image.max') : null,
     },
   });
 
@@ -64,8 +66,8 @@ export default function Generate() {
 
     if (!response.success) {
       notifications.show({
-        title: "Error",
-        message: response.error || "No se pudo generar las imágenes",
+        title: t('dashboard.tool.image.error'),
+        message: response.error || t('dashboard.tool.image.noimagen'),
         color: "red",
       });
       setResponseImages([]);
@@ -76,8 +78,8 @@ export default function Generate() {
     setResponseImages(response.data?.images || []);
 
     notifications.show({
-      title: "Éxito",
-      message: "Imágenes generadas exitosamente",
+      title: t('dashboard.tool.image.exito'),
+      message: t('dashboard.tool.image.exitotexto'),
       color: "green",
     });
 
@@ -100,8 +102,8 @@ export default function Generate() {
 
     if (!response.success) {
       notifications.show({
-        title: "Error",
-        message: response.error || "No se pudo generar las imágenes",
+        title: t('dashboard.tool.image.error'),
+        message: response.error || t('dashboard.tool.image.noimagen'),
         color: "red",
       });
       setResponseImages([]);
@@ -112,8 +114,8 @@ export default function Generate() {
     setResponseImages(response.data?.images || []);
 
     notifications.show({
-      title: "Éxito",
-      message: "Imágenes generadas exitosamente",
+      title: t('dashboard.tool.image.exito'),
+      message: t('dashboard.tool.image.exitotexto'),
       color: "green",
     });
 
@@ -138,8 +140,8 @@ export default function Generate() {
 
     if (!response.success) {
       notifications.show({
-        title: "Error",
-        message: response.error || "No se pudo generar las imágenes",
+        title: t('dashboard.tool.image.error'),
+        message: response.error || t('dashboard.tool.image.noimagen'),
         color: "red",
       });
       setResponseImages([]);
@@ -150,8 +152,8 @@ export default function Generate() {
     setResponseImages40(response.data?.result || {} as Result);
 
     notifications.show({
-      title: "Éxito",
-      message: "Imágenes generadas exitosamente",
+      title: t('dashboard.tool.image.exito'),
+      message: t('dashboard.tool.image.exitotexto'),
       color: "green",
     });
 
@@ -252,7 +254,7 @@ export default function Generate() {
                       style={{ color: 'var(--text-brown)' }}
                       onClick={() => handleDownload(base64, index)}
                     >
-                      Descarga
+                      {t('dashboard.tool.image.descarga')}
                     </Button>
                   </div>
                 ))
@@ -285,7 +287,7 @@ export default function Generate() {
                       style={{ color: 'var(--text-brown)' }}
                       onClick={() => handleDownload(img.bytesBase64Encoded, index)}
                     >
-                      Descarga
+                      {t('dashboard.tool.image.descarga')}
                     </Button>
                   </div>
                 ))
@@ -310,7 +312,7 @@ export default function Generate() {
                 className={classes.input}
                 size="lg"
                 autosize
-                placeholder="¿Qué quieres ver en la imagen?"
+                placeholder={t('dashboard.tool.image.quieresver')}
                 rightSectionWidth={42}
                 leftSection={<IconSparkles size={18} stroke={1.5} color="#FFFFFF" />}
                 rightSectionProps={{ style: { width: 'auto' } }}
@@ -324,7 +326,7 @@ export default function Generate() {
                 style={{ color: '#FFFFFF', maxWidth: '700px' }}
                 className={classes.button}
               >
-                Generar Imagen
+                {t('dashboard.tool.image.generar')}
               </Button>
             </Flex>
           </form>
