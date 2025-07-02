@@ -12,12 +12,12 @@ import {
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
 import { IconCheck, IconX } from '@tabler/icons-react';
-
+import { useTranslation } from 'react-i18next';
 export function SupportForm() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-
+  const { t } = useTranslation('supportform');
   const form = useForm({
     initialValues: {
       name: '',
@@ -29,11 +29,11 @@ export function SupportForm() {
     validateInputOnChange: true,
 
     validate: {
-      name: (value) => (value.length < 2 ? 'Tu nombre es muy corto' : null),
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Correo inválido'),
-      issueType: (value) => (value ? null : 'Selecciona un tipo de problema'),
+      name: (value) => (value.length < 2 ? t('supportform.listitem1') : null),
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : t('supportform.listitem2')),
+      issueType: (value) => (value ? null : t('supportform.listitem3') ),
       message: (value) =>
-        value.length < 10 ? 'Describe el problema con más detalle' : null,
+        value.length < 10 ? t('supportform.listitem4')  : null,
     },
   });
 
@@ -43,10 +43,10 @@ export function SupportForm() {
     setSuccess(null);
 
     const subjectMap: Record<string, string> = {
-      generacion: 'Problemas con generación de contenido',
-      pago: 'Problemas con el pago o suscripción',
-      rendimiento: 'La app funciona lento o mal',
-      otro: 'Otro tipo de error',
+      generacion: t('supportform.listitem5') ,
+      pago: t('supportform.listitem6'),
+      rendimiento: t('supportform.listitem7'),
+      otro: t('supportform.listitem8'),
     };
 
     const payload = {
@@ -69,13 +69,13 @@ export function SupportForm() {
       });
 
       if (res.ok) {
-        setSuccess('Tu solicitud ha sido enviada con éxito.');
+        setSuccess( t('supportform.listitem9'));
         form.reset();
       } else {
-        setError('Hubo un error al enviar el formulario. Inténtalo más tarde.');
+        setError( t('supportform.listitem10'));
       }
     } catch (err: unknown) {
-      setError((err as Error).message + 'Error de red al enviar el formulario.');
+      setError((err as Error).message +  t('supportform.listitem11'));
     } finally {
       setLoading(false);
     }
@@ -86,36 +86,36 @@ export function SupportForm() {
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <TextInput
           withAsterisk
-          label="Nombre"
+          label= {t('supportform.listitem12')}
           placeholder="John Doe"
           {...form.getInputProps('name')}
         />
 
         <TextInput
           withAsterisk
-          label="Correo electrónico"
-          placeholder="correo@ejemplo.com"
+          label={t('supportform.listitem13')}
+          placeholder={t('supportform.listitem14')}
           mt="md"
           {...form.getInputProps('email')}
         />
 
         <Select
-          label="Tipo de problema"
-          placeholder="Selecciona una opción"
+          label={t('supportform.listitem15')}
+          placeholder={t('supportform.listitem16')}
           mt="md"
           data={[
-            { value: 'generacion', label: 'Problemas con generación de contenido' },
-            { value: 'pago', label: 'Problemas con el pago o suscripción' },
-            { value: 'rendimiento', label: 'La app funciona lento o mal' },
-            { value: 'otro', label: 'Otro tipo de error' },
+            { value: 'generacion', label: t('supportform.listitem17')},
+            { value: 'pago', label: t('supportform.listitem18')},
+            { value: 'rendimiento', label: t('supportform.listitem19')},
+            { value: 'otro', label: t('supportform.listitem20')},
           ]}
           {...form.getInputProps('issueType')}
         />
 
         <Textarea
           withAsterisk
-          label="Descripción del problema"
-          placeholder="Cuéntanos qué ocurrió, cuándo, y si puedes cómo replicarlo..."
+          label={t('supportform.listitem21')}
+          placeholder={t('supportform.listitem22')}
           mt="md"
           minRows={4}
           autosize
@@ -129,7 +129,7 @@ export function SupportForm() {
             color="var(--yellow-contia)"
             style={{ color: 'var(--text-brown)' }}
           >
-            Enviar solicitud
+           {t('supportform.listitem25')} 
           </Button>
         </Group>
 
@@ -137,7 +137,7 @@ export function SupportForm() {
           <Notification
             icon={<IconCheck size={18} />}
             color="teal"
-            title="Enviado"
+            title={t('supportform.listitem23')}
             mt="lg"
           >
             {success}
@@ -148,7 +148,7 @@ export function SupportForm() {
           <Notification
             icon={<IconX size={18} />}
             color="red"
-            title="Error"
+            title={t('supportform.listitem24')}
             mt="lg"
           >
             {error}
