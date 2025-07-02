@@ -5,6 +5,7 @@ import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { IconAdjustmentsHorizontal, IconLogout2 } from "@tabler/icons-react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 export default function SidebarFilters({
   selectedAspectRatio,
@@ -38,6 +39,7 @@ export default function SidebarFilters({
   const isBigScreen = useMediaQuery('(min-width: 1402px)');
   const [opened, { open, close }] = useDisclosure(!isMobile);
   const router = useRouter();
+  const { t } = useTranslation('dashboard');
 
   useEffect(() => {
     if (isMobile) {
@@ -57,7 +59,7 @@ export default function SidebarFilters({
         withCloseButton={!isBigScreen}
         withOverlay={false}
         size={"auto"}
-        title='Ajustes de Imagen'
+        title={t('dashboard.tool.image.ajustesimagen')}
       >
         <nav className={classes.navbar}>
           <div className={classes.navbarMain}>
