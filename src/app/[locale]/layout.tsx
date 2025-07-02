@@ -45,7 +45,7 @@ export default async function RootLayout({ children, params }: { children: React
   if (!i18nConfig.locales.includes(locale)) {
     notFound();
   }
-  const namespaces = ["common", "about", "privacypolicy", "termsofservice", "support", "supportform", "home", "dashboard"];
+  const namespaces = ["common", "about", "privacypolicy", "termsofservice", "support", "supportform", "home", "dashboard", "auth", "project"];
 
   const { resources } = await initTranslations(locale, namespaces);
 

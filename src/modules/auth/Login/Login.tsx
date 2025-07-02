@@ -21,6 +21,7 @@ import type { Login } from "@/types/login.types";
 import { GoogleActions } from "../Signup/googleAction";
 import { GoogleButton } from "../Signup/GoogleButton";
 import { CredentialsActions } from "./CredentialsActions";
+import { useTranslation } from "react-i18next";
 
 interface FormValues { email: string; password: string }
 
@@ -28,6 +29,7 @@ export function Login() {
   // const router = useRouter();
   // const [isLoading, setIsLoading] = useState(false);
   // const dispatch = useAppDispatch();
+  const { t } = useTranslation("auth");
 
   const form = useForm<FormValues>({
     mode: "uncontrolled",
@@ -36,9 +38,9 @@ export function Login() {
     initialValues: { email: "", password: "" },
 
     validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : t("auth.login.invalido")),
       password: (value) =>
-        value.length < 8 ? "Password must have at least 8 characters" : null,
+        value.length < 8 ? t('auth.login.minimo') : null,
     },
   });
 
@@ -95,13 +97,13 @@ export function Login() {
     <div className={classes.wrapper}>
       <Paper className={classes.form} radius={0} p={30}>
         <Text className={classes.title} ta="center" mt="md" mb={50}>
-          ¡Bienvenido de vuelta!
+          {t('auth.login.bienvenido')}
         </Text>
 
         <Flex justify="center" mb="md">
           <form action={GoogleActions} style={{ width: "100%" }}>
             <GoogleButton fullWidth size="md" type="submit">
-              Inicia sesión con Google
+              {t('auth.login.iniciagoogle')}
             </GoogleButton>
           </form>
         </Flex>
@@ -111,7 +113,7 @@ export function Login() {
           // onSubmit={form.onSubmit(handleSubmit)}
         >
           <TextInput
-            label="Email address"
+            label={t('auth.login.email')}
             placeholder="hello@gmail.com"
             name="email"
             size="md"
@@ -119,7 +121,7 @@ export function Login() {
             key={form.key("email")}
           />
           <PasswordInput
-            label="Password"
+            label={t('auth.login.password')}
             placeholder="Your password"
             name="password"
             mt="md"
@@ -137,17 +139,17 @@ export function Login() {
             style={{ color: "var(--text-brown)" }}
             // loading={isLoading}
           >
-            Iniciar sesión
+            {t('auth.login.iniciar')}
           </Button>
         </form>
 
         <Text ta="center" mt="md">
-          Aun no tienes una cuenta?{" "}
+          {t('auth.login.aunno')}{" "}
           <Link
             href="/auth/signup"
             className={classes.link}
           >
-            Registrarse
+            {t('auth.login.registrarse')}
           </Link>
         </Text>
       </Paper>

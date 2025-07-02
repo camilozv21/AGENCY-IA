@@ -10,8 +10,11 @@ import {
   Stack,
 } from '@mantine/core';
 import { IconSparkles, IconBug, IconTool } from '@tabler/icons-react';
+import { useTranslation } from 'react-i18next';
 
 export function Changelog() {
+  const { t } = useTranslation('project');
+  
   const updates = [
     {
       version: 'v1.4.0',
@@ -75,20 +78,20 @@ export function Changelog() {
     <Box maw={800} mx="auto" px="md" py={80}>
       <Stack>
         <Title order={2} style={{ fontSize: 32 }} ta="center">
-          Changelog
+          {t('changelog.registro')}
         </Title>
         <Text ta="center" c="dimmed" mb="md">
-          Consulta los últimos cambios, mejoras y correcciones realizadas en ContiA.
+          {t('changelog.consulta')}
         </Text>
 
         <Accordion variant="separated">
-          {updates.map((update) => (
+          {updates.map((update, index) => (
             <Accordion.Item key={update.version} value={update.version}>
               <Accordion.Control>
                 <Group justify="space-between">
                   <Text fw={600}>{update.version}</Text>
                   <Text size="sm" c="dimmed">
-                    {update.date}
+                    {t(`changelog.updates.${index}.date`)}
                   </Text>
                 </Group>
               </Accordion.Control>
@@ -106,6 +109,7 @@ export function Changelog() {
                         {typeBadge[item.type as 'new' | 'fix' | 'improve'].label}
                       </Badge>
                       <Text size="sm">{item.text}</Text>
+                      <Text size="sm">{t(`changelog.updates.${index}.highlights.${idx}.text`)}</Text>
                     </Group>
                   ))}
                 </Stack>
