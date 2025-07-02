@@ -3,52 +3,53 @@
 import React from 'react';
 import { Title, Text, Container, Accordion, Paper } from '@mantine/core';
 import { SupportForm } from './SupportForm';
+import { useTranslation } from 'react-i18next';
 
 export default function Support({ user }: { user?: { email: string, name: string, image: string } }) {
+  const { t } = useTranslation('support');
   return (
     <Container size="md" pt={60} pb={60}>
       <Title order={1} mb="md" ta="center" fw={900}>
-        Centro de Soporte de ContiA
+        {t('support.listitem1')} 
       </Title>
       <Text size="lg" ta="center" mb="xl">
-        ¿Tienes dudas, problemas técnicos o necesitas ayuda para aprovechar al máximo nuestros modelos de generación?
-        Aquí encontrarás respuestas y formas de contactarnos.
+        {t('support.listitem2')} 
       </Text>
 
       <Paper shadow="md" p="xl" radius="md" withBorder>
         <Accordion variant="separated" transitionDuration={300}>
           <Accordion.Item value="1">
-            <Accordion.Control>¿Cómo empiezo a usar los generadores de imágenes y videos?</Accordion.Control>
+            <Accordion.Control>{t('support.listitem3')} </Accordion.Control>
             <Accordion.Panel>
-              Una vez adquieras un plan, accede a tu panel desde el menú principal. Allí podrás seleccionar el modelo de generación (Veo 3, Image 4.0, Nova Canva, Nova Reel) y empezar a crear tu contenido.
+              {t('support.listitem4')}
             </Accordion.Panel>
           </Accordion.Item>
 
           <Accordion.Item value="2">
-            <Accordion.Control>¿Puedo cambiar de plan en cualquier momento?</Accordion.Control>
+            <Accordion.Control>{t('support.listitem5')}</Accordion.Control>
             <Accordion.Panel>
-              Sí, puedes cambiar de plan desde tu cuenta. El nuevo plan se activa inmediatamente y se ajusta el número de tokens disponibles según tu suscripción actual.
+              {t('support.listitem6')}
             </Accordion.Panel>
           </Accordion.Item>
 
           <Accordion.Item value="3">
-            <Accordion.Control>¿Qué hago si tengo problemas con la generación de contenido?</Accordion.Control>
+            <Accordion.Control>{t('support.listitem7')}</Accordion.Control>
             <Accordion.Panel>
-              Si un modelo no responde correctamente o el contenido generado no cumple con tus expectativas, llena el siguiente formulario indicando el problema y adjunta ejemplos si es posible.
+              {t('support.listitem8')} 
             </Accordion.Panel>
           </Accordion.Item>
 
           <Accordion.Item value="4">
-            <Accordion.Control>¿Cuál es el tiempo de respuesta del soporte técnico?</Accordion.Control>
+            <Accordion.Control>{t('support.listitem9')}</Accordion.Control>
             <Accordion.Panel>
-              Nuestro equipo responde en menos de 24 horas hábiles.
+              {t('support.listitem10')} 
             </Accordion.Panel>
           </Accordion.Item>
 
           <Accordion.Item value="5">
-            <Accordion.Control>¿Los tokens vencen?</Accordion.Control>
+            <Accordion.Control>{t('support.listitem11')}</Accordion.Control>
             <Accordion.Panel>
-              Los tokens mensuales se renuevan cada ciclo. Si tienes un plan anual, puedes acumularlos durante todo el año. Recomendamos usarlos antes de la renovación para sacar el mayor provecho.
+              {t('support.listitem12')} 
             </Accordion.Panel>
           </Accordion.Item>
         </Accordion>
@@ -58,7 +59,7 @@ export default function Support({ user }: { user?: { email: string, name: string
         <SupportForm />
       ) : (
         <Text ta="center" mt="xl">
-          Inicia sesión para acceder al formulario de soporte.
+          {t('support.listitem13')}
         </Text>
       )}
     </Container>
