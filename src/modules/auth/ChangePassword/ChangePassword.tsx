@@ -16,11 +16,13 @@ import {
     Title,
 } from '@mantine/core';
 import classes from './ChangePassword.module.css';
+import { useTranslation } from 'react-i18next';
 
 export function ChangePassword() {
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
   const router = useRouter();
+  const { t } = useTranslation('auth');
 
   const [isValidToken, setIsValidToken] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -32,7 +34,7 @@ export function ChangePassword() {
     // Validar el token mediante un endpoint dedicado
     async function validateToken() {
       if (!token) {
-        setErrorMessage('Token no proveído.');
+        setErrorMessage(t('auth.changepassword.token'));
         setLoading(false);
         return;
       }
@@ -43,13 +45,13 @@ export function ChangePassword() {
           if (data.valid) {
             setIsValidToken(true);
           } else {
-            setErrorMessage('Token inválido o expirado.');
+            setErrorMessage(t('auth.changepassword.tokenexpirado'));
           }
         } else {
-          setErrorMessage('Error al validar el token.');
+          setErrorMessage(t('auth.changepassword.tokenvalidar'));
         }
       } catch (error: unknown) {
-        setErrorMessage(`Error en la conexión: ${error instanceof Error ? error.message : 'Error desconocido'}`);
+        setErrorMessage(`${t('auth.changepassword.errorconexion')} ${error instanceof Error ? error.message : t('auth.changepassword.errordesconocido')}`);
       }
       setLoading(false);
     }
@@ -59,7 +61,7 @@ export function ChangePassword() {
   const handleSubmit = async () => {
     setErrorMessage('');
     if (password !== passwordConfirm) {
-      setErrorMessage('Las contraseñas no coinciden.');
+      setErrorMessage(t('auth.changepassword.passcoincide'));
       return;
     }
     // Enviar la nueva contraseña junto con el token para actualizar la contraseña del usuario
@@ -74,17 +76,17 @@ export function ChangePassword() {
         router.push('/auth/login');
       } else {
         const data = await res.json();
-        setErrorMessage(data.error || 'Error al cambiar la contraseña.');
+        setErrorMessage(data.error || t('auth.changepassword.passcambiar'));
       }
     } catch (error: unknown) {
-      setErrorMessage(`Error en la conexión: ${error instanceof Error ? error.message : 'Error desconocido'}`);
+      setErrorMessage(`${t('auth.changepassword.errorconexion')} ${error instanceof Error ? error.message : t('auth.changepassword.errordesconocido')}`);
     }
   };
 
   if (loading) {
     return (
       <Container size={460} my={30}>
-        <Text ta="center">Cargando...</Text>
+        <Text ta="center">{t('auth.changepassword.cargando')}</Text>
       </Container>
     );
   }
@@ -92,7 +94,7 @@ export function ChangePassword() {
   if (!isValidToken || errorMessage) {
     return (
       <Container size={460} my={30}>
-        <Text ta="center" c="red">{errorMessage || 'Token inválido o expirado.'}</Text>
+        <Text ta="center" c="red">{errorMessage || t('auth.changepassword.tokenexpirado')}</Text>
       </Container>
     );
   }
@@ -100,15 +102,15 @@ export function ChangePassword() {
   return (
     <Container size={460} my={30}>
       <Title className={classes.title} ta="center">
-        Cambia tu contraseña
+        {t('auth.changepassword.cambia')}
       </Title>
       <Text c="dimmed" fz="sm" ta="center">
-        Introduce tu nueva contraseña
+        {t('auth.changepassword.introduce')}
       </Text>
 
       <Paper withBorder shadow="md" p={30} radius="md" mt="xl">
         <TextInput 
-          label="Nueva contraseña" 
+          label={t('auth.changepassword.nueva')} 
           type="password"
           placeholder="******" 
           required
@@ -116,7 +118,7 @@ export function ChangePassword() {
           onChange={(e) => setPassword(e.target.value)}
         />
         <TextInput 
-          label="Confirmar contraseña" 
+          label={t('auth.changepassword.confirmar')} 
           type="password"
           placeholder="******" 
           required
@@ -128,10 +130,10 @@ export function ChangePassword() {
           <Anchor c="dimmed" size="sm" className={classes.control} onClick={() => router.push('/login')}>
             <Center inline>
               <IconArrowLeft size={12} stroke={1.5} color="var(--yellow-contia)" />
-              <Box ml={5}>Volver al login</Box>
+              <Box ml={5}>{t('auth.changepassword.volver')}</Box>
             </Center>
           </Anchor>
-          <Button color="var(--yellow-contia)" className={classes.control} onClick={handleSubmit}>Reset password</Button>
+          <Button color="var(--yellow-contia)" className={classes.control} onClick={handleSubmit}>{t('auth.changepassword.restablecer')}</Button>
         </Group>
       </Paper>
     </Container>

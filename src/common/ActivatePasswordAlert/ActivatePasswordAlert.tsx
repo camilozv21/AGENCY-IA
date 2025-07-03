@@ -5,11 +5,13 @@ import { IconInfoCircle } from "@tabler/icons-react";
 import classes from "./ActivatePasswordAlert.module.css";
 import { useAppSelector } from "@/lib/hooks";
 import { usePathname } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 export default function ActivatePasswordAlert({ user }: { user?: { email: string, name: string, image: string } }) {
   const userData = useAppSelector((state) => state.user.data);
   const loading = useAppSelector((state) => state.user.isLoading);
   const pathname = usePathname();
+  const { t } = useTranslation("auth");
 
   const handleResetToken = async () => {
     await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/user/resetToken`, {
@@ -70,7 +72,7 @@ export default function ActivatePasswordAlert({ user }: { user?: { email: string
             .
           </>
         ) : (
-          `Activa tu contraseña, para ello revisa tu bandeja de entrada del correo, tienes: ${diffHours} horas y ${diffMinutes} minutos para hacerlo.`
+          t('auth.activate.activa', { diffHours, diffMinutes })
         )
       }
       icon={<IconInfoCircle />}

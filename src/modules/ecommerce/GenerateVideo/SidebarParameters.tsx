@@ -8,6 +8,7 @@ import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { useRouter } from 'next/navigation';
 import VideoParameters from './VideoParameters';
 import { sizesVideo } from '@/utils/aspectsRatio';
+import { useTranslation } from 'react-i18next';
 
 export interface SidebarParametersProps {
   selectedAspectRatio: typeof sizesVideo[0];
@@ -38,6 +39,7 @@ export default function SidebarParameters({
   const isBigScreen = useMediaQuery('(min-width: 1402px)');
   const [opened, { open, close }] = useDisclosure(!isMobile);
   const router = useRouter();
+  const { t } = useTranslation('dashboard');
 
     useEffect(() => {
       if (isMobile) {
@@ -57,7 +59,7 @@ export default function SidebarParameters({
         withCloseButton={!isBigScreen}
         withOverlay={false}
         size={"auto"}
-        title='Ajustes del Video'
+        title={t('dashboard.tool.video.ajustes')}
       >
         <nav className={classes.navbar}>
           <div className={classes.navbarMain}>

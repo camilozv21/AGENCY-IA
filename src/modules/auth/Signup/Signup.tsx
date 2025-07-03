@@ -17,12 +17,14 @@ import Link from "next/link";
 import { useState } from "react";
 import { GoogleButton } from "./GoogleButton";
 import { GoogleActions } from "./googleAction";
+import { useTranslation } from "react-i18next";
 
 interface FormValues { email: string; password: string }
 
 export function Signup() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const { t } = useTranslation("auth");
 
   const form = useForm<FormValues>({
     mode: "uncontrolled",
@@ -31,9 +33,9 @@ export function Signup() {
     initialValues: { email: "", password: "" },
 
     validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : t('auth.login.invalido')),
       password: (value) =>
-        value.length < 8 ? "Password must have at least 8 characters" : null,
+        value.length < 8 ? t('auth.login.minimo') : null,
     },
   });
 
@@ -48,7 +50,7 @@ export function Signup() {
         setIsLoading(false);
         notifications.show({
           title: "Error",
-          message: response.error || "Error creating user",
+          message: response.error || t('auth.signup.creating'),
           color: "red",
         });
         return;
@@ -56,8 +58,8 @@ export function Signup() {
 
       setIsLoading(false);
       notifications.show({
-        title: "Success",
-        message: "User created successfully",
+        title: t('auth.signup.exito'),
+        message: t('Usuario creado con éxito'),
         color: "green",
       });
 
@@ -68,7 +70,7 @@ export function Signup() {
       console.error("Error creating user:", error);
       notifications.show({
         title: "Error",
-        message: "Error creating user",
+        message: t('auth.signup.creating'),
         color: "red",
       });
     }
@@ -78,27 +80,27 @@ export function Signup() {
     <div className={classes.wrapper}>
       <Paper className={classes.form} radius={0} p={30}>
         <Text className={classes.title} ta="center" mt="md" mb={50}>
-          ¡Bienvenido! <br /> Crea tu cuenta
+          {t('auth.signup.bienvenido')} <br /> {t('auth.signup.crea')}
         </Text>
 
         <Flex justify="center" mb="md">
           <form action={GoogleActions} style={{ width: "100%" }}>
             <GoogleButton fullWidth size="md" type="submit">
-              Registrare con Google
+              {t('auth.signup.google')}
             </GoogleButton>
           </form>
         </Flex>
 
         <form onSubmit={form.onSubmit(handleSubmit)}>
           <TextInput
-            label="Email address"
+            label={t('auth.login.email')}
             placeholder="hello@gmail.com"
             size="md"
             {...form.getInputProps("email")}
             key={form.key("email")}
           />
           <PasswordInput
-            label="Password"
+            label={t('auth.login.password')}
             placeholder="Your password"
             mt="md"
             size="md"
@@ -115,17 +117,17 @@ export function Signup() {
             style={{ color: "var(--text-brown)" }}
             loading={isLoading}
           >
-            Registrarse
+            {t('auth.login.registrarse')}
           </Button>
         </form>
 
         <Text ta="center" mt="md">
-          Ya tienes una cuenta?{" "}
+          {t('auth.signup.cuenta')}{" "}
           <Link
             href="/auth/login"
             className={classes.link}
           >
-            Iniciar sesión
+            {t('auth.signup.iniciar')}
           </Link>
         </Text>
       </Paper>

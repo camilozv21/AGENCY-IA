@@ -8,6 +8,7 @@ import { sizesVideo } from "@/utils/aspectsRatio";
 import { Dropzone, MIME_TYPES } from "@mantine/dropzone";
 import classesDrop from "./DropzoneButton.module.css"
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function VideoParameters(
   {
@@ -26,6 +27,7 @@ export default function VideoParameters(
   const theme = useMantineTheme();
   const openRef = useRef<() => void>(null);
   const isMobile = useMediaQuery('(max-width: 768px)');
+  const { t } = useTranslation('dashboard');
 
   const handleDrop = (files: File[]) => {
     if (files.length > 0) {
@@ -78,7 +80,7 @@ export default function VideoParameters(
           <ScrollAreaAutosize mah={'500px'} maw={400} scrollbars='y' mx="auto" offsetScrollbars scrollbarSize={4}>
             <Flex justify="space-between" align="center" px={10} py={5}>
               <Text size="sm" fw={700}>
-                Aspect Ratio
+                {t('dashboard.tool.image.aspectratio')}
               </Text>
               <CloseButton
                 onClick={() => setMenuAspectRatio(false)}
@@ -108,19 +110,19 @@ export default function VideoParameters(
         </MenuDropdown>
       </Menu>
 
-      <Text color='#C7C7C7' mt={10}>Seleccionar modelo</Text>
+      <Text color='#C7C7C7' mt={10}>{t('dashboard.tool.video.modelo')}</Text>
       <Select
         mb="md"
         comboboxProps={{ withinPortal: true }}
         data={['Nova Reel', 'Veo 2']}
         defaultValue={'Nova Reel'}
-        placeholder="Selecciona un modelo"
+        placeholder={t('dashboard.tool.video.modelo')}
         onChange={(value) => setSelectedModel(value || 'Nova Reel')}
         value={selectedModel.toString()}
       />
 
       <div className={classesDrop.wrapper}>
-        <Text color='#C7C7C7' my={10}>Sube tu propia imagen</Text>
+        <Text color='#C7C7C7' my={10}>{t('dashboard.tool.image.subeimagen')}</Text>
         <Dropzone
           openRef={openRef}
           onDrop={handleDrop}
@@ -165,15 +167,15 @@ export default function VideoParameters(
               </Group>
   
               <Text ta="center" fw={700} fz="lg" mt="xl">
-                <Dropzone.Accept>Drop files here</Dropzone.Accept>
-                <Dropzone.Reject>File not supported</Dropzone.Reject>
-                <Dropzone.Idle>Drag your images here</Dropzone.Idle>
+                <Dropzone.Accept>{t('dashboard.tool.image.sueltaarchivos')}</Dropzone.Accept>
+                <Dropzone.Reject>{t('dashboard.tool.image.filenosupported')}</Dropzone.Reject>
+                <Dropzone.Idle>{t('dashboard.tool.image.dragimages')}</Dropzone.Idle>
               </Text>
   
               <Text className={classesDrop.description}>
                 Or <br />
                 <Text component="span" fw={700} fz="md" color={theme.colors.violet[6]} inherit>
-                  click to upload
+                  {t('dashboard.tool.image.click')}
                 </Text>
               </Text>
             </div>
