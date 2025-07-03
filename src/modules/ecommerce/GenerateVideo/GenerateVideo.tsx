@@ -11,6 +11,7 @@ import { IconDownload, IconMovie, IconSparkles } from '@tabler/icons-react';
 import { useMediaQuery } from '@mantine/hooks';
 import { generateVideoToVeo2 } from '@/services/Gcloud/generateVideoToPromptVeo2';
 import { genereteVideoToPromptAWS } from '@/services/aws/generateVideoFromPrompt';
+import { useTranslation } from 'react-i18next';
 
 interface FormValues {
   prompt: string;
@@ -29,6 +30,7 @@ export default function GenerateVideo() {
   const [loading, setLoading] = useState(false);
   const [responseVideo, setResponseVideo] = useState<string[]>([]);
   const [responseVideoReel, setResponseVideoReel] = useState<string>();
+  const { t } = useTranslation('dashboard');
 
   const form = useForm<FormValues>({
     mode: 'uncontrolled',
@@ -36,7 +38,7 @@ export default function GenerateVideo() {
     initialValues: { prompt: '', aspectRatio: selectedAspectRatio.ratio, image: uploadedImage || '', duration: 6 },
     validate: {
       prompt: (value) =>
-        !value ? 'Campo obligatorio' : value.length > 120 ? 'Máximo de caracteres 120' : null,
+        !value ? t('dashboard.tool.image.obligatorio') : value.length > 120 ? t('dashboard.tool.video.max120') : null,
     },
   });
 
@@ -54,16 +56,16 @@ export default function GenerateVideo() {
       setResponseVideoReel(response?.data?.fileName);
     } catch (error: unknown) {
       setLoading(false);
-      console.error('Error al crear el video:', (error as Error).message);
-      let errorMessage = 'No se pudo generar el Video. Por favor verifica los datos o contacta soporte.';
+      console.error(t('dashboard.tool.video.errorvideo'), (error as Error).message);
+      let errorMessage = t('dashboard.tool.video.errortext');
       if ((error as Error).message.includes('400')) {
-        errorMessage = 'Error de validación: revisa que los datos ingresados sean correctos.';
+        errorMessage = t('dashboard.tool.video.errorvalidacion');
       } else if ((error as Error).message.includes('401')) {
-        errorMessage = 'No autorizado: verifica tu sesión.';
+        errorMessage = t('dashboard.tool.video.errorsesion');
       } else if ((error as Error).message.includes('403')) {
-        errorMessage = 'No suficientes tokens.';
+        errorMessage = t('dashboard.tool.video.errortokens');
       } else if ((error as Error).message.includes('500')) {
-        errorMessage = 'Error interno del servidor. Inténtalo más tarde.';
+        errorMessage = t('dashboard.tool.video.errorserver');
       }
       console.error(errorMessage);
       
@@ -217,7 +219,7 @@ export default function GenerateVideo() {
                             style={{ color: 'var(--text-brown)' }}
                             onClick={() => handleDownload(base64, index)}
                           >
-                            Descarga
+                            {t('dashboard.tool.image.descarga')}
                           </Button>
                         </div>
                       ))
@@ -261,7 +263,7 @@ export default function GenerateVideo() {
                             document.body.removeChild(link);
                           }}
                         >
-                          Descarga
+                          {t('dashboard.tool.image.descarga')}
                         </Button>
                       </div>
                     )}
@@ -288,7 +290,7 @@ export default function GenerateVideo() {
                   className={classes.input}
                   size="lg"
                   autosize
-                  placeholder="¿Qué quieres ver en el video?"
+                  placeholder={t('dashboard.tool.video.quequieres')}
                   rightSectionWidth={42}
                   leftSection={<IconSparkles size={18} stroke={1.5} color="#FFFFFF" />}
                   rightSectionProps={{ style: { width: 'auto' } }}
@@ -302,7 +304,7 @@ export default function GenerateVideo() {
                   style={{ color: '#FFFFFF', maxWidth: '700px' }}
                   className={classes.button}
                 >
-                  Generar Video
+                  {t('dashboard.tool.video.generar')}
                 </Button>
               </Flex>
             </form>
