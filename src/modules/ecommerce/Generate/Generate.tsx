@@ -16,6 +16,7 @@ import { useMediaQuery } from '@mantine/hooks';
 import { generateImagen4 } from '@/services/Gcloud/generateVideoToPromptImagen4';
 import { Result } from '@/types/createimagefromtextimagen4.type';
 import { useTranslation } from 'react-i18next';
+import { Carousel } from '@mantine/carousel';
 
 interface FormValues {
   prompt: string;
@@ -206,58 +207,71 @@ export default function Generate() {
             onSubmit={form.onSubmit((values) => selectedModel === 'Nova Canva' ? uploadedImage ? handleCreateImageFromImage(values) : handleCreateImage(values) : handleCreateImage40(values))}
           >
             <Flex
-              direction={isMobile ? "column" : "row"}
+              direction={"row"}
               align="center"
               justify="flex-start"
+              id='flex-images'
               gap={20}
-              style={{ marginBottom: 30, flexWrap: 'wrap' }}
+              style={{ marginBottom: 30, flexWrap: 'wrap', height: '100%', margin: '0 auto', minWidth: isMobile ? '100%' : '300px' }}
             >
               {loading ? (
-                Array.from({ length: quantityImages }).map((_, index) => (
+                // Array.from({ length: quantityImages }).map((_, index) => (
                   <div
-                    key={index}
+                    // key={index}
                     style={{
-                      width: isMobile ? '100%' : `calc(100% / ${quantityImages > 3 ? 3 : quantityImages} - 20px)`,
+                      width: '100%',
                       aspectRatio: selectedAspectRatio?.ratio || '1 / 1',
                       marginTop: '3rem',
+                      margin: 'auto'
                     }}
                   >
                     <SkeletonImage />
                   </div>
-                ))
+                // ))
               ) : selectedModel === 'Nova Canva' && responseImages.length > 0 ? (
-                responseImages.map((base64, index) => (
-                  <div
-                    key={index}
-                    style={{
-                      width: isMobile ? '100%' : `calc(100% / ${quantityImages > 3 ? 3 : quantityImages} - 20px)`,
-                      aspectRatio: selectedAspectRatio?.ratio || '1 / 1',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      marginTop: '3rem',
-                    }}
+                  <Carousel
+                    style={{ position: 'relative', zIndex: 1 }}
+                    withControls={true}
+                    controlsOffset={0}
+                    draggable={true}
+                    // slideSize={{ base: '0%', sm: '0%' }}
+                    // slideGap={{ base: 'xs', sm: 'sm' }}
                   >
-                    <Image
-                      src={`data:image/png;base64,${base64}`}
-                      alt="Generated"
-                      layout="responsive"
-                      width={1}
-                      height={1}
-                      className={classes.image}
-                      style={{ objectFit: 'cover', width: '100%', height: 'auto' }}
-                    />
-                    <Button
-                      leftSection={<IconDownload />}
-                      mt="sm"
-                      color="var(--yellow-contia)"
-                      style={{ color: 'var(--text-brown)' }}
-                      onClick={() => handleDownload(base64, index)}
-                    >
-                      {t('dashboard.tool.image.descarga')}
-                    </Button>
-                  </div>
-                ))
+                    {responseImages.map((base64, index) => (
+                      <Carousel.Slide key={index}>
+                      <div
+                        style={{
+                          width: '100%',
+                          // aspectRatio: selectedAspectRatio?.ratio || '1 / 1',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          marginTop: '3rem',
+                          margin: 'auto'
+                        }}
+                      >
+                        <Image
+                          src={`data:image/png;base64,${base64}`}
+                          alt="Generated"
+                          layout="responsive"
+                          width={1}
+                          height={1}
+                          className={classes.image}
+                          style={{ objectFit: 'cover', width: '100%', height: 'auto' }}
+                        />
+                        <Button
+                          leftSection={<IconDownload />}
+                          mt="sm"
+                          color="var(--yellow-contia)"
+                          style={{ color: 'var(--text-brown)' }}
+                          onClick={() => handleDownload(base64, index)}
+                        >
+                          {t('dashboard.tool.image.descarga')}
+                        </Button>
+                      </div>
+                      </Carousel.Slide>
+                    ))}
+                  </Carousel>
               ) : selectedModel === 'image 4.0' && responseImages40?.predictions?.length > 0 ? (
                 responseImages40.predictions.map((img, index) => (
                   <div
