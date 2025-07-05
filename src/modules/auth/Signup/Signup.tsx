@@ -59,7 +59,7 @@ export function Signup() {
       setIsLoading(false);
       notifications.show({
         title: t('auth.signup.exito'),
-        message: t('Usuario creado con éxito'),
+        message: t('auth.signup.usuariocreado'),
         color: "green",
       });
 
