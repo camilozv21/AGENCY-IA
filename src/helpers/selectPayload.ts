@@ -13,7 +13,7 @@ export function applyselectPayload(typeTask: string = "OUTPAINTING", cleanBase64
               "blurry, distorted, low quality, low resolution, pixelated, artifacts, deformed, bad anatomy, extra limbs, missing limbs, poorly drawn, mutated, ugly, unrealistic, low detail, jpeg artifacts, bad lighting, overexposed, underexposed, unnatural colors, disfigured, text, watermark, logo, cropped, frame cut, tiling, out of frame"
           }, 
           imageGenerationConfig: {
-            numberOfImages: numberOfImages || 3,
+            numberOfImages: 1,
             quality: "premium",
             cfgScale: 7.5,
             seed: Math.floor(Math.random() * 1000)
@@ -50,7 +50,7 @@ export function applyselectPayload(typeTask: string = "OUTPAINTING", cleanBase64
               },
               imageGenerationConfig: {
                 quality: "premium",
-                numberOfImages: numberOfImages || 3,
+                numberOfImages: 1,
                 cfgScale: 7.5,
                 seed: Math.floor(Math.random() * 1000)
               },

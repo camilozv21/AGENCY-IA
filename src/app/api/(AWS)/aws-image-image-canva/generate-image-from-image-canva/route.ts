@@ -1,7 +1,7 @@
 import { BedrockRuntimeClient, InvokeModelCommand } from "@aws-sdk/client-bedrock-runtime";
 import { applyStyleToPrompt } from "@/utils/applyStyleToPrompt";
 import { getDimensions } from "@/utils/getDimensions";
-import { NextResponse } from "next/server";
+// import { NextResponse } from "next/server";
 import { applyselectPayload } from "@/helpers/selectPayload";
 import { auth } from "@/auth";
 import { NextAuthRequest } from "next-auth";
@@ -18,12 +18,6 @@ export interface ImageSetting {
 
 
 export const POST = auth(async (request: NextAuthRequest) => {
-  const session = request.auth;
-
-  if (!session?.user) {
-    return new NextResponse("Unauthorized", { status: 401 });
-  }
-
   try{
     const body: ImageSetting = await request.json();
     const { prompt,imageBase64 , settings, typeTask } = body;
