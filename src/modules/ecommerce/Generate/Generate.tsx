@@ -88,47 +88,60 @@ export default function Generate() {
   };
 
 const handleCreateImageFromImage = async (values: FormValues) => {
-  const { prompt } = values;
-
-  const settings = {
-    style: selectedStyles?.name || "realistic",
-    aspectRatio: selectedAspectRatio?.ratio || "1:1-lg",
-    lighting: selectedIlumination?.type || "none",
-    camera: selectedCamera?.type || "none",
-    numberOfImages: quantityImages || 3,
-  };
-
-  if (!uploadedImage) {
-    notifications.show({
-      title: t("dashboard.tool.image.error"),
-      message: t("dashboard.tool.image.noimagen"),
-      color: "red",
-    });
-    return;
-  }
-
-  setLoading(true);
-
   try {
-    // Convertir base64 a Blob
-    const blob = await (await fetch(uploadedImage)).blob();
-    const formData = new FormData();
-    formData.append("file", blob, `image_${Date.now()}.png`);
+    const { prompt } = values;
 
-    // 1) Subir imagen al API para que la API la suba a S3
-    const uploadRes = await fetch("/api/s3-temporal-image", {
+    const settings = {
+      style: selectedStyles?.name || "realistic",
+      aspectRatio: selectedAspectRatio?.ratio || "1:1-lg",
+      lighting: selectedIlumination?.type || "none",
+      camera: selectedCamera?.type || "none",
+      numberOfImages: quantityImages || 3,
+    };
+
+    // 1) Prepara el blob local
+    if (!uploadedImage) {
+      throw new Error("No image uploaded");
+    }
+    const blob = await (await fetch(uploadedImage)).blob();
+
+    // 2) Pide signed URL al backend (no envía la imagen, solo JSON pequeño)
+    const fileName = `image_${Date.now()}.png`;
+
+    const signedUrlRes = await fetch("/api/s3-get-signed-url", {
       method: "POST",
-      body: formData,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        fileName,
+        fileType: "image/png",
+      }),
     });
 
-    if (!uploadRes.ok) throw new Error("No se pudo subir la imagen al servidor.");
+    if (!signedUrlRes.ok) {
+      throw new Error("No se pudo obtener el signed URL");
+    }
 
-    const { url: imageUrl } = await uploadRes.json();
+    const { signedUrl, publicUrl } = await signedUrlRes.json();
 
-    // 2) Enviar el prompt + settings + URL de imagen al generador de imágenes
+    // 3) Sube la imagen directamente a S3 usando el signed URL
+    const uploadRes = await fetch(signedUrl, {
+      method: "PUT",
+      headers: { "Content-Type": "image/png" },
+      body: blob,
+    });
+
+    if (!uploadRes.ok) {
+      throw new Error("No se pudo subir la imagen a S3");
+    }
+
+    console.log("Imagen subida correctamente a S3:", publicUrl);
+
+    setLoading(true);
+
+    // 4) Llama a tu API de generación, pasando la URL como imageBase64
     const response = await generateImagesFromFormImageCanva({
       prompt,
-      imageBase64: imageUrl, // Enviar URL, no base64
+      imageBase64: publicUrl, // Aquí pasas la URL, tu API ya la descarga y convierte a base64
       settings,
       typeTask: selectedTypeTask?.type,
     });
@@ -152,20 +165,17 @@ const handleCreateImageFromImage = async (values: FormValues) => {
       color: "green",
     });
 
+    setLoading(false);
   } catch (error: unknown) {
     console.error(error);
     notifications.show({
       title: t("dashboard.tool.image.error"),
-      message: (error as Error).message || "Error inesperado.",
+      message: (error as Error).message,
       color: "red",
     });
-    setResponseImages([]);
+    setLoading(false);
   }
-
-  setLoading(false);
 };
-
-
 
   const handleCreateImage40 = async (values: FormValues) => {
     const { prompt } = values;
