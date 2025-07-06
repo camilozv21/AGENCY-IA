@@ -87,24 +87,56 @@ export default function Generate() {
     setLoading(false);
   };
 
-  const handleCreateImageFromImage = async (values: FormValues) => {
-    const { prompt } = values;
-    const settings = {
-        style: selectedStyles?.name || "realistic",
-        aspectRatio: selectedAspectRatio?.ratio || "1:1-lg",
-        lighting: selectedIlumination?.type || "none",
-        camera: selectedCamera?.type || "none",
-        numberOfImages: quantityImages || 3,
-      };
-    const imageBase64 = uploadedImage || '';
+const handleCreateImageFromImage = async (values: FormValues) => {
+  const { prompt } = values;
 
-    setLoading(true);
-    const response = await generateImagesFromFormImageCanva({prompt, imageBase64, settings, typeTask: selectedTypeTask?.type});
+  const settings = {
+    style: selectedStyles?.name || "realistic",
+    aspectRatio: selectedAspectRatio?.ratio || "1:1-lg",
+    lighting: selectedIlumination?.type || "none",
+    camera: selectedCamera?.type || "none",
+    numberOfImages: quantityImages || 3,
+  };
+
+  if (!uploadedImage) {
+    notifications.show({
+      title: t("dashboard.tool.image.error"),
+      message: t("dashboard.tool.image.noimagen"),
+      color: "red",
+    });
+    return;
+  }
+
+  setLoading(true);
+
+  try {
+    // Convertir base64 a Blob
+    const blob = await (await fetch(uploadedImage)).blob();
+    const formData = new FormData();
+    formData.append("file", blob, `image_${Date.now()}.png`);
+
+    // 1) Subir imagen al API para que la API la suba a S3
+    const uploadRes = await fetch("/api/s3-temporal-image", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!uploadRes.ok) throw new Error("No se pudo subir la imagen al servidor.");
+
+    const { url: imageUrl } = await uploadRes.json();
+
+    // 2) Enviar el prompt + settings + URL de imagen al generador de imágenes
+    const response = await generateImagesFromFormImageCanva({
+      prompt,
+      imageBase64: imageUrl, // Enviar URL, no base64
+      settings,
+      typeTask: selectedTypeTask?.type,
+    });
 
     if (!response.success) {
       notifications.show({
-        title: t('dashboard.tool.image.error'),
-        message: response.error || t('dashboard.tool.image.noimagen'),
+        title: t("dashboard.tool.image.error"),
+        message: response.error || t("dashboard.tool.image.noimagen"),
         color: "red",
       });
       setResponseImages([]);
@@ -115,13 +147,25 @@ export default function Generate() {
     setResponseImages(response.data?.images || []);
 
     notifications.show({
-      title: t('dashboard.tool.image.exito'),
-      message: t('dashboard.tool.image.exitotexto'),
+      title: t("dashboard.tool.image.exito"),
+      message: t("dashboard.tool.image.exitotexto"),
       color: "green",
     });
 
-    setLoading(false);
-  };
+  } catch (error: unknown) {
+    console.error(error);
+    notifications.show({
+      title: t("dashboard.tool.image.error"),
+      message: (error as Error).message || "Error inesperado.",
+      color: "red",
+    });
+    setResponseImages([]);
+  }
+
+  setLoading(false);
+};
+
+
 
   const handleCreateImage40 = async (values: FormValues) => {
     const { prompt } = values;
