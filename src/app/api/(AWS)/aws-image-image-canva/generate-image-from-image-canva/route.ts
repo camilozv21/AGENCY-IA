@@ -14,12 +14,13 @@ export interface ImageSetting {
     numberOfImages: number;
   };
   typeTask: string;
+  maskPrompt:string;
 }
 
 export const POST = auth(async (request: NextAuthRequest) => {
   try {
     const body: ImageSetting = await request.json();
-    const { prompt, imageBase64, settings, typeTask } = body;
+    const { prompt, imageBase64, settings, typeTask, maskPrompt } = body;
 
     if (!prompt || typeof prompt !== "string" || !prompt.trim()) {
       return Response.json({ error: '"prompt" field is required and must be a non-empty string' }, { status: 400 });
@@ -66,7 +67,8 @@ export const POST = auth(async (request: NextAuthRequest) => {
       styledPrompt,
       settings.numberOfImages,
       height,
-      width
+      width,
+      maskPrompt
     );
 
     const client = new BedrockRuntimeClient({
