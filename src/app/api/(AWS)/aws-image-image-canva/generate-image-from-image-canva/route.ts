@@ -14,7 +14,7 @@ export interface ImageSetting {
     numberOfImages: number;
   };
   typeTask: string;
-  maskPrompt:string;
+  maskPrompt?:string;
 }
 
 export const POST = auth(async (request: NextAuthRequest) => {
