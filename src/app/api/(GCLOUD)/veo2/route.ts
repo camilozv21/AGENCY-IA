@@ -33,7 +33,7 @@ export const POST = auth(async (request: NextAuthRequest) => {
   const body: VideoSettings = await request.json();
   const { prompt, parameters, image } = body;
   const cleanBase64 = image.replace(/^data:image\/\w+;base64,/, ""); 
-  const isValidTokens = await validateTokens(session.user.email || "", parameters.sampleCount * 660);
+  const isValidTokens = await validateTokens(session.user.email || "", parameters.sampleCount * 654);
 
   if (!isValidTokens) {
     return new NextResponse("Not enough tokens", { status: 403 });

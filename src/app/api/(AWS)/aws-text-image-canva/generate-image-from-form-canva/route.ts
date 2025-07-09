@@ -35,7 +35,7 @@ export const POST = auth(async (request: NextAuthRequest) => {
     const body: RequestBody = await request.json();
     const { prompt, settings } = body;
 
-    const isValidTokens = await validateTokens(session.user.email || "", settings.numberOfImages*30);
+    const isValidTokens = await validateTokens(session.user.email || "", settings.numberOfImages*27);
 
     if (!isValidTokens) {
       return new NextResponse("Not enough tokens", { status: 403 });
