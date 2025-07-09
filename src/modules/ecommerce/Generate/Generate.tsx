@@ -32,6 +32,7 @@ export default function Generate() {
   const [selectedCamera, setSelectedCamera] = useState<typeof camera[0]>();
   const [quantityImages, setQuantityImages] = useState(3);
   const [selectedTypeTask, setSelectedTypeTask] = useState<typeof typesTask[0]>(typesTask[0]);
+  const [maskText, setMaskText] = useState<string>('');
   const [menuOpened, setMenuOpened] = useState(false);
   const [menuOpenedStyle, setMenuOpenedStyle] = useState(false);
   const [menuOpenedIlumination, setMenuOpenedIlumination] = useState(false);
@@ -97,6 +98,7 @@ const handleCreateImageFromImage = async (values: FormValues) => {
       lighting: selectedIlumination?.type || "none",
       camera: selectedCamera?.type || "none",
       numberOfImages: quantityImages || 3,
+      maskPrompt: maskText,
     };
 
     // 1) Prepara el blob local
@@ -134,8 +136,6 @@ const handleCreateImageFromImage = async (values: FormValues) => {
       throw new Error("No se pudo subir la imagen a S3");
     }
 
-    console.log("Imagen subida correctamente a S3:", publicUrl);
-
     setLoading(true);
 
     // 4) Llama a tu API de generación, pasando la URL como imageBase64
@@ -144,6 +144,7 @@ const handleCreateImageFromImage = async (values: FormValues) => {
       imageBase64: publicUrl, // Aquí pasas la URL, tu API ya la descarga y convierte a base64
       settings,
       typeTask: selectedTypeTask?.type,
+      maskPrompt: maskText,
     });
 
     if (!response.success) {
@@ -253,6 +254,8 @@ const handleCreateImageFromImage = async (values: FormValues) => {
         setMenuOpenedTypeTask={setMenuOpenedTypeTask}
         selectedModel={selectedModel}
         setSelectedModel={setSelectedModel}
+        maskText={maskText}
+        setMaskText={setMaskText}
       />
       <Center px={15} pb={50} inline={false} className={classes.container}>
         <Flex direction="column" align="center" justify="center" h={'100%'} w={'100%'}>

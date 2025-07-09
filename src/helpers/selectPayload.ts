@@ -1,4 +1,4 @@
-export function applyselectPayload(typeTask: string = "OUTPAINTING", cleanBase64: string, prompt: string, styledPrompt: string, numberOfImages:number, height:number, width:number, maskPrompt: string) {
+export function applyselectPayload(typeTask: string = "OUTPAINTING", cleanBase64: string, prompt: string, styledPrompt: string, numberOfImages:number, height:number, width:number, maskPrompt?: string) {
     let payload;  
     switch (typeTask) {
       case 'OUTPAINTING':
@@ -6,7 +6,7 @@ export function applyselectPayload(typeTask: string = "OUTPAINTING", cleanBase64
           taskType : "OUTPAINTING",
           outPaintingParams: {
             image: cleanBase64,
-            maskPrompt: prompt,
+            maskPrompt: maskPrompt,
             outPaintingMode: "PRECISE",
             text: styledPrompt,
             negativeText:
@@ -44,7 +44,7 @@ export function applyselectPayload(typeTask: string = "OUTPAINTING", cleanBase64
               taskType : "INPAINTING",          
               inPaintingParams: {
                 image: cleanBase64,
-                maskPrompt:prompt,
+                maskPrompt: maskPrompt,
                 text: styledPrompt,
                 negativeText: "blurry, distorted, low quality, low resolution, pixelated, artifacts, deformed, bad anatomy, extra limbs, missing limbs, poorly drawn, mutated, ugly, unrealistic, low detail, jpeg artifacts, bad lighting, overexposed, underexposed, unnatural colors, disfigured, text, watermark, logo, cropped, frame cut, tiling, out of frame"
               },
