@@ -9,7 +9,9 @@ interface RequestBody{
     prompt:string;
     imageBase64:string;
     settings:Settings;
-    typeTask:string; 
+    typeTask:string;
+    maskPrompt:string; 
+   
 }
 
 export interface Settings {
@@ -18,6 +20,7 @@ export interface Settings {
     lighting: string;
     camera: string;
     numberOfImages: number;
+    
 }
 
 export const POST = auth(async (request: NextAuthRequest) => {
@@ -30,7 +33,7 @@ export const POST = auth(async (request: NextAuthRequest) => {
     try{
       
         const body: RequestBody = await request.json();
-        const { prompt, imageBase64, settings, typeTask} = body;
+        const { prompt, imageBase64, settings, typeTask ,maskPrompt} = body;
 
         const isValidTokens = await validateTokens(session.user.email || "", settings.numberOfImages*100);
     
@@ -56,6 +59,7 @@ export const POST = auth(async (request: NextAuthRequest) => {
                 camera:settings.camera,
                 
             }
+            
         }
         const formTextImageFromPrompt = await generetePromptTextImage({ promptSettings });
 
@@ -67,7 +71,8 @@ export const POST = auth(async (request: NextAuthRequest) => {
                 aspectRatio:settings.aspectRatio || "1:1",
                 numberOfImages:settings.numberOfImages || 3
             },
-            typeTask:typeTask
+            typeTask:typeTask,
+            maskPrompt: maskPrompt
         }
         const generateImageFromImage = await generateImagesFromImagesCanvas({ imageSettings });
         return Response.json(generateImageFromImage, { status: 200 });
