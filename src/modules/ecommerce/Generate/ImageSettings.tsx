@@ -1,4 +1,4 @@
-import { Menu, Text, Divider, Grid, Flex, ActionIcon, CloseButton, MenuTarget, NavLink, MenuDropdown, ScrollAreaAutosize, GridCol, Group, useMantineTheme, Select } from "@mantine/core";
+import { Menu, Text, Divider, Grid, Flex, ActionIcon, CloseButton, MenuTarget, NavLink, MenuDropdown, ScrollAreaAutosize, GridCol, Group, useMantineTheme, Select, TextInput } from "@mantine/core";
 import { useRef } from "react";
 import { sizes, styles, iluminations, camera, typesTask } from "@/utils/aspectsRatio";
 import { IconChevronRight, IconCloudUpload, IconDownload, IconPalette, IconSunLowFilled, IconX } from "@tabler/icons-react";
@@ -36,6 +36,8 @@ export interface ImageSettingsProps {
   setMenuOpenedTypeTask: React.Dispatch<React.SetStateAction<boolean>>;
   selectedModel: string;
   setSelectedModel: React.Dispatch<React.SetStateAction<string>>;
+  maskText: string;
+  setMaskText: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export default function ImageSettings({
@@ -64,7 +66,9 @@ export default function ImageSettings({
   menuOpenedTypeTask,
   setMenuOpenedTypeTask,
   selectedModel,
-  setSelectedModel
+  setSelectedModel,
+  maskText,
+  setMaskText
 }: ImageSettingsProps) {
     const theme = useMantineTheme();
     const openRef = useRef<() => void>(null);
@@ -552,10 +556,22 @@ export default function ImageSettings({
           )}
         </Dropzone>
       </div>
+
+      {uploadedImage && (
+        <TextInput 
+          label={t('dashboard.tool.image.masktext')}
+          placeholder={t('dashboard.tool.image.maskplaceholder')}
+          disabled={!uploadedImage}
+          value={maskText}
+          onChange={(e) => setMaskText(e.target.value)}
+          my="md"
+        />
+      )}
       
       <Text color='#C7C7C7' my={10}>{t('dashboard.tool.image.numeroimagenes')}</Text>
       <Select
         my="md"
+        disabled={!!uploadedImage}
         comboboxProps={{ withinPortal: true }}
         data={['1', '2', '3']}
         defaultValue={'3'}

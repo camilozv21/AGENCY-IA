@@ -10,8 +10,7 @@ interface RequestBody{
     imageBase64:string;
     settings:Settings;
     typeTask:string;
-    maskPrompt:string; 
-   
+    maskPrompt?:string; 
 }
 
 export interface Settings {
@@ -20,7 +19,6 @@ export interface Settings {
     lighting: string;
     camera: string;
     numberOfImages: number;
-    
 }
 
 export const POST = auth(async (request: NextAuthRequest) => {

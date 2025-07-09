@@ -33,7 +33,9 @@ export default function SidebarFilters({
   menuOpenedTypeTask,
   setMenuOpenedTypeTask,
   selectedModel,
-  setSelectedModel
+  setSelectedModel,
+  maskText,
+  setMaskText,
 }: ImageSettingsProps) {
   const isMobile = useMediaQuery('(max-width: 768px)');
   const isBigScreen = useMediaQuery('(min-width: 1402px)');
@@ -95,6 +97,8 @@ export default function SidebarFilters({
                 setMenuOpenedTypeTask={setMenuOpenedTypeTask}
                 selectedModel={selectedModel}
                 setSelectedModel={setSelectedModel}
+                maskText={maskText}
+                setMaskText={setMaskText}
               />
             {/* </ScrollAreaAutosize> */}
           </div>
