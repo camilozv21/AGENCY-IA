@@ -7,11 +7,12 @@ import { validateTokens } from "@/helpers/validateTokens";
 const PROJECT_ID = "contia-461315";
 const LOCATION_ID = "us-central1";
 const API_ENDPOINT = "us-central1-aiplatform.googleapis.com";
-const MODEL_ID = "veo-2.0-generate-001";
+//const MODEL_ID = "veo-2.0-generate-001";
 export interface VideoSettings {
   prompt: string;
   parameters: Parameters;
   image: string;
+  model: string;
 }
 
 export interface Parameters {
@@ -31,7 +32,7 @@ export const POST = auth(async (request: NextAuthRequest) => {
   }
 
   const body: VideoSettings = await request.json();
-  const { prompt, parameters, image } = body;
+  const { prompt, parameters, image, model } = body;
   const cleanBase64 = image.replace(/^data:image\/\w+;base64,/, ""); 
   const isValidTokens = await validateTokens(session.user.email || "", parameters.sampleCount * 654);
 
@@ -55,7 +56,7 @@ export const POST = auth(async (request: NextAuthRequest) => {
 
     if (image) {
       requestPayload = {
-        endpoint: `projects/${PROJECT_ID}/locations/${LOCATION_ID}/publishers/google/models/${MODEL_ID}`,
+        endpoint: `projects/${PROJECT_ID}/locations/${LOCATION_ID}/publishers/google/models/${model}`,
         instances: [
           {
             prompt: prompt,
@@ -72,11 +73,12 @@ export const POST = auth(async (request: NextAuthRequest) => {
           personGeneration: "allow_adult",
           enablePromptRewriting: true,
           addWatermark: false,
+          generateAudio : true,
         },
       };
     } else {
       requestPayload = {
-        endpoint: `projects/${PROJECT_ID}/locations/${LOCATION_ID}/publishers/google/models/${MODEL_ID}`,
+        endpoint: `projects/${PROJECT_ID}/locations/${LOCATION_ID}/publishers/google/models/${model}`,
         instances: [
           {
             prompt: prompt,
@@ -94,7 +96,7 @@ export const POST = auth(async (request: NextAuthRequest) => {
     }
 
 
-    const url = `https://${API_ENDPOINT}/v1/projects/${PROJECT_ID}/locations/${LOCATION_ID}/publishers/google/models/${MODEL_ID}:predictLongRunning`;
+    const url = `https://${API_ENDPOINT}/v1/projects/${PROJECT_ID}/locations/${LOCATION_ID}/publishers/google/models/${model}:predictLongRunning`;
 
     const response = await client.request<{
       name: string;

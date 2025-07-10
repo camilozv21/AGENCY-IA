@@ -1,10 +1,10 @@
 import { httpService } from "../common/http.service";
 import { CreateVideotoPromptVeo2 } from "@/types/createVideoFromPromptVeo2.type";
 import { Parameters } from "@/app/api/(GCLOUD)/veo2/route";
-export async function generateVideoToVeo2({ prompt,parameters,image }: { prompt: string , parameters:Parameters , image: string }): Promise<{ success: boolean; data?: CreateVideotoPromptVeo2; error?: string }> {
+export async function generateVideoToVeo2({ prompt,parameters,image,model }: { prompt: string , parameters:Parameters , image: string, model :string }): Promise<{ success: boolean; data?: CreateVideotoPromptVeo2; error?: string }> {
     // const cookie = (await cookies()).get('authjs.session-token')?.value
     try {
-          const response = await httpService.post<CreateVideotoPromptVeo2>("/veo2", {prompt,parameters,image},{credentials:"include"});
+          const response = await httpService.post<CreateVideotoPromptVeo2>("/veo2", {prompt,parameters,image,model},{credentials:"include"});
           if (response.success === false) {
             return { success: false, error: response.error || "No se pudo generar el Video" };
           }
