@@ -103,7 +103,7 @@ export async function GET(request: Request) {
       );
     }
 
-    return new Response(JSON.stringify({ email: user.email, resetPasswordTime: user.passwordResetExpires || null }), { status: 200 });
+    return new Response(JSON.stringify({ email: user.email, resetPasswordTime: user.passwordResetExpires || null, tokens: user.tokensQuantity }), { status: 200 });
   } catch (error) {
       console.error("Error al obtener usuario:", error);
       return new Response(
