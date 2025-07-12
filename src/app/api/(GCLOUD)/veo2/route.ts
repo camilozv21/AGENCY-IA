@@ -33,8 +33,9 @@ export const POST = auth(async (request: NextAuthRequest) => {
 
   const body: VideoSettings = await request.json();
   const { prompt, parameters, image, model } = body;
-  const cleanBase64 = image.replace(/^data:image\/\w+;base64,/, ""); 
-  const isValidTokens = await validateTokens(session.user.email || "", parameters.sampleCount * 654);
+  const cleanBase64 = image.replace(/^data:image\/\w+;base64,/, "");
+  const tokenCount = model === 'Veo 2' ? parameters.sampleCount * 654 : parameters.sampleCount * 1800;
+  const isValidTokens = await validateTokens(session.user.email || "", tokenCount);
 
   if (!isValidTokens) {
     return new NextResponse("Not enough tokens", { status: 403 });
@@ -53,10 +54,11 @@ export const POST = auth(async (request: NextAuthRequest) => {
     });
 
     let requestPayload;
-
+    const modelName = model === 'Veo 2' ? 'veo-2.0-generate-001' : 'veo-3.0-generate-preview';
+console.log(model, modelName);
     if (image) {
       requestPayload = {
-        endpoint: `projects/${PROJECT_ID}/locations/${LOCATION_ID}/publishers/google/models/${model}`,
+        endpoint: `projects/${PROJECT_ID}/locations/${LOCATION_ID}/publishers/google/models/${modelName}`,
         instances: [
           {
             prompt: prompt,
@@ -73,12 +75,12 @@ export const POST = auth(async (request: NextAuthRequest) => {
           personGeneration: "allow_adult",
           enablePromptRewriting: true,
           addWatermark: false,
-          generateAudio : true,
+          ...(model === 'Veo 3' ? { generateAudio: true } : {}),
         },
       };
     } else {
       requestPayload = {
-        endpoint: `projects/${PROJECT_ID}/locations/${LOCATION_ID}/publishers/google/models/${model}`,
+        endpoint: `projects/${PROJECT_ID}/locations/${LOCATION_ID}/publishers/google/models/${modelName}`,
         instances: [
           {
             prompt: prompt,
@@ -91,12 +93,12 @@ export const POST = auth(async (request: NextAuthRequest) => {
           personGeneration: "allow_adult",
           enablePromptRewriting: true,
           addWatermark: false,
+          ...(model === 'Veo 3' ? { generateAudio: true } : {}),
         },
       };
     }
 
-
-    const url = `https://${API_ENDPOINT}/v1/projects/${PROJECT_ID}/locations/${LOCATION_ID}/publishers/google/models/${model}:predictLongRunning`;
+    const url = `https://${API_ENDPOINT}/v1/projects/${PROJECT_ID}/locations/${LOCATION_ID}/publishers/google/models/${modelName}:predictLongRunning`;
 
     const response = await client.request<{
       name: string;
@@ -107,7 +109,7 @@ export const POST = auth(async (request: NextAuthRequest) => {
     });
 
     const operationId = response.data.name;
-
+console.log(response);
     return NextResponse.json(
       {
         operationId,

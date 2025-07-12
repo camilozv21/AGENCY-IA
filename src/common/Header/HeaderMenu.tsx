@@ -25,6 +25,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { GoogleActions } from '@/modules/auth/Signup/googleAction';
 import { useTranslation } from 'react-i18next';
+import ShowTokens from '../ShowTokens/ShowTokens';
 
 // const mockdata = [
 //   {
@@ -174,6 +175,7 @@ export function HeaderMenu({ user }: { user?: { email: string, name: string, ima
                 </Link>
               </Button> */}
               <LanguagePicker />
+              <ShowTokens />
               <Menu radius="md" width={220} withinPortal={false}>
                 <Menu.Target>
                   <UnstyledButton className={classes.control}>
@@ -309,6 +311,9 @@ export function HeaderMenu({ user }: { user?: { email: string, name: string, ima
             )}
             {user && (
               <>
+                <div style={{ maxWidth: '200px', margin: '0 auto' }}>
+                  <ShowTokens />
+                </div>
                 <Button
                   variant="default"
                   component="a"

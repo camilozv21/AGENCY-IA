@@ -9,6 +9,7 @@ import { Dropzone, MIME_TYPES } from "@mantine/dropzone";
 import classesDrop from "./DropzoneButton.module.css"
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { showNotification } from "@mantine/notifications";
 
 export default function VideoParameters(
   {
@@ -31,13 +32,48 @@ export default function VideoParameters(
 
   const handleDrop = (files: File[]) => {
     if (files.length > 0) {
+      const file = files[0];
       const reader = new FileReader();
+
       reader.onload = function (e) {
-        setUploadedImage(e.target?.result as string);
+        if (selectedModel === 'Nova Reel') {
+          const img = new Image();
+
+          img.onload = function () {
+            const width = img.width;
+            const height = img.height;
+
+            if (width === 1280 && height === 720) {
+              setUploadedImage(e.target?.result as string);
+            } else {
+              showNotification({
+                title: 'Error',
+                message: 'La imagen debe tener exactamente 1280x720 píxeles. Intenta usar el modelo Veo 2.',
+                color: 'red',
+              });
+            }
+          };
+
+          img.onerror = function () {
+            showNotification({
+              title: 'Error al cargar la imagen',
+              message: 'El archivo no es una imagen válida.',
+              color: 'red',
+            });
+          };
+
+          img.src = e.target?.result as string;
+        } else {
+          // No validamos dimensiones si el modelo no es Nova Reel
+          setUploadedImage(e.target?.result as string);
+        }
       };
-      reader.readAsDataURL(files[0]);
+
+      reader.readAsDataURL(file);
     }
   };
+
+
 
   return (
     <>

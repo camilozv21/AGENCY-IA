@@ -6,6 +6,7 @@ import { IconAdjustmentsHorizontal, IconLogout2 } from "@tabler/icons-react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
+import ShowTokens from "@/common/ShowTokens/ShowTokens";
 
 export default function SidebarFilters({
   selectedAspectRatio,
@@ -110,6 +111,10 @@ export default function SidebarFilters({
 
       <UnstyledButton variant="default" onClick={router.back} className={classes.buttonGoBack}>
         <IconLogout2 stroke={2} />
+      </UnstyledButton>
+
+      <UnstyledButton variant="default" onClick={router.back} className={classes.tokensQuantity}>
+        <ShowTokens />
       </UnstyledButton>
     </>
   );
