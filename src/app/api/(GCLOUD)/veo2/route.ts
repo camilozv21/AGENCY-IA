@@ -55,7 +55,7 @@ export const POST = auth(async (request: NextAuthRequest) => {
 
     let requestPayload;
     const modelName = model === 'Veo 2' ? 'veo-2.0-generate-001' : 'veo-3.0-generate-preview';
-console.log(model, modelName);
+
     if (image) {
       requestPayload = {
         endpoint: `projects/${PROJECT_ID}/locations/${LOCATION_ID}/publishers/google/models/${modelName}`,
@@ -109,7 +109,7 @@ console.log(model, modelName);
     });
 
     const operationId = response.data.name;
-console.log(response);
+
     return NextResponse.json(
       {
         operationId,
