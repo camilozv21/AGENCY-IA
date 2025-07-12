@@ -10,7 +10,7 @@ export async function genereteVideoToPromptAWS({ prompt,duration,image }: { prom
           }
           return { success: true, data: response };
       } catch (error: unknown) {
-          console.error("Error during Video creation:", (error as Error).message);
+          console.error("Error during Video creation:", (error as Error));
           let errorMessage = "No se pudo generar El Video. Por favor verifica los datos o contacta soporte.";
           if ((error as Error).message.includes("400")) {
               errorMessage =  error + "Error de validación: revisa que los datos ingresados sean correctos.";
@@ -19,7 +19,7 @@ export async function genereteVideoToPromptAWS({ prompt,duration,image }: { prom
           } else if ((error as Error).message.includes("403")) {
               errorMessage = "No suficientes tokens.";
           } else if ((error as Error).message.includes("500")) {
-              errorMessage = "Error interno del servidor. Inténtalo más tarde.";
+              errorMessage = "Error interno del servidor. Inténtalo más tarde." + (error as Error).cause;
             }
           return { success: false, error: errorMessage };
       }

@@ -97,7 +97,7 @@ const handleCreateImageFromImage = async (values: FormValues) => {
       aspectRatio: selectedAspectRatio?.ratio || "1:1-lg",
       lighting: selectedIlumination?.type || "none",
       camera: selectedCamera?.type || "none",
-      numberOfImages: quantityImages || 3,
+      numberOfImages: quantityImages || 1,
       maskPrompt: maskText,
     };
 

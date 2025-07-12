@@ -86,6 +86,7 @@ export default function GenerateVideo() {
           addWatermark: false,
         },
         image: uploadedImage || '',
+        model: selectedModel
       });
   
       const operationId = response.data?.operationId || '';
@@ -164,7 +165,7 @@ export default function GenerateVideo() {
           <Flex direction="column" align="center" justify="center" h={'100%'} w={'100%'}>
             <form
               className={classes.form}
-              onSubmit={form.onSubmit((values) => selectedModel === 'Veo 2' ? handleCreateVideoVeo2(values) : handleCreateVideoReel(values))}
+              onSubmit={form.onSubmit((values) => selectedModel === 'Veo 2' || selectedModel === 'Veo 3' ? handleCreateVideoVeo2(values) : handleCreateVideoReel(values))}
             >
 
               <Flex
