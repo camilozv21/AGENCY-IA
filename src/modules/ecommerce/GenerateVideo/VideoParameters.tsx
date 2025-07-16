@@ -1,6 +1,6 @@
 'use client';
 
-import { ActionIcon, CloseButton, Divider, Flex, Grid, GridCol, Group, Menu, MenuDropdown, MenuTarget, NavLink, ScrollAreaAutosize, Select, Text, useMantineTheme } from "@mantine/core";
+import { ActionIcon, CloseButton, Divider, Flex, Grid, GridCol, Group, Menu, MenuDropdown, MenuTarget, NavLink, ScrollAreaAutosize, Text, useMantineTheme } from "@mantine/core";
 import { SidebarParametersProps } from "./SidebarParameters";
 import { IconChevronRight, IconCloudUpload, IconDownload, IconX } from "@tabler/icons-react";
 import { useMediaQuery } from "@mantine/hooks";
@@ -9,7 +9,7 @@ import { Dropzone, MIME_TYPES } from "@mantine/dropzone";
 import classesDrop from "./DropzoneButton.module.css"
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { showNotification } from "@mantine/notifications";
+// import { showNotification } from "@mantine/notifications";
 
 export default function VideoParameters(
   {
@@ -17,8 +17,8 @@ export default function VideoParameters(
     setSelectedAspectRatio,
     // duration,
     // setDuration,
-    selectedModel,
-    setSelectedModel,
+    // selectedModel,
+    // setSelectedModel,
     menuAspectRatio,
     setMenuAspectRatio,
     uploadedImage,
@@ -36,44 +36,42 @@ export default function VideoParameters(
       const reader = new FileReader();
 
       reader.onload = function (e) {
-        if (selectedModel === 'Nova Reel') {
-          const img = new Image();
+        // if (selectedModel === 'Nova Reel') {
+        //   const img = new Image();
 
-          img.onload = function () {
-            const width = img.width;
-            const height = img.height;
+        //   img.onload = function () {
+        //     const width = img.width;
+        //     const height = img.height;
 
-            if (width === 1280 && height === 720) {
-              setUploadedImage(e.target?.result as string);
-            } else {
-              showNotification({
-                title: 'Error',
-                message: 'La imagen debe tener exactamente 1280x720 píxeles. Intenta usar el modelo Veo 2.',
-                color: 'red',
-              });
-            }
-          };
+        //     if (width === 1280 && height === 720) {
+        //       setUploadedImage(e.target?.result as string);
+        //     } else {
+        //       showNotification({
+        //         title: 'Error',
+        //         message: 'La imagen debe tener exactamente 1280x720 píxeles. Intenta usar el modelo Veo 2.',
+        //         color: 'red',
+        //       });
+        //     }
+        //   };
 
-          img.onerror = function () {
-            showNotification({
-              title: 'Error al cargar la imagen',
-              message: 'El archivo no es una imagen válida.',
-              color: 'red',
-            });
-          };
+        //   img.onerror = function () {
+        //     showNotification({
+        //       title: 'Error al cargar la imagen',
+        //       message: 'El archivo no es una imagen válida.',
+        //       color: 'red',
+        //     });
+        //   };
 
-          img.src = e.target?.result as string;
-        } else {
+        //   img.src = e.target?.result as string;
+        // } else {
           // No validamos dimensiones si el modelo no es Nova Reel
           setUploadedImage(e.target?.result as string);
-        }
+        // }
       };
 
       reader.readAsDataURL(file);
     }
   };
-
-
 
   return (
     <>
@@ -146,7 +144,7 @@ export default function VideoParameters(
         </MenuDropdown>
       </Menu>
 
-      <Text color='#C7C7C7' mt={10}>{t('dashboard.tool.video.modelo')}</Text>
+      {/* <Text color='#C7C7C7' mt={10}>{t('dashboard.tool.video.modelo')}</Text>
       <Select
         mb="md"
         comboboxProps={{ withinPortal: true }}
@@ -155,7 +153,7 @@ export default function VideoParameters(
         placeholder={t('dashboard.tool.video.modelo')}
         onChange={(value) => setSelectedModel(value || 'Nova Reel')}
         value={selectedModel.toString()}
-      />
+      /> */}
 
       <div className={classesDrop.wrapper}>
         <Text color='#C7C7C7' my={10}>{t('dashboard.tool.image.subeimagen')}</Text>

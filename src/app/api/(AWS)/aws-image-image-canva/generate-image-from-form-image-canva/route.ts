@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import { subtractTokens } from "@/helpers/subtractTokens";
 import { validateTokens } from "@/helpers/validateTokens";
 import {generateImagesFromImagesCanvas} from "@/services/aws/generateImageFromImageCanva"
 import { generetePromptTextImage } from "@/services/aws/generetePromptTextImage"
@@ -33,7 +34,7 @@ export const POST = auth(async (request: NextAuthRequest) => {
         const body: RequestBody = await request.json();
         const { prompt, imageBase64, settings, typeTask ,maskPrompt} = body;
 
-        const isValidTokens = await validateTokens(session.user.email || "", settings.numberOfImages*27);
+        const isValidTokens = await validateTokens(session.user.email || "", settings.numberOfImages * 18);
     
         if (!isValidTokens) {
             return new NextResponse("Not enough tokens", { status: 403 });
@@ -72,6 +73,7 @@ export const POST = auth(async (request: NextAuthRequest) => {
             typeTask:typeTask,
             maskPrompt: maskPrompt
         }
+        await subtractTokens(session.user.email || "", settings.numberOfImages * 18);
         const generateImageFromImage = await generateImagesFromImagesCanvas({ imageSettings });
         return Response.json(generateImageFromImage, { status: 200 });
    

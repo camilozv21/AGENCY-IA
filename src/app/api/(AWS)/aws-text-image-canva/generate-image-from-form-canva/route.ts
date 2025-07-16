@@ -1,5 +1,6 @@
 
 import { auth } from "@/auth"; // Este viene de NextAuth v5 setup
+import { subtractTokens } from "@/helpers/subtractTokens";
 import { validateTokens } from "@/helpers/validateTokens";
 import { generateImagesFromPromptCanva } from "@/services/aws/generateImageFromPromptCanva";
 import { generetePromptTextImage } from "@/services/aws/generetePromptTextImage";
@@ -35,7 +36,7 @@ export const POST = auth(async (request: NextAuthRequest) => {
     const body: RequestBody = await request.json();
     const { prompt, settings } = body;
 
-    const isValidTokens = await validateTokens(session.user.email || "", settings.numberOfImages*27);
+    const isValidTokens = await validateTokens(session.user.email || "", settings.numberOfImages * 18);
 
     if (!isValidTokens) {
       return new NextResponse("Not enough tokens", { status: 403 });
@@ -73,6 +74,7 @@ export const POST = auth(async (request: NextAuthRequest) => {
       imageSettings,
     });
 
+    await subtractTokens(session.user.email || "", settings.numberOfImages * 18)
     return NextResponse.json(generateImageFromPromptCanva, { status: 200 });
   } catch (error: unknown) {
     return NextResponse.json(
