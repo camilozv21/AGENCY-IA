@@ -24,7 +24,8 @@ export default function GenerateVideo() {
   const [selectedAspectRatio, setSelectedAspectRatio] = useState<typeof sizesVideo[0]>(sizesVideo[0]);
   const [menuAspectRatio, setMenuAspectRatio] = useState(false);
   // const [duration, setDuration] = useState(6);
-  const [selectedModel, setSelectedModel] = useState('Nova Reel');
+  // const [selectedModel, setSelectedModel] = useState('Veo 2');
+  const selectedModel = 'Veo 2'; // Hardcoded for now, can be replaced with state if needed
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [loading, setLoading] = useState(false);
@@ -153,8 +154,8 @@ export default function GenerateVideo() {
           setSelectedAspectRatio={setSelectedAspectRatio}
           // duration={duration}
           // setDuration={setDuration}
-          selectedModel={selectedModel}
-          setSelectedModel={setSelectedModel}
+          // selectedModel={selectedModel}
+          // setSelectedModel={setSelectedModel}
           menuAspectRatio={menuAspectRatio}
           setMenuAspectRatio={setMenuAspectRatio}
           uploadedImage={uploadedImage}
@@ -227,7 +228,7 @@ export default function GenerateVideo() {
                     )}
               
                     {/* Renderiza video Nova Reel fuera del map */}
-                    {selectedModel === 'Nova Reel' && responseVideoReel && (
+                    {/* {selectedModel === 'Nova Reel' && responseVideoReel && (
                       <div
                         style={{
                           width: '100%',
@@ -267,7 +268,7 @@ export default function GenerateVideo() {
                           {t('dashboard.tool.image.descarga')}
                         </Button>
                       </div>
-                    )}
+                    )} */}
                   </>
                 )}
                 {responseVideo.length === 0 && !responseVideoReel && !loading && (

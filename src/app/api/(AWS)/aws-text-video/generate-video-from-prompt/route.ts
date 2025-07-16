@@ -9,6 +9,7 @@ import {
 } from "@aws-sdk/client-bedrock-runtime";
 import { auth } from "@/auth";
 import { validateTokens } from "@/helpers/validateTokens";
+import { subtractTokens } from "@/helpers/subtractTokens";
 interface RequestBody {
   prompt: string;
   duration: number;
@@ -29,7 +30,7 @@ export const POST = auth(async (request: NextAuthRequest) => {
 
   const isValidTokens = await validateTokens(
     session.user.email || "",
-    duration * 27
+    duration * 18
   );
 
   if (!isValidTokens) {
@@ -124,6 +125,7 @@ export const POST = auth(async (request: NextAuthRequest) => {
     }
 
     if (status === "Completed") {
+      await subtractTokens(session.user.email || "", duration * 18);
       return new Response(
         JSON.stringify({
           invocationArn: response.invocationArn,

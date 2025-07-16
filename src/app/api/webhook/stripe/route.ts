@@ -111,27 +111,27 @@ export async function POST(req: Request) {
 
                 switch (priceId) {
                     case 'price_1RVbRrGPNJsUq7ASQXbL5kLj': // Basic Plan monthly
-                        user.tokensQuantity = 4501;
+                        user.tokensQuantity = 4500;
                         break;
                     
                     case 'price_1RVbWKGPNJsUq7ASwi0NWDTA': // Basic Plan yearly
-                        user.tokensQuantity = 54012;
+                        user.tokensQuantity = 54000;
                         break;
 
                     case 'price_1RVbScGPNJsUq7AST3bPpgm3': // Enterprise Plan monthly
-                        user.tokensQuantity = 12001;
+                        user.tokensQuantity = 13500;
                         break;
 
                     case 'price_1RVbX5GPNJsUq7ASb2Nt3hjo': // Enterprise Plan yearly
-                        user.tokensQuantity = 144012;
+                        user.tokensQuantity = 162000;
                         break;
 
                     case 'price_1RXtL2GPNJsUq7ASYuKjuprm': // Premium Plan monthly
-                        user.tokensQuantity = 20001;
+                        user.tokensQuantity = 22500;
                         break;
 
                     case 'price_1RXtMOGPNJsUq7ASgzfra8pl': // Premium Plan yearly
-                        user.tokensQuantity = 240012;
+                        user.tokensQuantity = 270000;
                         break;
 
                     default:

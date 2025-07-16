@@ -17,9 +17,9 @@ export const validateTokens = async (email: string, tokens: number) => {
     return false;
   }
 
-  user.tokensQuantity -= tokens;
+  // user.tokensQuantity -= tokens;
 
-  await user.save();
+  // await user.save();
 
   return true; 
 }

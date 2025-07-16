@@ -10,8 +10,7 @@ export const plansDataMonthly = [
     price: '$49.00',
     features: [
       {text: 'Posibilidad de generar 70 imagenes (100% personalizadas)', icon: IconBrandMeta},
-      {text: 'Posibilidad de generar 3 videos de 5 segundos (Veo 3) tipo reel o TikTok, adaptado a tu marca', icon: IconBrandTiktok},
-      {text: 'Posibilidad de generar 4 videos de 6 segundos (Nova Reel) tipo reel o TikTok, adaptado a tu marca', icon: IconBrandInstagram},
+      {text: 'Posibilidad de generar 3 videos de 5 segundos (Veo 3) tipo reel o TikTok, adaptado a tu marca', icon: IconBrandInstagram},
     ],
     featured: false,
     paymentFrequency: 'Mensual',
@@ -28,7 +27,7 @@ export const plansDataMonthly = [
   },
   {
     name: 'EMPRESARIAL',
-    tokens: 12001,
+    tokens: 13501,
     title: 'Crecimiento constante para marcas en expansión.',
     description:
       'Diseñado para negocios que ya tienen presencia online y quieren llevarla al siguiente nivel. Incluye mayor volumen de contenido, videos adaptados a tu marca y un asistente con IA que te ayuda a generar ideas creativas en segundos. Ideal para tiendas físicas, e-commerce y negocios en etapa de crecimiento.',
@@ -36,7 +35,6 @@ export const plansDataMonthly = [
     features: [
       {text: 'Posibilidad de generar 175 imagenes (100% personalizadas)', icon: IconBrandMeta},
       {text: 'Posibilidad de generar 7 videos de 5 segundos (Veo 3) tipo reel o TikTok, adaptado a tu marca', icon: IconBrandTiktok},
-      {text: 'Posibilidad de generar 10 videos de 6 segundos (Nova Reel) tipo reel o TikTok, adaptado a tu marca', icon: IconBrandInstagram},
       {text: 'Asistente con IA para generar ideas y textos cuando lo necesites', icon: IconRobot}
     ],
     featured: true,
@@ -54,7 +52,7 @@ export const plansDataMonthly = [
   },
   {
     name: 'PREMIUM',
-    tokens: 20001,
+    tokens: 22501,
     title: 'Dominio total de tu nicho con contenido automatizado y de alto rendimiento.',
     description:
       'El paquete definitivo para empresas consolidadas que desean posicionarse como líderes de su sector. Obtén contenido profesional a escala, campañas optimizadas, y un flujo de ideas constante gracias a la inteligencia artificial. Automatiza tu estrategia de contenido con herramientas de nivel empresarial.',
@@ -62,7 +60,6 @@ export const plansDataMonthly = [
     features: [
       {text: 'Posibilidad de generar 288 imagenes (100% personalizadas)', icon: IconBrandMeta},
       {text: 'Posibilidad de generar 14 videos de 5 segundos (Veo 3) tipo reel o TikTok, adaptado a tu marca', icon: IconBrandTiktok},
-      {text: 'Posibilidad de generar 19 videos de 6 segundos (Nova Reel) tipo reel o TikTok, adaptado a tu marca', icon: IconBrandInstagram},
       {text: 'Asistente con IA para generar ideas y textos cuando lo necesites', icon: IconRobot}
     ],
     featured: false,
@@ -70,7 +67,7 @@ export const plansDataMonthly = [
     button: 'Comenzar ahora',
     link:
         process.env.NODE_ENV === 'development'
-          ? 'https://buy.stripe.com/test_28EcN58cm4Cbex3e6ogEg02'
+          ? 'https://buy.stripe.com/test_2F8EcN58cm4Cbex3e6ogEg02'
           : 'https://buy.stripe.com/5kQcN5eAKgkTcoV3rKgEg08',
     priceId:
         process.env.NODE_ENV === 'development'
@@ -84,7 +81,7 @@ export const plansDataMonthly = [
 export const plansDataYearly = [
   {
     name: 'BASICO',
-    tokens: 54012,
+    tokens: 54000,
     title: 'Impulso inicial para emprendedores que quieren destacar.',
     description:
       'Perfecto para quienes están dando sus primeros pasos online. Este plan te permite crear contenido visual de alto impacto, sin complicaciones técnicas. Ideal para freelancers, pequeños comercios o profesionales independientes que quieren mejorar su imagen digital con resultados rápidos y visibles.',
@@ -92,7 +89,6 @@ export const plansDataYearly = [
     features: [
       {text: 'Posibilidad de generar 840 imagenes (100% personalizadas)', icon: IconBrandMeta},
       {text: 'Posibilidad de generar 36 videos de 5 segundos (Veo 3) tipo reel o TikTok, adaptado a tu marca', icon: IconBrandTiktok},
-      {text: 'Posibilidad de generar 48 videos de 6 segundos (Nova Reel) tipo reel o TikTok, adaptado a tu marca', icon: IconBrandInstagram},
     ],
     featured: false,
     paymentFrequency: 'Mensual',
@@ -109,7 +105,7 @@ export const plansDataYearly = [
   },
   {
     name: 'EMPRESARIAL',
-    tokens: 144012,
+    tokens: 162000,
     title: 'Crecimiento constante para marcas en expansión.',
     description:
       'Diseñado para negocios que ya tienen presencia online y quieren llevarla al siguiente nivel. Incluye mayor volumen de contenido, videos adaptados a tu marca y un asistente con IA que te ayuda a generar ideas creativas en segundos. Ideal para tiendas físicas, e-commerce y negocios en etapa de crecimiento.',
@@ -117,7 +113,6 @@ export const plansDataYearly = [
     features: [
       {text: 'Posibilidad de generar 2100 imagenes (100% personalizadas)', icon: IconBrandMeta},
       {text: 'Posibilidad de generar 84 videos de 5 segundos (Veo 3) tipo reel o TikTok, adaptado a tu marca', icon: IconBrandTiktok},
-      {text: 'Posibilidad de generar 120 videos de 6 segundos (Nova Reel) tipo reel o TikTok, adaptado a tu marca', icon: IconBrandInstagram},
       {text: 'Asistente con IA para generar ideas y textos cuando lo necesites', icon: IconRobot}
     ],
     featured: true,
@@ -135,7 +130,7 @@ export const plansDataYearly = [
   },
   {
     name: 'PREMIUM',
-    tokens: 240012,
+    tokens: 270000,
     title: 'Dominio total de tu nicho con contenido automatizado y de alto rendimiento.',
     description:
       'El paquete definitivo para empresas consolidadas que desean posicionarse como líderes de su sector. Obtén contenido profesional a escala, campañas optimizadas, y un flujo de ideas constante gracias a la inteligencia artificial. Automatiza tu estrategia de contenido con herramientas de nivel empresarial.',
@@ -143,7 +138,6 @@ export const plansDataYearly = [
     features: [
       {text: 'Posibilidad de generar 3456 imagenes (100% personalizadas)', icon: IconBrandMeta},
       {text: 'Posibilidad de generar 168 videos de 5 segundos (Veo 3) tipo reel o TikTok, adaptado a tu marca', icon: IconBrandTiktok},
-      {text: 'Posibilidad de generar 228 videos de 6 segundos (Nova Reel) tipo reel o TikTok, adaptado a tu marca', icon: IconBrandInstagram},
       {text: 'Asistente con IA para generar ideas y textos cuando lo necesites', icon: IconRobot}
     ],
     featured: false,
