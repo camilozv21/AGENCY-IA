@@ -3,6 +3,7 @@ import { NextAuthRequest } from "next-auth";
 import { NextResponse } from "next/server";
 import { JWT } from "google-auth-library";
 import { validateTokens } from "@/helpers/validateTokens";
+import { subtractTokens } from "@/helpers/subtractTokens";
 
 const PROJECT_ID = "contia-461315";
 const LOCATION_ID = "us-central1";
@@ -33,7 +34,7 @@ export const POST = auth(async (request: NextAuthRequest) => {
 
   const isValidTokens = await validateTokens(
     session.user.email || "",
-    parameters.sampleCount * 27
+    parameters.sampleCount * 18
   );
 
   if (!isValidTokens) {
@@ -80,6 +81,7 @@ export const POST = auth(async (request: NextAuthRequest) => {
       data: requestPayload,
     });
 
+    await subtractTokens(session.user.email || "", parameters.sampleCount * 18);
     return NextResponse.json(
       {
         result: response.data,
