@@ -1,11 +1,11 @@
 'use client'
 
 import { Badge, Group, Text, Tooltip } from '@mantine/core'
+import { readLocalStorageValue } from '@mantine/hooks';
 import { IconBolt } from '@tabler/icons-react'
-import { useAppSelector } from '@/lib/hooks'
 
 export default function ShowTokens() {
-  const tokens = useAppSelector((state) => state.user?.data?.tokens)
+  const tokens = readLocalStorageValue<number>({ key: 'tokens' });
 
   return (
     <Tooltip label="Tokens disponibles" withArrow>
