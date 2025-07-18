@@ -25,8 +25,9 @@ export default function SetupData({ user }: { user?: { email: string, name: stri
         }
 
         const data = await response.json();
+        localStorage.setItem('tokens', JSON.stringify(data.tokens));
         dispatch(userInfoSuccess(data));
-        console.log('Datos del usuario configurados:', data);
+        // console.log('Datos del usuario configurados:', data);
       } catch (error) {
         dispatch(userInfoFailure(error instanceof Error ? error.message : 'Error desconocido'));
         console.error('Error al configurar los datos del usuario:', error);
