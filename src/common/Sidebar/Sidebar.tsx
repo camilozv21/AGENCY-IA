@@ -44,6 +44,7 @@ export function Sidebar() {
 
   if (pathname.includes('/dashboard/tool/text-to-image')) return null;
   if (pathname.includes('/dashboard/tool/text-to-video')) return null;
+  if (isMobile) return null;
 
   const links = navData.map((item, index) => {
     if (isMobile) {

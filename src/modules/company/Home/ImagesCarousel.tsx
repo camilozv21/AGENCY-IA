@@ -110,6 +110,7 @@ export function ImagesCarousel() {
             maxHeight: '700px',
             objectFit: 'cover',
             zIndex: -1,
+            opacity: 0.8,
           }}
         >
           <source src="https://df50lbm4qcrt6.cloudfront.net/home-carousel/Stars.webm" type="video/webm" />
