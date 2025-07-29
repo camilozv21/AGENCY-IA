@@ -14,13 +14,13 @@ export interface ImageSetting {
     numberOfImages: number;
   };
   typeTask: string;
-  maskPrompt?:string;
+  // maskPrompt?:string;
 }
 
 export const POST = auth(async (request: NextAuthRequest) => {
   try {
     const body: ImageSetting = await request.json();
-    const { prompt, imageBase64, settings, typeTask, maskPrompt } = body;
+    const { prompt, imageBase64, settings, typeTask } = body;
 
     if (!prompt || typeof prompt !== "string" || !prompt.trim()) {
       return Response.json({ error: '"prompt" field is required and must be a non-empty string' }, { status: 400 });
@@ -59,6 +59,19 @@ export const POST = auth(async (request: NextAuthRequest) => {
     const { width, height } = getDimensions(settings.aspectRatio);
     const styledPrompt = applyStyleToPrompt(prompt, settings.style);
 
+    const inferedMaskPrompt = await fetch(`${process.env.API_BASE_URL}/aws-text-prompt/generate-prompt-o4mini`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        prompt,
+        image: imageBase64,
+      }),
+    })
+
+    const maskPromptResponse = await inferedMaskPrompt.json();
+
     // Construir payload con imagen en base64
     const payload = applyselectPayload(
       typeTask,
@@ -68,7 +81,7 @@ export const POST = auth(async (request: NextAuthRequest) => {
       settings.numberOfImages,
       height,
       width,
-      maskPrompt
+      maskPromptResponse.result
     );
 
     const client = new BedrockRuntimeClient({
