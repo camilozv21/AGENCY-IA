@@ -34,7 +34,17 @@ export const POST = auth(async (request: NextAuthRequest) => {
 
   const body: VideoSettings = await request.json();
   const { prompt, parameters, image, model } = body;
-  const cleanBase64 = image.replace(/^data:image\/\w+;base64,/, "");
+  let cleanBase64 = "";
+  if (image.startsWith("http")) {
+    // Descarga la imagen y la convierte a base64
+    const imageResponse = await fetch(image);
+    if (!imageResponse.ok) {
+      return new NextResponse("Error fetching image from URL", { status: 400 });
+    }
+    const arrayBuffer = await imageResponse.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+    cleanBase64 = buffer.toString("base64");
+  }
   const tokenCount = model === 'Veo 2' ? parameters.durationSeconds * 112.5 : parameters.durationSeconds * 225;
   const isValidTokens = await validateTokens(session.user.email || "", tokenCount);
 

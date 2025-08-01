@@ -76,6 +76,44 @@ export default function GenerateVideo() {
   const handleCreateVideoVeo2 = async (values: { prompt: string, aspectRatio: string, image?: string }) => {
     setLoading(true);
     try {
+      let publicUrl = "";
+  
+      // Solo sube la imagen a S3 si uploadedImage tiene valor
+      if (uploadedImage) {
+        const blob = await (await fetch(uploadedImage)).blob();
+  
+        // 2) Solicita signed URL al backend (no se envía la imagen, solo JSON pequeño)
+        const fileName = `image_${Date.now()}.png`;
+        const signedUrlRes = await fetch("/api/s3-get-signed-url", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            fileName,
+            fileType: "image/png",
+          }),
+        });
+  
+        if (!signedUrlRes.ok) {
+          throw new Error("No se pudo obtener el signed URL");
+        }
+  
+        const { signedUrl, publicUrl: sUrl } = await signedUrlRes.json();
+  
+        // 3) Sube la imagen directamente a S3 usando el signed URL
+        const uploadRes = await fetch(signedUrl, {
+          method: "PUT",
+          headers: { "Content-Type": "image/png" },
+          body: blob,
+        });
+  
+        if (!uploadRes.ok) {
+          throw new Error("No se pudo subir la imagen a S3");
+        }
+  
+        publicUrl = sUrl;
+      }
+  
+      // Llamada al endpoint para generar video. Si no se subió imagen, se envía una cadena vacía.
       const response = await generateVideoToVeo2({
         prompt: values.prompt,
         parameters: {
@@ -86,8 +124,8 @@ export default function GenerateVideo() {
           enablePromptRewriting: true,
           addWatermark: false,
         },
-        image: uploadedImage || '',
-        model: selectedModel
+        image: publicUrl,
+        model: 'Veo 2'
       });
   
       const operationId = response.data?.operationId || '';
